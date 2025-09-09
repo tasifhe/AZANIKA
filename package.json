@@ -1,0 +1,39 @@
+{
+  "name": "azanika-ecommerce",
+  "version": "1.0.0",
+  "description": "Professional e-commerce website for AZANIKA - Women's Fashion Accessories",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.2.2",
+    "@types/node": "^20.8.0",
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.10",
+    "tailwindcss": "^3.3.5",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "lucide-react": "^0.288.0",
+    "clsx": "^2.0.0",
+    "framer-motion": "^10.16.4",
+    "@headlessui/react": "^1.7.17",
+    "react-hot-toast": "^2.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.51.0",
+    "eslint-config-next": "^14.0.0",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10"
+  },
+  "keywords": ["ecommerce", "fashion", "accessories", "women", "next.js", "react", "typescript"],
+  "author": "AZANIKA Team",
+  "license": "MIT"
+}
