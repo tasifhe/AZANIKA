@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Filter, Search, Grid, List, SlidersHorizontal } from 'lucide-react';
@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
 import { mockProducts, mockCategories } from '@/lib/data';
 
-const ProductsPage = () => {
+const ProductsContent = () => {
   const searchParams = useSearchParams();
   const categoryFilter = searchParams?.get('category') || '';
   const searchFromUrl = searchParams?.get('search') || '';
@@ -261,6 +261,14 @@ const ProductsPage = () => {
 
       <Footer />
     </div>
+  );
+};
+
+const ProductsPage = () => {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <ProductsContent />
+    </Suspense>
   );
 };
 
