@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import NewsletterSignup from './NewsletterSignup';
 
 const Footer = () => {
   return (
@@ -73,17 +74,8 @@ const Footer = () => {
 
             {/* Newsletter Signup */}
             <div className="mt-6">
-              <h5 className="font-medium mb-2">Subscribe to our newsletter</h5>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="flex-1 px-3 py-2 bg-gray-800 text-white rounded-l-md border border-gray-700 focus:outline-none focus:border-primary-500"
-                />
-                <button className="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-r-md transition-colors">
-                  Subscribe
-                </button>
-              </div>
+              <h5 className="font-medium mb-4">Subscribe to our newsletter</h5>
+              <NewsletterSignup theme="light" className="max-w-none" />
             </div>
           </div>
         </div>

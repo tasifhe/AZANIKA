@@ -1,14 +1,61 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { ShoppingCart, Search, Menu, X, User, Heart } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
+import { searchProducts } from '@/lib/data';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [showResults, setShowResults] = useState(false);
   const { itemCount } = useCart();
+  const router = useRouter();
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setShowResults(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      const results = searchProducts(searchQuery).slice(0, 5);
+      setSearchResults(results);
+      setShowResults(true);
+    } else {
+      setSearchResults([]);
+      setShowResults(false);
+    }
+  }, [searchQuery]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
+      setIsSearchOpen(false);
+      setShowResults(false);
+      setSearchQuery('');
+    }
+  };
+
+  const handleProductClick = (productId: string) => {
+    router.push(`/product/${productId}`);
+    setIsSearchOpen(false);
+    setShowResults(false);
+    setSearchQuery('');
+  };
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -42,8 +89,17 @@ const Header = () => {
 
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold gradient-text">AZANIKA</span>
+            <Link href="/" className="flex items-center space-x-3">
+              <div className="relative w-10 h-10">
+                <Image
+                  src="/AZANIKA_LOGO.png"
+                  alt="AZANIKA Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+              <span className="text-2xl font-bold gradient-text tracking-wide">AZANIKA</span>
             </Link>
           </div>
 
@@ -94,16 +150,60 @@ const Header = () => {
 
         {/* Search Bar */}
         {isSearchOpen && (
-          <div className="pb-4">
+          <div className="pb-4" ref={searchRef}>
             <div className="relative max-w-md mx-auto">
-              <input
-                type="text"
-                placeholder="Search products..."
-                className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
-              />
-              <button className="absolute right-3 top-2.5 text-gray-400">
-                <Search size={16} />
-              </button>
+              <form onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-4 pr-10 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                  autoFocus
+                />
+                <button type="submit" className="absolute right-3 top-2.5 text-neutral-400 hover:text-primary-600">
+                  <Search size={16} />
+                </button>
+              </form>
+              
+              {/* Search Results Dropdown */}
+              {showResults && searchResults.length > 0 && (
+                <div className="absolute top-full left-0 right-0 bg-white border border-neutral-200 rounded-lg shadow-lg mt-1 z-50 max-h-96 overflow-y-auto">
+                  {searchResults.map((product) => (
+                    <button
+                      key={product.id}
+                      onClick={() => handleProductClick(product.id)}
+                      className="w-full flex items-center space-x-3 p-3 hover:bg-neutral-50 text-left"
+                    >
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-neutral-100 flex-shrink-0">
+                        <Image
+                          src={product.images[0]}
+                          alt={product.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-sm font-medium text-neutral-900 truncate">{product.name}</h3>
+                        <p className="text-sm text-neutral-600">${product.price.toFixed(2)}</p>
+                      </div>
+                    </button>
+                  ))}
+                  {searchQuery && (
+                    <Link
+                      href={`/products?search=${encodeURIComponent(searchQuery)}`}
+                      onClick={() => {
+                        setIsSearchOpen(false);
+                        setShowResults(false);
+                        setSearchQuery('');
+                      }}
+                      className="block w-full p-3 text-center text-primary-600 hover:bg-primary-50 border-t border-neutral-200 font-medium"
+                    >
+                      View all results for "{searchQuery}"
+                    </Link>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}

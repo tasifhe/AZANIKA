@@ -7,6 +7,7 @@ import { ArrowRight, Star, Truck, Shield, RefreshCw, Award } from 'lucide-react'
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
+import NewsletterSignup from '@/components/NewsletterSignup';
 import { getFeaturedProducts, mockCategories } from '@/lib/data';
 
 const HomePage = () => {
@@ -188,16 +189,7 @@ const HomePage = () => {
             Subscribe to our newsletter for exclusive offers, style tips, and new arrivals.
           </p>
           
-          <div className="max-w-md mx-auto flex elegant-shadow">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-l-lg border-0 focus:ring-2 focus:ring-cream-300"
-            />
-            <button className="bg-white text-primary-600 px-6 py-3 rounded-r-lg font-medium hover:bg-cream-50 transition-colors">
-              Subscribe
-            </button>
-          </div>
+          <NewsletterSignup />
         </div>
       </section>
 

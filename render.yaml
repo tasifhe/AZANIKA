@@ -1,0 +1,17 @@
+services:
+  # Backend API Server
+  - type: web
+    name: azanika-backend
+    env: node
+    region: singapore
+    buildCommand: cd AZANIKA/server && npm install && npm run build
+    startCommand: cd AZANIKA/server && npm start
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://postgres.zupvjkpxjopiukxmcapm:LMii4o2GApNJpJ@aws-1-ap-south-1.pooler.supabase.com:5432/postgres
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production

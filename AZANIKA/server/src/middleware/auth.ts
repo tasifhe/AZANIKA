@@ -9,8 +9,13 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-    req.user = decoded; // Assuming you attach the user info to the request
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      throw new Error('JWT_SECRET is not defined');
+    }
+    
+    const decoded = jwt.verify(token, secret);
+    req.user = decoded;
     next();
   } catch (error) {
     res.status(400).json({ message: 'Invalid token.' });

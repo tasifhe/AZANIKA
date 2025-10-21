@@ -1,33 +1,47 @@
+import dotenv from 'dotenv';
+
+// Load environment variables FIRST (before any other imports that use them)
+dotenv.config();
+
 import express from 'express';
-import mongoose from 'mongoose';
 import authRoutes from './routes/auth';
 import productRoutes from './routes/products';
 import orderRoutes from './routes/orders';
-import { json, urlencoded } from 'body-parser';
 import cors from 'cors';
+import { errorHandler, notFoundHandler } from './middleware/errorHandler';
+import pool from './config/supabase';
 
 const app = express();
 
 // Middleware
-app.use(cors());
-app.use(json());
-app.use(urlencoded({ extended: true }));
+app.use(cors({
+  origin: '*', // Allow all origins for local network testing
+  credentials: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Health check route
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', message: 'Server is running' });
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 
-// Database connection
-const connectDB = async () => {
+// Error handling middleware (must be last)
+app.use(notFoundHandler);
+app.use(errorHandler);
+
+// Test database connection
+const testDBConnection = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/azanika', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('MongoDB connected');
+    const result = await pool.query('SELECT NOW()');
+    console.log('✅ Supabase PostgreSQL connected successfully at:', result.rows[0].now);
   } catch (error) {
-    console.error('MongoDB connection error:', error);
+    console.error('❌ Database connection error:', error);
     process.exit(1);
   }
 };
@@ -35,7 +49,19 @@ const connectDB = async () => {
 // Start server
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  connectDB();
+const server = app.listen(PORT, () => {
+  console.log(`🚀 Server is running on port ${PORT}`);
+  testDBConnection();
 });
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  server.close(async () => {
+    await pool.end();
+    console.log('Server closed');
+    process.exit(0);
+  });
+});
+
+export default app;
