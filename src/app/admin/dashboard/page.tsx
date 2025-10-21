@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminSidebar from '@/components/AdminSidebar';
+import { dashboardApi } from '@/lib/api';
 import { 
   DollarSign, 
   ShoppingBag, 
@@ -13,19 +14,43 @@ import {
   AlertTriangle
 } from 'lucide-react';
 
+interface DashboardStats {
+  revenue: number;
+  orders: number;
+  products: number;
+  lowStock: any[];
+  recentOrders: any[];
+}
+
 const AdminDashboard = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     // Check if admin is logged in
     const token = localStorage.getItem('adminToken');
     if (!token) {
       router.push('/admin/login');
-    } else {
-      setLoading(false);
+      return;
     }
+
+    // Fetch dashboard data
+    fetchDashboardData();
   }, [router]);
+
+  const fetchDashboardData = async () => {
+    setLoading(true);
+    const response = await dashboardApi.getStats();
+    
+    if (response.success && response.data) {
+      setStats(response.data as DashboardStats);
+    } else {
+      setError(response.error || 'Failed to load dashboard data');
+    }
+    setLoading(false);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
@@ -41,11 +66,33 @@ const AdminDashboard = () => {
     );
   }
 
-  // Mock data - will be replaced with real API calls
-  const stats = [
+  if (error) {
+    return (
+      <div className="flex min-h-screen bg-neutral-50">
+        <AdminSidebar onLogout={handleLogout} />
+        <div className="ml-64 flex-1 p-8">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-red-800">{error}</p>
+            <button 
+              onClick={fetchDashboardData}
+              className="mt-2 text-red-600 hover:text-red-700 font-medium"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!stats) {
+    return null;
+  }
+
+  const statsCards = [
     {
       name: 'Total Revenue',
-      value: '$12,426',
+      value: `$${stats.revenue.toFixed(2)}`,
       change: '+12.5%',
       trend: 'up',
       icon: DollarSign,
@@ -53,7 +100,7 @@ const AdminDashboard = () => {
     },
     {
       name: 'Orders',
-      value: '156',
+      value: stats.orders.toString(),
       change: '+8.2%',
       trend: 'up',
       icon: ShoppingBag,
@@ -61,34 +108,20 @@ const AdminDashboard = () => {
     },
     {
       name: 'Products',
-      value: '89',
+      value: stats.products.toString(),
       change: '+3',
       trend: 'up',
       icon: Package,
       color: 'bg-purple-500'
     },
     {
-      name: 'Customers',
-      value: '432',
-      change: '+18',
-      trend: 'up',
-      icon: Users,
+      name: 'Low Stock',
+      value: stats.lowStock.length.toString(),
+      change: 'Alert',
+      trend: 'down',
+      icon: AlertTriangle,
       color: 'bg-orange-500'
     }
-  ];
-
-  const recentOrders = [
-    { id: '#ORD-001', customer: 'Sarah Johnson', amount: '$89.99', status: 'Completed', date: '2025-10-21' },
-    { id: '#ORD-002', customer: 'Mike Smith', amount: '$149.99', status: 'Processing', date: '2025-10-21' },
-    { id: '#ORD-003', customer: 'Emma Wilson', amount: '$39.99', status: 'Pending', date: '2025-10-20' },
-    { id: '#ORD-004', customer: 'John Doe', amount: '$199.99', status: 'Shipped', date: '2025-10-20' },
-    { id: '#ORD-005', customer: 'Lisa Brown', amount: '$69.99', status: 'Completed', date: '2025-10-19' }
-  ];
-
-  const lowStockProducts = [
-    { name: 'Elegant Pearl Necklace', stock: 3, sku: 'PRD-001' },
-    { name: 'Vintage Leather Bag', stock: 5, sku: 'PRD-002' },
-    { name: 'Gold Chain Bracelet', stock: 2, sku: 'PRD-003' }
   ];
 
   const getStatusColor = (status: string) => {
@@ -114,7 +147,7 @@ const AdminDashboard = () => {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat) => {
+          {statsCards.map((stat) => {
             const Icon = stat.icon;
             const TrendIcon = stat.trend === 'up' ? TrendingUp : TrendingDown;
             
@@ -159,17 +192,17 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {recentOrders.map((order) => (
+                  {stats.recentOrders.map((order: any) => (
                     <tr key={order.id} className="border-b border-neutral-100 hover:bg-neutral-50">
-                      <td className="py-3 px-4 text-sm font-medium text-neutral-900">{order.id}</td>
-                      <td className="py-3 px-4 text-sm text-neutral-600">{order.customer}</td>
-                      <td className="py-3 px-4 text-sm font-medium text-neutral-900">{order.amount}</td>
+                      <td className="py-3 px-4 text-sm font-medium text-neutral-900">#{order.id}</td>
+                      <td className="py-3 px-4 text-sm text-neutral-600">{order.user_email || 'Guest'}</td>
+                      <td className="py-3 px-4 text-sm font-medium text-neutral-900">${order.total_amount}</td>
                       <td className="py-3 px-4">
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
                           {order.status}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-sm text-neutral-600">{order.date}</td>
+                      <td className="py-3 px-4 text-sm text-neutral-600">{new Date(order.created_at).toLocaleDateString()}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -184,8 +217,8 @@ const AdminDashboard = () => {
               <h2 className="text-xl font-bold text-neutral-900">Low Stock Alert</h2>
             </div>
             <div className="space-y-4">
-              {lowStockProducts.map((product) => (
-                <div key={product.sku} className="border-b border-neutral-100 pb-4 last:border-0 last:pb-0">
+              {stats.lowStock.map((product: any) => (
+                <div key={product.id} className="border-b border-neutral-100 pb-4 last:border-0 last:pb-0">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-medium text-neutral-900 text-sm">{product.name}</h3>
                     <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold">
