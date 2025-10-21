@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminSidebar from '@/components/AdminSidebar';
+import { productsApi } from '@/lib/api';
 import { 
   Search, 
   AlertTriangle,
@@ -11,19 +12,19 @@ import {
   Plus,
   Package,
   TrendingUp,
-  TrendingDown
+  TrendingDown,
+  X
 } from 'lucide-react';
 
-interface InventoryItem {
-  id: string;
+interface Product {
+  id: number;
   sku: string;
   name: string;
   category: string;
-  currentStock: number;
-  minStock: number;
-  maxStock: number;
-  price: number;
-  lastRestocked: string;
+  stock: number;
+  price: string;
+  description: string;
+  image_url?: string;
 }
 
 const InventoryPage = () => {
@@ -31,15 +32,35 @@ const InventoryPage = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    price: '',
+    stock: '',
+    category: '',
+    image_url: '',
+    sku: ''
+  });
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     if (!token) {
       router.push('/admin/login');
-    } else {
-      setLoading(false);
+      return;
     }
+    fetchProducts();
   }, [router]);
+
+  const fetchProducts = async () => {
+    setLoading(true);
+    const response = await productsApi.getAll();
+    if (response.success && response.data) {
+      setProducts(Array.isArray(response.data) ? response.data : []);
+    }
+    setLoading(false);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
@@ -47,69 +68,54 @@ const InventoryPage = () => {
     router.push('/admin/login');
   };
 
-  // Mock inventory data
-  const inventory: InventoryItem[] = [
-    {
-      id: '1',
-      sku: 'PRD-001',
-      name: 'Elegant Pearl Statement Necklace',
-      category: 'Jewelry',
-      currentStock: 3,
-      minStock: 5,
-      maxStock: 50,
-      price: 89.99,
-      lastRestocked: '2025-10-15'
-    },
-    {
-      id: '2',
-      sku: 'PRD-002',
-      name: 'Vintage Leather Crossbody Bag',
-      category: 'Bags',
-      currentStock: 15,
-      minStock: 10,
-      maxStock: 40,
-      price: 149.99,
-      lastRestocked: '2025-10-18'
-    },
-    {
-      id: '3',
-      sku: 'PRD-003',
-      name: 'Delicate Gold Chain Bracelet',
-      category: 'Jewelry',
-      currentStock: 2,
-      minStock: 8,
-      maxStock: 60,
-      price: 39.99,
-      lastRestocked: '2025-10-10'
-    },
-    {
-      id: '4',
-      sku: 'PRD-004',
-      name: 'Designer Sunglasses',
-      category: 'Sunglasses',
-      currentStock: 25,
-      minStock: 15,
-      maxStock: 50,
-      price: 129.99,
-      lastRestocked: '2025-10-20'
-    },
-    {
-      id: '5',
-      sku: 'PRD-005',
-      name: 'Silk Scarf Collection',
-      category: 'Scarves',
-      currentStock: 8,
-      minStock: 10,
-      maxStock: 30,
-      price: 69.99,
-      lastRestocked: '2025-10-17'
-    }
-  ];
-
-  const getStockStatus = (item: InventoryItem) => {
-    if (item.currentStock <= item.minStock) return 'critical';
-    if (item.currentStock <= item.minStock * 1.5) return 'low';
+  const getStockStatus = (product: Product) => {
+    const stock = product.stock || 0;
+    if (stock === 0) return 'critical';
+    if (stock <= 5) return 'low';
     return 'normal';
+  };
+
+  const handleSaveProduct = async () => {
+    try {
+      if (editingProduct) {
+        await productsApi.update(String(editingProduct.id), formData);
+      } else {
+        await productsApi.create(formData);
+      }
+      fetchProducts();
+      setShowAddModal(false);
+      setEditingProduct(null);
+      setFormData({ name: '', description: '', price: '', category: '', image_url: '', stock: '', sku: '' });
+    } catch (error) {
+      console.error('Error saving product:', error);
+      alert('Failed to save product');
+    }
+  };
+
+  const handleEditProduct = (product: Product) => {
+    setEditingProduct(product);
+    setFormData({
+      name: product.name,
+      description: product.description || '',
+      price: String(product.price),
+      category: product.category,
+      image_url: product.image_url || '',
+      stock: String(product.stock || 0),
+      sku: product.sku || ''
+    });
+    setShowAddModal(true);
+  };
+
+  const handleDeleteProduct = async (id: number) => {
+    if (confirm('Are you sure you want to delete this product?')) {
+      try {
+        await productsApi.delete(String(id));
+        fetchProducts();
+      } catch (error) {
+        console.error('Error deleting product:', error);
+        alert('Failed to delete product');
+      }
+    }
   };
 
   const getStockColor = (status: string) => {
@@ -121,15 +127,14 @@ const InventoryPage = () => {
     }
   };
 
-  const filteredInventory = inventory.filter(item =>
+  const filteredInventory = products.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.sku.toLowerCase().includes(searchQuery.toLowerCase()) ||
     item.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const criticalStock = inventory.filter(item => getStockStatus(item) === 'critical').length;
-  const lowStock = inventory.filter(item => getStockStatus(item) === 'low').length;
-  const totalValue = inventory.reduce((sum, item) => sum + (item.currentStock * item.price), 0);
+  const criticalStock = products.filter(item => getStockStatus(item) === 'critical').length;
+  const lowStock = products.filter(item => getStockStatus(item) === 'low').length;
+  const totalValue = products.reduce((sum, item) => sum + ((item.stock || 0) * Number(item.price)), 0);
 
   if (loading) {
     return (
@@ -167,7 +172,7 @@ const InventoryPage = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-neutral-600">Total Products</p>
-                <p className="text-2xl font-bold text-neutral-900">{inventory.length}</p>
+                <p className="text-2xl font-bold text-neutral-900">{products.length}</p>
               </div>
               <Package className="text-neutral-400" size={32} />
             </div>
@@ -221,11 +226,10 @@ const InventoryPage = () => {
             <table className="w-full">
               <thead className="bg-neutral-50">
                 <tr>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-neutral-700">SKU</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-neutral-700">Product ID</th>
                   <th className="text-left py-4 px-6 text-sm font-semibold text-neutral-700">Product Name</th>
                   <th className="text-left py-4 px-6 text-sm font-semibold text-neutral-700">Category</th>
                   <th className="text-left py-4 px-6 text-sm font-semibold text-neutral-700">Current Stock</th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-neutral-700">Min/Max</th>
                   <th className="text-left py-4 px-6 text-sm font-semibold text-neutral-700">Status</th>
                   <th className="text-left py-4 px-6 text-sm font-semibold text-neutral-700">Price</th>
                   <th className="text-left py-4 px-6 text-sm font-semibold text-neutral-700">Actions</th>
@@ -236,30 +240,32 @@ const InventoryPage = () => {
                   const status = getStockStatus(item);
                   return (
                     <tr key={item.id} className="border-t border-neutral-100 hover:bg-neutral-50">
-                      <td className="py-4 px-6 font-medium text-neutral-900">{item.sku}</td>
+                      <td className="py-4 px-6 font-medium text-neutral-900">#{item.id}</td>
                       <td className="py-4 px-6">
                         <p className="font-medium text-neutral-900">{item.name}</p>
-                        <p className="text-xs text-neutral-500">Last restocked: {item.lastRestocked}</p>
                       </td>
                       <td className="py-4 px-6 text-neutral-600">{item.category}</td>
                       <td className="py-4 px-6">
-                        <p className="font-bold text-neutral-900">{item.currentStock}</p>
-                      </td>
-                      <td className="py-4 px-6 text-sm text-neutral-600">
-                        {item.minStock} / {item.maxStock}
+                        <p className="font-bold text-neutral-900">{item.stock || 0}</p>
                       </td>
                       <td className="py-4 px-6">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStockColor(status)}`}>
-                          {status === 'critical' ? 'Critical' : status === 'low' ? 'Low Stock' : 'Normal'}
+                          {status === 'critical' ? 'Out of Stock' : status === 'low' ? 'Low Stock' : 'In Stock'}
                         </span>
                       </td>
                       <td className="py-4 px-6 font-medium text-neutral-900">${item.price}</td>
                       <td className="py-4 px-6">
                         <div className="flex items-center space-x-2">
-                          <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                          <button 
+                            onClick={() => handleEditProduct(item)}
+                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          >
                             <Edit size={16} />
                           </button>
-                          <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                          <button 
+                            onClick={() => handleDeleteProduct(item.id)}
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          >
                             <Trash2 size={16} />
                           </button>
                         </div>
@@ -278,6 +284,130 @@ const InventoryPage = () => {
             </div>
           )}
         </div>
+
+        {/* Add/Edit Product Modal */}
+        {showAddModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-neutral-900">
+                  {editingProduct ? 'Edit Product' : 'Add New Product'}
+                </h2>
+                <button
+                  onClick={() => {
+                    setShowAddModal(false);
+                    setEditingProduct(null);
+                    setFormData({ name: '', description: '', price: '', category: '', image_url: '', stock: '', sku: '' });
+                  }}
+                  className="text-neutral-400 hover:text-neutral-600"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Product Name
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    placeholder="Enter product name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Description
+                  </label>
+                  <textarea
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    rows={3}
+                    placeholder="Enter product description"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-2">
+                      Price ($)
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.price}
+                      onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                      className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="0.00"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-2">
+                      Stock Quantity
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.stock}
+                      onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+                      className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Category
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.category}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    placeholder="e.g., Jewelry, Bags, Accessories"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Image URL
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.image_url}
+                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                    className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    placeholder="https://example.com/image.jpg"
+                  />
+                </div>
+
+                <div className="flex justify-end space-x-3 pt-4">
+                  <button
+                    onClick={() => {
+                      setShowAddModal(false);
+                      setEditingProduct(null);
+                      setFormData({ name: '', description: '', price: '', category: '', image_url: '', stock: '', sku: '' });
+                    }}
+                    className="px-6 py-2 border border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSaveProduct}
+                    className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                  >
+                    {editingProduct ? 'Update Product' : 'Add Product'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
