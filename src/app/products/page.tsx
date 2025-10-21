@@ -1,13 +1,25 @@
 'use client';
 
-import React, { useState, useMemo, Suspense } from 'react';
+import React, { useState, useMemo, Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Filter, Search, Grid, List, SlidersHorizontal } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
-import { mockProducts, mockCategories } from '@/lib/data';
+import { productsApi } from '@/lib/api';
+
+interface Product {
+  id: number;
+  name: string;
+  description?: string;
+  price: number;
+  category: string;
+  image_url?: string;
+  stock?: number;
+  rating?: number;
+  tags?: string[];
+}
 
 const ProductsContent = () => {
   const searchParams = useSearchParams();
@@ -16,22 +28,45 @@ const ProductsContent = () => {
   
   const [searchQuery, setSearchQuery] = useState(searchFromUrl);
   const [selectedCategory, setSelectedCategory] = useState(categoryFilter);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 50000]);
   const [sortBy, setSortBy] = useState('featured');
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await productsApi.getAll();
+      if (response.success && response.data) {
+        setProducts(response.data as Product[]);
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get unique categories from products
+  const categories = Array.from(new Set(products.map(p => p.category)));
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = mockProducts.filter(product => {
+    let filtered = products.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           product.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+                           (product.description || '').toLowerCase().includes(searchQuery.toLowerCase());
       
       const matchesCategory = !selectedCategory || product.category === selectedCategory;
       
       const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
       
-      return matchesSearch && matchesCategory && matchesPrice && product.inStock;
+      const inStock = (product.stock || 0) > 0;
+      
+      return matchesSearch && matchesCategory && matchesPrice && inStock;
     });
 
     // Sort products
@@ -43,20 +78,20 @@ const ProductsContent = () => {
         filtered.sort((a, b) => b.price - a.price);
         break;
       case 'rating':
-        filtered.sort((a, b) => b.rating - a.rating);
+        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
         break;
       case 'newest':
-        // Assuming newer products have higher IDs
-        filtered.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+        filtered.sort((a, b) => b.id - a.id);
         break;
       case 'featured':
       default:
-        filtered.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+        // Keep original order or sort by ID descending
+        filtered.sort((a, b) => b.id - a.id);
         break;
     }
 
     return filtered;
-  }, [searchQuery, selectedCategory, priceRange, sortBy]);
+  }, [products, searchQuery, selectedCategory, priceRange, sortBy]);
 
   const clearFilters = () => {
     setSearchQuery('');
@@ -86,7 +121,7 @@ const ProductsContent = () => {
           
           <h1 className="text-3xl font-bold text-neutral-900">
             {selectedCategory 
-              ? `${mockCategories.find(c => c.slug === selectedCategory)?.name || 'Category'} Collection`
+              ? `${selectedCategory} Collection`
               : 'All Products'
             }
           </h1>
@@ -142,17 +177,17 @@ const ProductsContent = () => {
                   >
                     All Categories
                   </button>
-                  {mockCategories.map((category) => (
+                  {categories.map((category) => (
                     <button
-                      key={category.id}
-                      onClick={() => setSelectedCategory(category.slug)}
+                      key={category}
+                      onClick={() => setSelectedCategory(category)}
                       className={`block w-full text-left px-3 py-2 rounded-md text-sm ${
-                        selectedCategory === category.slug
+                        selectedCategory === category
                           ? 'bg-primary-100 text-primary-700 font-medium'
                           : 'text-neutral-700 hover:bg-neutral-100'
                       }`}
                     >
-                      {category.name} ({category.productCount})
+                      {category}
                     </button>
                   ))}
                 </div>
@@ -167,14 +202,14 @@ const ProductsContent = () => {
                   <input
                     type="range"
                     min="0"
-                    max="500"
+                    max="50000"
                     value={priceRange[1]}
                     onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
                     className="w-full"
                   />
                   <div className="flex justify-between text-sm text-neutral-600">
-                    <span>${priceRange[0]}</span>
-                    <span>${priceRange[1]}</span>
+                    <span>৳{priceRange[0]}</span>
+                    <span>৳{priceRange[1]}</span>
                   </div>
                 </div>
               </div>

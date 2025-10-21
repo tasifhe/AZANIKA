@@ -92,7 +92,7 @@ const AdminDashboard = () => {
   const statsCards = [
     {
       name: 'Total Revenue',
-      value: `$${stats.revenue.toFixed(2)}`,
+      value: `৳${stats.revenue.toFixed(2)}`,
       change: '+12.5%',
       trend: 'up',
       icon: DollarSign,
@@ -196,7 +196,7 @@ const AdminDashboard = () => {
                     <tr key={order.id} className="border-b border-neutral-100 hover:bg-neutral-50">
                       <td className="py-3 px-4 text-sm font-medium text-neutral-900">#{order.id}</td>
                       <td className="py-3 px-4 text-sm text-neutral-600">{order.user_email || 'Guest'}</td>
-                      <td className="py-3 px-4 text-sm font-medium text-neutral-900">${order.total_amount}</td>
+                      <td className="py-3 px-4 text-sm font-medium text-neutral-900">৳{order.total_amount}</td>
                       <td className="py-3 px-4">
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
                           {order.status}

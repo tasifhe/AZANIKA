@@ -57,7 +57,7 @@ const AdminAnalyticsPage = () => {
   const metrics = [
     {
       name: 'Total Revenue',
-      value: `$${stats.revenue.toFixed(2)}`,
+      value: `৳${stats.revenue.toFixed(2)}`,
       change: '+15.3%',
       trend: 'up',
       icon: DollarSign,
@@ -81,7 +81,7 @@ const AdminAnalyticsPage = () => {
     },
     {
       name: 'Avg Order Value',
-      value: `$${stats.orders > 0 ? (stats.revenue / stats.orders).toFixed(2) : '0.00'}`,
+      value: `৳${stats.orders > 0 ? (stats.revenue / stats.orders).toFixed(2) : '0.00'}`,
       change: '+5.4%',
       trend: 'up',
       icon: TrendingUp,

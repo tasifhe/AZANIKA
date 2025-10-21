@@ -199,7 +199,7 @@ const InventoryPage = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-green-600">Total Value</p>
-                <p className="text-2xl font-bold text-green-900">${totalValue.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-green-900">৳{totalValue.toFixed(2)}</p>
               </div>
               <TrendingUp className="text-green-500" size={32} />
             </div>
@@ -253,7 +253,7 @@ const InventoryPage = () => {
                           {status === 'critical' ? 'Out of Stock' : status === 'low' ? 'Low Stock' : 'In Stock'}
                         </span>
                       </td>
-                      <td className="py-4 px-6 font-medium text-neutral-900">${item.price}</td>
+                      <td className="py-4 px-6 font-medium text-neutral-900">৳{item.price}</td>
                       <td className="py-4 px-6">
                         <div className="flex items-center space-x-2">
                           <button 

@@ -4,11 +4,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Heart, ShoppingCart, Star } from 'lucide-react';
-import { Product } from '@/types';
 import { useCart } from '@/lib/cart-context';
 
 interface ProductCardProps {
-  product: Product;
+  product: any;
   className?: string;
 }
 
@@ -27,6 +26,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
     setIsWishlisted(!isWishlisted);
   };
 
+  // Support both API format (image_url) and mock format (images array)
+  const productImage = product.image_url || (product.images && product.images[0]) || '/placeholder.jpg';
+  const inStock = product.stock > 0 || product.inStock;
+  
   const discountPercent = product.originalPrice 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
@@ -55,11 +58,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
         {/* Image Container */}
         <div 
           className="relative h-64 overflow-hidden bg-gray-100"
-          onMouseEnter={() => product.images.length > 1 && setCurrentImageIndex(1)}
+          onMouseEnter={() => product.images && product.images.length > 1 && setCurrentImageIndex(1)}
           onMouseLeave={() => setCurrentImageIndex(0)}
         >
           <Image
-            src={product.images[currentImageIndex] || product.images[0]}
+            src={productImage}
             alt={product.name}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -90,24 +93,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
                   key={star}
                   size={14}
                   className={
-                    star <= product.rating
+                    star <= (product.rating || 0)
                       ? 'text-yellow-400 fill-current'
                       : 'text-gray-300'
                   }
                 />
               ))}
             </div>
-            <span className="text-xs text-neutral-500">({product.reviewCount})</span>
+            <span className="text-xs text-neutral-500">({product.reviewCount || 0})</span>
           </div>
 
           {/* Price */}
           <div className="flex items-center space-x-2 mb-2">
             <span className="text-lg font-bold text-neutral-900">
-              ${product.price.toFixed(2)}
+              ৳{typeof product.price === 'number' ? product.price.toFixed(2) : product.price}
             </span>
             {product.originalPrice && (
               <span className="text-sm text-neutral-500 line-through">
-                ${product.originalPrice.toFixed(2)}
+                ৳{product.originalPrice.toFixed(2)}
               </span>
             )}
           </div>
@@ -117,7 +120,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
             <div className="flex items-center space-x-1">
               <span className="text-xs text-gray-500">Colors:</span>
               <div className="flex space-x-1">
-                {product.colors.slice(0, 3).map((color, index) => (
+                {product.colors.slice(0, 3).map((color: string, index: number) => (
                   <div
                     key={index}
                     className="w-3 h-3 rounded-full border border-gray-300"
@@ -145,7 +148,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
 
           {/* Stock Status */}
           <div className="mt-2">
-            {product.inStock ? (
+            {inStock ? (
               <span className="text-xs text-green-600 font-medium">In Stock</span>
             ) : (
               <span className="text-xs text-red-600 font-medium">Out of Stock</span>

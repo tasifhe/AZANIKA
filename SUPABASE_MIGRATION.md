@@ -145,7 +145,7 @@ INSERT INTO products (name, description, price, original_price, category, subcat
 2. Scroll to **Connection string**
 3. Select **Connection pooling** tab
 4. Copy the connection string
-5. Replace `[YOUR-PASSWORD]` with your database password
+5. Replace `cin>>Pass69;` with your database password
 
 Example:
 ```

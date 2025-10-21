@@ -122,7 +122,7 @@ const AdminCustomersPage = () => {
               <div>
                 <p className="text-sm text-neutral-600 mb-1">Total Revenue</p>
                 <p className="text-2xl font-bold text-neutral-900">
-                  ${customers.reduce((sum, c) => sum + c.totalSpent, 0).toFixed(2)}
+                  ৳{customers.reduce((sum, c) => sum + c.totalSpent, 0).toFixed(2)}
                 </p>
               </div>
               <div className="bg-purple-100 p-3 rounded-lg">
@@ -175,7 +175,7 @@ const AdminCustomersPage = () => {
                   </td>
                   <td className="py-4 px-6 text-sm text-neutral-600">{customer.totalOrders} orders</td>
                   <td className="py-4 px-6 text-sm font-medium text-neutral-900">
-                    ${customer.totalSpent.toFixed(2)}
+                    ৳{customer.totalSpent.toFixed(2)}
                   </td>
                   <td className="py-4 px-6 text-sm text-neutral-600">
                     {new Date(customer.lastOrder).toLocaleDateString()}
