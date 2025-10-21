@@ -14,6 +14,9 @@ interface Product {
   stock: number;
   category: string;
   image_url?: string;
+  images?: string[];
+  colors?: string[];
+  sizes?: string[];
   sku: string;
 }
 
@@ -31,6 +34,9 @@ const AdminProductsPage = () => {
     stock: '',
     category: '',
     image_url: '',
+    images: '',
+    colors: '',
+    sizes: '',
     sku: ''
   });
 
@@ -60,11 +66,20 @@ const AdminProductsPage = () => {
 
   const handleAddProduct = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await productsApi.create(formData);
+    
+    // Format the data for API
+    const productData = {
+      ...formData,
+      images: formData.images ? formData.images.split(',').map(s => s.trim()).filter(Boolean) : [],
+      colors: formData.colors ? formData.colors.split(',').map(s => s.trim()).filter(Boolean) : [],
+      sizes: formData.sizes ? formData.sizes.split(',').map(s => s.trim()).filter(Boolean) : [],
+    };
+    
+    const response = await productsApi.create(productData);
     if (response.success) {
       alert('Product added successfully!');
       setShowAddModal(false);
-      setFormData({ name: '', description: '', price: '', stock: '', category: '', image_url: '', sku: '' });
+      setFormData({ name: '', description: '', price: '', stock: '', category: '', image_url: '', images: '', colors: '', sizes: '', sku: '' });
       fetchProducts();
     } else {
       alert(`Error: ${response.error}`);
@@ -75,11 +90,19 @@ const AdminProductsPage = () => {
     e.preventDefault();
     if (!editingProduct) return;
     
-    const response = await productsApi.update(editingProduct.id.toString(), formData);
+    // Format the data for API
+    const productData = {
+      ...formData,
+      images: formData.images ? formData.images.split(',').map(s => s.trim()).filter(Boolean) : [],
+      colors: formData.colors ? formData.colors.split(',').map(s => s.trim()).filter(Boolean) : [],
+      sizes: formData.sizes ? formData.sizes.split(',').map(s => s.trim()).filter(Boolean) : [],
+    };
+    
+    const response = await productsApi.update(editingProduct.id.toString(), productData);
     if (response.success) {
       alert('Product updated successfully!');
       setEditingProduct(null);
-      setFormData({ name: '', description: '', price: '', stock: '', category: '', image_url: '', sku: '' });
+      setFormData({ name: '', description: '', price: '', stock: '', category: '', image_url: '', images: '', colors: '', sizes: '', sku: '' });
       fetchProducts();
     } else {
       alert(`Error: ${response.error}`);
@@ -107,6 +130,9 @@ const AdminProductsPage = () => {
       stock: product.stock.toString(),
       category: product.category,
       image_url: product.image_url || '',
+      images: Array.isArray(product.images) ? product.images.join(', ') : '',
+      colors: Array.isArray(product.colors) ? product.colors.join(', ') : '',
+      sizes: Array.isArray(product.sizes) ? product.sizes.join(', ') : '',
       sku: product.sku
     });
   };
@@ -296,13 +322,47 @@ const AdminProductsPage = () => {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">Image URL (optional)</label>
+                    <label className="block text-sm font-medium text-neutral-700 mb-2">Main Image URL</label>
                     <input
                       type="url"
                       value={formData.image_url}
                       onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
                       className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      placeholder="https://example.com/image.jpg"
                     />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-2">Additional Images (comma-separated URLs)</label>
+                    <textarea
+                      value={formData.images}
+                      onChange={(e) => setFormData({ ...formData, images: e.target.value })}
+                      className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      placeholder="https://example.com/img1.jpg, https://example.com/img2.jpg"
+                      rows={2}
+                    />
+                    <p className="text-xs text-neutral-500 mt-1">Separate multiple image URLs with commas</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-700 mb-2">Colors (comma-separated)</label>
+                      <input
+                        type="text"
+                        value={formData.colors}
+                        onChange={(e) => setFormData({ ...formData, colors: e.target.value })}
+                        className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                        placeholder="Red, Blue, Black"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-700 mb-2">Sizes (comma-separated)</label>
+                      <input
+                        type="text"
+                        value={formData.sizes}
+                        onChange={(e) => setFormData({ ...formData, sizes: e.target.value })}
+                        className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                        placeholder="S, M, L, XL"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="mt-6 flex space-x-4">
@@ -317,7 +377,7 @@ const AdminProductsPage = () => {
                     onClick={() => {
                       setShowAddModal(false);
                       setEditingProduct(null);
-                      setFormData({ name: '', description: '', price: '', stock: '', category: '', image_url: '', sku: '' });
+                      setFormData({ name: '', description: '', price: '', stock: '', category: '', image_url: '', images: '', colors: '', sizes: '', sku: '' });
                     }}
                     className="flex-1 bg-neutral-200 text-neutral-700 px-6 py-3 rounded-lg font-medium hover:bg-neutral-300"
                   >

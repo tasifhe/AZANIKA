@@ -18,9 +18,12 @@ interface Product {
   price: number;
   category: string;
   image_url?: string;
+  images?: string[];
   stock?: number;
   rating?: number;
   sku?: string;
+  colors?: string[];
+  sizes?: string[];
 }
 
 const ProductDetailPage = () => {
@@ -107,8 +110,17 @@ const ProductDetailPage = () => {
     addToCart(product as any, quantity, selectedColor, selectedSize);
   };
 
-  const productImage = product.image_url || '/placeholder.jpg';
+  const productImages = product.images && product.images.length > 0 
+    ? product.images 
+    : product.image_url 
+      ? [product.image_url]
+      : ['/placeholder.jpg'];
+  
+  const productImage = productImages[selectedImageIndex];
   const inStock = (product.stock || 0) > 0;
+
+  const productColors = product.colors || [];
+  const productSizes = product.sizes || [];
 
   return (
     <div className="min-h-screen bg-white">
@@ -141,6 +153,28 @@ const ProductDetailPage = () => {
                 priority
               />
             </div>
+            
+            {/* Image Thumbnails */}
+            {productImages.length > 1 && (
+              <div className="grid grid-cols-4 gap-4">
+                {productImages.map((img: string, index: number) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImageIndex(index)}
+                    className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
+                      selectedImageIndex === index ? 'border-primary-600 ring-2 ring-primary-200' : 'border-transparent hover:border-neutral-300'
+                    }`}
+                  >
+                    <Image
+                      src={img}
+                      alt={`${product.name} ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Product Info */}
@@ -194,6 +228,50 @@ const ProductDetailPage = () => {
                 </div>
               )}
 
+              {/* Color Selection */}
+              {productColors.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="font-medium text-neutral-900 mb-3">Select Color</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {productColors.map((color: string) => (
+                      <button
+                        key={color}
+                        onClick={() => setSelectedColor(color)}
+                        className={`px-4 py-2 border-2 rounded-lg font-medium transition-all ${
+                          selectedColor === color
+                            ? 'border-primary-600 bg-primary-50 text-primary-700'
+                            : 'border-neutral-300 hover:border-primary-300 text-neutral-700'
+                        }`}
+                      >
+                        {color}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Size Selection */}
+              {productSizes.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="font-medium text-neutral-900 mb-3">Select Size</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {productSizes.map((size: string) => (
+                      <button
+                        key={size}
+                        onClick={() => setSelectedSize(size)}
+                        className={`px-4 py-2 border-2 rounded-lg font-medium transition-all ${
+                          selectedSize === size
+                            ? 'border-primary-600 bg-primary-50 text-primary-700'
+                            : 'border-neutral-300 hover:border-primary-300 text-neutral-700'
+                        }`}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Quantity */}
               <div className="mb-8">
                 <h3 className="font-medium text-neutral-900 mb-3">Quantity</h3>
@@ -244,15 +322,15 @@ const ProductDetailPage = () => {
               <div className="border-t pt-8 space-y-4">
                 <div className="flex items-center space-x-3">
                   <Truck className="text-primary-600" size={20} />
-                  <span className="text-neutral-700">Free shipping on orders over $100</span>
+                  <span className="text-neutral-700">Free shipping on orders over ৳5,000</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Shield className="text-primary-600" size={20} />
-                  <span className="text-neutral-700">Secure payment guaranteed</span>
+                  <span className="text-neutral-700">Secure payment with SSL encryption</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <RefreshCw className="text-primary-600" size={20} />
-                  <span className="text-neutral-700">30-day return policy</span>
+                  <span className="text-neutral-700">7-day easy return & exchange</span>
                 </div>
               </div>
             </div>
