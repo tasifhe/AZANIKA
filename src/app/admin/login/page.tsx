@@ -53,8 +53,8 @@ const AdminLoginPage = () => {
         <div className="text-center">
           <div className="relative w-20 h-20 mx-auto mb-4">
             <Image
-              src="/AZANIKA_LOGO.png"
-              alt="AZANIKA Logo"
+              src="https://iili.io/KU7rz92.png"
+              alt="AZANIKA M"
               fill
               className="object-contain"
             />
