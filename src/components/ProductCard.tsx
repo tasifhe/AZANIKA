@@ -108,7 +108,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
 
           {/* Price */}
           <div className="flex items-center space-x-1 md:space-x-2 mb-2">
-            <span className="text-sm md:text-lg font-bold text-primary-700">
+            <span className="text-sm md:text-lg font-bold text-blush-600">
               ৳{typeof product.price === 'number' ? product.price.toFixed(0) : product.price}
             </span>
             {product.originalPrice && (

@@ -75,36 +75,36 @@ const HomePage = () => {
       <HeroSlideshow />
 
       {/* Features Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-cream-50">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-blush-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-primary-100 to-primary-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
-                <Truck className="text-primary-700" size={24} />
+              <div className="bg-gradient-to-br from-blush-100 to-blush-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
+                <Truck className="text-blush-600" size={24} />
               </div>
               <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Free Shipping</h3>
               <p className="text-neutral-600 text-xs md:text-sm">Orders over ৳5,000</p>
             </div>
             
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-emerald-100 to-emerald-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
-                <Shield className="text-emerald-700" size={24} />
+              <div className="bg-gradient-to-br from-blush-200 to-blush-100 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
+                <Shield className="text-blush-700" size={24} />
               </div>
               <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Secure Payment</h3>
               <p className="text-neutral-600 text-xs md:text-sm">SSL encryption</p>
             </div>
             
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-blue-100 to-blue-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
-                <RefreshCw className="text-blue-700" size={24} />
+              <div className="bg-gradient-to-br from-blush-100 to-blush-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
+                <RefreshCw className="text-blush-600" size={24} />
               </div>
               <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Easy Returns</h3>
               <p className="text-neutral-600 text-xs md:text-sm">7-day returns</p>
             </div>
             
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-amber-100 to-amber-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
-                <Award className="text-amber-700" size={24} />
+              <div className="bg-gradient-to-br from-blush-200 to-blush-100 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
+                <Award className="text-blush-700" size={24} />
               </div>
               <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Premium Quality</h3>
               <p className="text-neutral-600 text-xs md:text-sm">Luxury items</p>
@@ -117,7 +117,7 @@ const HomePage = () => {
       <section className="py-12 md:py-20 bg-neutral-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
-            <div className="inline-flex items-center space-x-2 bg-primary-100 text-primary-700 px-3 md:px-4 py-2 rounded-full mb-3 md:mb-4">
+            <div className="inline-flex items-center space-x-2 bg-blush-100 text-blush-700 px-3 md:px-4 py-2 rounded-full mb-3 md:mb-4">
               <Sparkles size={18} />
               <span className="font-semibold text-sm md:text-base">Shop by Category</span>
             </div>
@@ -166,7 +166,7 @@ const HomePage = () => {
       <section className="py-12 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
-            <div className="inline-flex items-center space-x-2 bg-amber-100 text-amber-700 px-3 md:px-4 py-2 rounded-full mb-3 md:mb-4">
+            <div className="inline-flex items-center space-x-2 bg-blush-100 text-blush-700 px-3 md:px-4 py-2 rounded-full mb-3 md:mb-4">
               <TrendingUp size={18} />
               <span className="font-semibold text-sm md:text-base">Trending Now</span>
             </div>

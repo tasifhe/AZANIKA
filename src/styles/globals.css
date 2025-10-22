@@ -74,11 +74,11 @@ body {
 
 /* Gradient backgrounds */
 .gradient-bg {
-  background: linear-gradient(135deg, #fef5ff 0%, #fff5f7 25%, #fffbf5 100%);
+  background: linear-gradient(135deg, #fef9f8 0%, #fef3f2 25%, #fdfaf8 100%);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #cc2ed4, #e750ee, #f47df8);
+  background: linear-gradient(135deg, #F6B6B1, #F4A7A3, #e89088);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -86,20 +86,20 @@ body {
 
 /* Premium gradient overlays */
 .premium-gradient {
-  background: linear-gradient(135deg, #cc2ed4 0%, #e750ee 50%, #f47df8 100%);
+  background: linear-gradient(135deg, #F6B6B1 0%, #F4A7A3 50%, #FADCD9 100%);
 }
 
 .elegant-shadow {
-  box-shadow: 0 20px 40px rgba(231, 80, 238, 0.2), 0 10px 20px rgba(204, 46, 212, 0.15);
+  box-shadow: 0 10px 25px rgba(246, 182, 177, 0.15), 0 5px 10px rgba(244, 167, 163, 0.1);
 }
 
 .luxury-border {
-  border: 1px solid rgba(231, 80, 238, 0.3);
+  border: 1px solid rgba(246, 182, 177, 0.3);
 }
 
 /* Premium gold accent gradient */
 .gold-gradient {
-  background: linear-gradient(135deg, #ff9a3d 0%, #f07818 50%, #c85e0f 100%);
+  background: linear-gradient(135deg, #e89b8a 0%, #db7b68 50%, #c96050 100%);
 }
 
 /* Mobile optimizations */
