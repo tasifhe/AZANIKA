@@ -46,11 +46,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold">Categories</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/category/jewelry" className="text-gray-300 hover:text-white transition-colors">Jewelry</Link></li>
-              <li><Link href="/category/bags" className="text-gray-300 hover:text-white transition-colors">Handbags</Link></li>
-              <li><Link href="/category/scarves" className="text-gray-300 hover:text-white transition-colors">Scarves</Link></li>
-              <li><Link href="/category/sunglasses" className="text-gray-300 hover:text-white transition-colors">Sunglasses</Link></li>
-              <li><Link href="/sale" className="text-gray-300 hover:text-white transition-colors">Sale Items</Link></li>
+              <li><Link href="/category/Jewelry" className="text-gray-300 hover:text-white transition-colors">💎 Jewelry</Link></li>
+              <li><Link href="/category/Bags" className="text-gray-300 hover:text-white transition-colors">👜 Handbags</Link></li>
+              <li><Link href="/category/Accessories" className="text-gray-300 hover:text-white transition-colors">✨ Accessories</Link></li>
+              <li><Link href="/category/scarves" className="text-gray-300 hover:text-white transition-colors">🧣 Scarves</Link></li>
+              <li><Link href="/category/sunglasses" className="text-gray-300 hover:text-white transition-colors">🕶️ Sunglasses</Link></li>
             </ul>
           </div>
 
@@ -60,15 +60,15 @@ const Footer = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-2">
                 <Mail size={16} className="text-primary-400" />
-                <span className="text-gray-300">info@azanika.com</span>
+                <span className="text-gray-300">contact@azanika.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone size={16} className="text-primary-400" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
+                <span className="text-gray-300">+880 1234-567890</span>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin size={16} className="text-primary-400" />
-                <span className="text-gray-300">Fashion District, NY</span>
+                <span className="text-gray-300">Dhaka, Bangladesh</span>
               </div>
             </div>
 

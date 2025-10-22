@@ -35,10 +35,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
     : 0;
 
   return (
-    <div className={`group relative bg-white rounded-lg shadow-md overflow-hidden card-hover ${className}`}>
+    <div className={`group relative bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 ${className}`}>
       {/* Discount Badge */}
       {discountPercent > 0 && (
-        <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-bold rounded z-10">
+        <div className="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 text-xs font-bold rounded-full z-10 shadow-lg">
           -{discountPercent}%
         </div>
       )}
@@ -46,10 +46,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
       {/* Wishlist Button */}
       <button
         onClick={handleWishlist}
-        className="absolute top-2 right-2 p-2 bg-white/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10"
+        className="absolute top-3 right-3 p-2.5 bg-white/90 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all z-10 hover:scale-110 shadow-lg"
       >
         <Heart 
-          size={16} 
+          size={18} 
           className={`${isWishlisted ? 'text-red-500 fill-current' : 'text-gray-600'}`}
         />
       </button>
@@ -57,7 +57,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
       <Link href={`/product/${product.id}`}>
         {/* Image Container */}
         <div 
-          className="relative h-64 overflow-hidden bg-gray-100"
+          className="relative h-72 overflow-hidden bg-gradient-to-br from-neutral-50 to-neutral-100"
           onMouseEnter={() => product.images && product.images.length > 1 && setCurrentImageIndex(1)}
           onMouseLeave={() => setCurrentImageIndex(0)}
         >
@@ -65,17 +65,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
             src={productImage}
             alt={product.name}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-cover transition-all duration-500 group-hover:scale-110"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
+          
+          {/* Overlay gradient on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           
           {/* Quick Add to Cart Button */}
           <button
             onClick={handleAddToCart}
-            className="absolute bottom-2 left-2 right-2 premium-gradient text-white py-2 px-4 rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 elegant-shadow"
+            className="absolute bottom-4 left-4 right-4 premium-gradient text-white py-3 px-4 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center space-x-2 shadow-xl font-semibold transform group-hover:translate-y-0 translate-y-2"
           >
-            <ShoppingCart size={16} />
-            <span className="text-sm font-medium">Quick Add</span>
+            <ShoppingCart size={18} />
+            <span>Add to Cart</span>
           </button>
         </div>
 

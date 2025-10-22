@@ -1,146 +1,159 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Star, Truck, Shield, RefreshCw, Award } from 'lucide-react';
+import { ArrowRight, Star, Truck, Shield, RefreshCw, Award, Sparkles, TrendingUp } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
 import NewsletterSignup from '@/components/NewsletterSignup';
-import { getFeaturedProducts, mockCategories } from '@/lib/data';
+import HeroSlideshow from '@/components/HeroSlideshow';
+import { productsApi } from '@/lib/api';
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image_url: string;
+  images?: string[];
+  category: string;
+  rating?: number;
+  featured?: boolean;
+}
 
 const HomePage = () => {
-  const featuredProducts = getFeaturedProducts();
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await productsApi.getAll();
+      if (response.success && response.data) {
+        const products = response.data as Product[];
+        // Get featured products or first 4 products
+        const featured = products.filter(p => p.featured).slice(0, 4);
+        setFeaturedProducts(featured.length > 0 ? featured : products.slice(0, 4));
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const categories = [
+    {
+      name: 'Jewelry',
+      image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80',
+      link: '/category/Jewelry',
+      icon: '💎'
+    },
+    {
+      name: 'Handbags',
+      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&q=80',
+      link: '/category/Bags',
+      icon: '👜'
+    },
+    {
+      name: 'Accessories',
+      image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&q=80',
+      link: '/category/Accessories',
+      icon: '✨'
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-white">
       <Header />
       
-      {/* Hero Section */}
-      <section className="relative gradient-bg overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Hero Content */}
-            <div className="text-center lg:text-left">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
-                Elevate Your
-                <span className="gradient-text block">Style</span>
-              </h1>
-              <p className="text-xl text-neutral-600 mb-8 max-w-lg">
-                Discover premium women's fashion accessories that complement your unique style. 
-                From elegant jewelry to luxurious handbags.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link 
-                  href="/category/jewelry" 
-                  className="btn-hover premium-gradient text-white px-8 py-3 rounded-lg font-medium text-lg inline-flex items-center justify-center elegant-shadow"
-                >
-                  Shop Now
-                  <ArrowRight className="ml-2" size={20} />
-                </Link>
-                <Link 
-                  href="/about" 
-                  className="btn-hover luxury-border border-2 text-primary-600 px-8 py-3 rounded-lg font-medium text-lg inline-flex items-center justify-center hover:bg-cream-50 transition-all"
-                >
-                  Learn More
-                </Link>
-              </div>
-            </div>
-
-            {/* Hero Image */}
-            <div className="relative animate-float">
-              <div className="relative h-96 w-full rounded-2xl overflow-hidden shadow-2xl">
-                <Image
-                  src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80"
-                  alt="AZANIKA Fashion Accessories"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Slideshow */}
+      <HeroSlideshow />
 
       {/* Features Section */}
-      <section className="py-16 bg-cream-50">
+      <section className="py-16 bg-gradient-to-b from-white to-cream-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 elegant-shadow">
-                <Truck className="text-primary-600" size={24} />
+            <div className="text-center group">
+              <div className="bg-gradient-to-br from-primary-100 to-primary-50 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
+                <Truck className="text-primary-600" size={28} />
               </div>
-              <h3 className="font-semibold text-neutral-900 mb-2">Free Shipping</h3>
-              <p className="text-neutral-600 text-sm">Free shipping on orders over $100</p>
+              <h3 className="font-bold text-neutral-900 mb-2 text-lg">Free Shipping</h3>
+              <p className="text-neutral-600 text-sm">On orders over ৳5,000</p>
             </div>
             
-            <div className="text-center">
-              <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 elegant-shadow">
-                <Shield className="text-primary-600" size={24} />
+            <div className="text-center group">
+              <div className="bg-gradient-to-br from-emerald-100 to-emerald-50 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
+                <Shield className="text-emerald-600" size={28} />
               </div>
-              <h3 className="font-semibold text-neutral-900 mb-2">Secure Payment</h3>
-              <p className="text-neutral-600 text-sm">Your payment information is safe</p>
+              <h3 className="font-bold text-neutral-900 mb-2 text-lg">Secure Payment</h3>
+              <p className="text-neutral-600 text-sm">100% secure SSL encryption</p>
             </div>
             
-            <div className="text-center">
-              <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 elegant-shadow">
-                <RefreshCw className="text-primary-600" size={24} />
+            <div className="text-center group">
+              <div className="bg-gradient-to-br from-blue-100 to-blue-50 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
+                <RefreshCw className="text-blue-600" size={28} />
               </div>
-              <h3 className="font-semibold text-neutral-900 mb-2">Easy Returns</h3>
-              <p className="text-neutral-600 text-sm">30-day return policy</p>
+              <h3 className="font-bold text-neutral-900 mb-2 text-lg">Easy Returns</h3>
+              <p className="text-neutral-600 text-sm">7-day hassle-free returns</p>
             </div>
             
-            <div className="text-center">
-              <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 elegant-shadow">
-                <Award className="text-primary-600" size={24} />
+            <div className="text-center group">
+              <div className="bg-gradient-to-br from-amber-100 to-amber-50 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
+                <Award className="text-amber-600" size={28} />
               </div>
-              <h3 className="font-semibold text-neutral-900 mb-2">Premium Quality</h3>
-              <p className="text-neutral-600 text-sm">Carefully selected materials</p>
+              <h3 className="font-bold text-neutral-900 mb-2 text-lg">Premium Quality</h3>
+              <p className="text-neutral-600 text-sm">Handpicked luxury items</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Categories Section */}
-      <section className="py-20">
+      <section className="py-20 bg-neutral-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
+            <div className="inline-flex items-center space-x-2 bg-primary-100 text-primary-600 px-4 py-2 rounded-full mb-4">
+              <Sparkles size={20} />
+              <span className="font-semibold">Shop by Category</span>
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
-              Shop by Category
+              Discover Your Style
             </h2>
             <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
               Explore our curated collection of premium accessories
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {mockCategories.map((category) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {categories.map((category) => (
               <Link
-                key={category.id}
-                href={`/category/${category.slug}`}
-                className="group block"
+                key={category.name}
+                href={category.link}
+                className="group relative"
               >
-                <div className="relative h-64 rounded-2xl overflow-hidden card-hover">
+                <div className="relative h-80 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
                   <Image
                     src={category.image}
                     alt={category.name}
                     fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-white text-xl font-bold mb-2">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                  <div className="absolute inset-0 bg-primary-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-8">
+                    <div className="text-5xl mb-3">{category.icon}</div>
+                    <h3 className="text-white text-2xl font-bold mb-2 transform group-hover:translate-x-2 transition-transform">
                       {category.name}
                     </h3>
-                    <p className="text-white/90 text-sm mb-3">
-                      {category.description}
-                    </p>
-                    <span className="text-white text-sm font-medium flex items-center">
-                      {category.productCount} items
-                      <ArrowRight className="ml-1" size={16} />
-                    </span>
+                    <div className="flex items-center text-white/90 group-hover:text-white">
+                      <span className="text-sm font-medium">Explore Collection</span>
+                      <ArrowRight className="ml-2 transform group-hover:translate-x-2 transition-transform" size={18} />
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -150,9 +163,13 @@ const HomePage = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="py-20 bg-cream-50">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
+            <div className="inline-flex items-center space-x-2 bg-amber-100 text-amber-600 px-4 py-2 rounded-full mb-4">
+              <TrendingUp size={20} />
+              <span className="font-semibold">Trending Now</span>
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               Featured Products
             </h2>
@@ -161,16 +178,24 @@ const HomePage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="bg-neutral-100 rounded-2xl h-96 animate-pulse"></div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {featuredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
 
           <div className="text-center">
             <Link
               href="/products"
-              className="btn-hover premium-gradient text-white px-8 py-3 rounded-lg font-medium text-lg inline-flex items-center elegant-shadow"
+              className="btn-hover premium-gradient text-white px-8 py-4 rounded-lg font-semibold text-lg inline-flex items-center elegant-shadow hover:shadow-xl transition-all"
             >
               View All Products
               <ArrowRight className="ml-2" size={20} />
@@ -180,16 +205,25 @@ const HomePage = () => {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-20 premium-gradient">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Stay in Style
-          </h2>
-          <p className="text-xl text-cream-100 mb-8 max-w-2xl mx-auto">
-            Subscribe to our newsletter for exclusive offers, style tips, and new arrivals.
-          </p>
-          
-          <NewsletterSignup />
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 premium-gradient"></div>
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.4"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}></div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-12 shadow-2xl">
+            <div className="mb-6">
+              <div className="inline-block bg-white/20 rounded-full p-4 mb-4">
+                <Star className="text-white" size={32} />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Join Our Exclusive Club
+              </h2>
+              <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                Subscribe to get special offers, style inspiration, and early access to new collections
+              </p>
+            </div>
+            
+            <NewsletterSignup />
+          </div>
         </div>
       </section>
 

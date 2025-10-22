@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ShoppingCart, Search, Menu, X, User, Heart } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, User, Heart, ChevronDown } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { searchProducts } from '@/lib/data';
 
@@ -14,14 +14,19 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { itemCount } = useCart();
   const router = useRouter();
   const searchRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setShowResults(false);
+      }
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setActiveDropdown(null);
       }
     };
 
@@ -59,10 +64,27 @@ const Header = () => {
 
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'Jewelry', href: '/category/jewelry' },
-    { name: 'Handbags', href: '/category/bags' },
-    { name: 'Scarves', href: '/category/scarves' },
-    { name: 'Sunglasses', href: '/category/sunglasses' },
+    { 
+      name: 'Shop',
+      dropdown: [
+        { name: 'All Products', href: '/products' },
+        { name: 'New Arrivals', href: '/products?sort=newest' },
+        { name: 'Best Sellers', href: '/products?sort=popular' },
+        { name: 'Sale', href: '/products?sale=true' },
+      ]
+    },
+    { 
+      name: 'Categories',
+      dropdown: [
+        { name: 'Jewelry', href: '/category/Jewelry', icon: '💎' },
+        { name: 'Handbags', href: '/category/Bags', icon: '👜' },
+        { name: 'Accessories', href: '/category/Accessories', icon: '✨' },
+        { name: 'Scarves', href: '/category/scarves', icon: '🧣' },
+        { name: 'Sunglasses', href: '/category/sunglasses', icon: '🕶️' },
+        { name: 'Watches', href: '/category/watches', icon: '⌚' },
+      ]
+    },
+    { name: 'Collections', href: '/products?featured=true' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ];
@@ -71,78 +93,119 @@ const Header = () => {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       {/* Top Banner */}
       <div className="premium-gradient text-white text-center py-2 text-sm">
-        <p>Free shipping on orders over $100 | Use code: AZANIKA10 for 10% off</p>
+        <p>🎉 Free Shipping on Orders Over ৳5,000 | New Arrivals Every Week! 🛍️</p>
       </div>
 
       {/* Main Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-primary-600 p-2"
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 premium-gradient rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">A</span>
-              </div>
-              <span className="text-2xl font-bold gradient-text tracking-wide">AZANIKA</span>
-            </Link>
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-neutral-700 hover:text-primary-600 font-medium transition-colors duration-200"
-              >
-                {item.name}
+      <div className="border-b border-neutral-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <Link href="/" className="flex items-center space-x-3">
+                <div className="relative w-10 h-10">
+                  <Image
+                    src="/AZANIKA_LOGO.png"
+                    alt="AZANIKA Logo"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+                <span className="text-2xl font-bold gradient-text tracking-wide">AZANIKA</span>
               </Link>
-            ))}
-          </nav>
+            </div>
 
-          {/* Right side icons */}
-          <div className="flex items-center space-x-4">
-            {/* Search */}
-            <button
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="text-neutral-700 hover:text-primary-600 p-2 transition-colors"
-            >
-              <Search size={20} />
-            </button>
+            {/* Desktop Navigation - Centered */}
+            <nav className="hidden lg:flex items-center space-x-8 flex-1 justify-center" ref={dropdownRef}>
+              {navigation.map((item) => (
+                <div key={item.name} className="relative">
+                  {item.dropdown ? (
+                    <div className="relative">
+                      <button
+                        onClick={() => setActiveDropdown(activeDropdown === item.name ? null : item.name)}
+                        onMouseEnter={() => setActiveDropdown(item.name)}
+                        className="flex items-center space-x-1 text-neutral-700 hover:text-primary-600 font-medium transition-colors duration-200 py-2 text-[15px] uppercase tracking-wide"
+                      >
+                        <span>{item.name}</span>
+                        <ChevronDown size={16} className={`transition-transform ${activeDropdown === item.name ? 'rotate-180' : ''}`} />
+                      </button>
+                      {activeDropdown === item.name && (
+                        <div 
+                          className="absolute top-full left-0 mt-2 bg-white border border-neutral-200 rounded-xl shadow-2xl min-w-[220px] py-3 z-50 animate-fade-in"
+                          onMouseLeave={() => setActiveDropdown(null)}
+                        >
+                          {item.dropdown.map((subItem: any) => (
+                            <Link
+                              key={subItem.name}
+                              href={subItem.href}
+                              onClick={() => setActiveDropdown(null)}
+                              className="flex items-center space-x-3 px-5 py-2.5 text-neutral-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
+                            >
+                              {subItem.icon && <span className="text-xl">{subItem.icon}</span>}
+                              <span className="text-[14px]">{subItem.name}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href || '/'}
+                      className="text-neutral-700 hover:text-primary-600 font-medium transition-colors duration-200 text-[15px] uppercase tracking-wide"
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </nav>
 
-            {/* Wishlist */}
-            <button className="text-neutral-700 hover:text-primary-600 p-2 transition-colors">
-              <Heart size={20} />
-            </button>
+            {/* Right side icons */}
+            <div className="flex items-center space-x-2">
+              {/* Search */}
+              <button
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                className="text-neutral-700 hover:text-primary-600 p-2.5 transition-colors rounded-lg hover:bg-neutral-100"
+                title="Search"
+              >
+                <Search size={22} />
+              </button>
 
-            {/* User Account */}
-            <button className="text-neutral-700 hover:text-primary-600 p-2 transition-colors">
-              <User size={20} />
-            </button>
+              {/* Wishlist - Desktop only */}
+              <button className="hidden sm:block text-neutral-700 hover:text-primary-600 p-2.5 transition-colors rounded-lg hover:bg-neutral-100" title="Wishlist">
+                <Heart size={22} />
+              </button>
 
-            {/* Shopping Cart */}
-            <Link href="/cart" className="relative text-neutral-700 hover:text-primary-600 p-2 transition-colors">
-              <ShoppingCart size={20} />
-              {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-                  {itemCount}
-                </span>
-              )}
-            </Link>
+              {/* User Account - Desktop only */}
+              <button className="hidden sm:block text-neutral-700 hover:text-primary-600 p-2.5 transition-colors rounded-lg hover:bg-neutral-100" title="Account">
+                <User size={22} />
+              </button>
+
+              {/* Shopping Cart */}
+              <Link href="/cart" className="relative text-neutral-700 hover:text-primary-600 p-2.5 transition-colors rounded-lg hover:bg-neutral-100" title="Cart">
+                <ShoppingCart size={22} />
+                {itemCount > 0 && (
+                  <span className="absolute top-1 right-1 bg-primary-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-semibold">
+                    {itemCount}
+                  </span>
+                )}
+              </Link>
+
+              {/* Mobile menu button */}
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="lg:hidden text-neutral-700 hover:text-primary-600 p-2.5 transition-colors rounded-lg hover:bg-neutral-100"
+              >
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Search Bar */}
+      {/* Search Bar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {isSearchOpen && (
           <div className="pb-4" ref={searchRef}>
             <div className="relative max-w-md mx-auto">
@@ -205,17 +268,35 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t">
+        <div className="lg:hidden bg-white border-t">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="block px-3 py-2 text-gray-700 hover:text-primary-600 font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
+              <div key={item.name}>
+                {item.dropdown ? (
+                  <div className="py-1">
+                    <div className="px-3 py-2 text-sm font-semibold text-neutral-900 uppercase tracking-wide">{item.name}</div>
+                    {item.dropdown.map((subItem: any) => (
+                      <Link
+                        key={subItem.name}
+                        href={subItem.href}
+                        className="flex items-center px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-neutral-50"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {subItem.icon && <span className="mr-2 text-lg">{subItem.icon}</span>}
+                        <span>{subItem.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <Link
+                    href={item.href || '/'}
+                    className="block px-3 py-2 text-gray-700 hover:text-primary-600 font-medium uppercase tracking-wide"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </div>
             ))}
           </div>
         </div>
