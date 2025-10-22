@@ -91,37 +91,46 @@ const HeroSlideshow = () => {
   const slide = slides[currentSlide];
 
   return (
-    <div className="relative h-[500px] md:h-[600px] overflow-hidden">
+    <div className="relative h-[450px] md:h-[600px] overflow-hidden">
       {/* Background gradient */}
       <div className={`absolute inset-0 bg-gradient-to-br ${slide.bgGradient} transition-all duration-1000`}></div>
 
+      {/* Logo at the top */}
+      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30">
+        <img
+          src="https://iili.io/KU7rz92.png"
+          alt="Azanika Logo"
+          className="mx-auto mb-4 h-16 w-auto drop-shadow-lg"
+        />
+      </div>
+
       {/* Content */}
       <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center h-full py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-center h-full py-8 md:py-12">
           {/* Text Content */}
-          <div className="text-center lg:text-left space-y-6 z-10">
-            <div className="space-y-2">
-              <p className="text-primary-600 font-semibold text-lg tracking-wide uppercase animate-fade-in">
+          <div className="text-center lg:text-left space-y-4 md:space-y-6 z-10">
+            <div className="space-y-1 md:space-y-2">
+              <p className="text-primary-700 font-bold text-sm md:text-lg tracking-wide uppercase animate-fade-in">
                 {slide.subtitle}
               </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 leading-tight animate-slide-up">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-neutral-900 leading-tight animate-slide-up">
                 {slide.title}
               </h1>
             </div>
-            <p className="text-lg md:text-xl text-neutral-600 max-w-lg mx-auto lg:mx-0 animate-fade-in-delay">
+            <p className="text-sm md:text-lg lg:text-xl text-neutral-600 max-w-lg mx-auto lg:mx-0 animate-fade-in-delay">
               {slide.description}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-delay-2">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start animate-fade-in-delay-2">
               <Link 
                 href={slide.ctaLink}
-                className="premium-gradient text-white px-8 py-4 rounded-lg font-semibold text-lg inline-flex items-center justify-center elegant-shadow hover:shadow-xl transition-all transform hover:scale-105"
+                className="premium-gradient text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg inline-flex items-center justify-center elegant-shadow hover:shadow-xl transition-all transform hover:scale-105"
               >
                 {slide.cta}
-                <ArrowRight className="ml-2" size={20} />
+                <ArrowRight className="ml-2" size={18} />
               </Link>
               <Link 
                 href="/products"
-                className="luxury-border border-2 text-primary-600 px-8 py-4 rounded-lg font-semibold text-lg inline-flex items-center justify-center hover:bg-white transition-all"
+                className="luxury-border border-2 text-primary-700 px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg inline-flex items-center justify-center hover:bg-white transition-all"
               >
                 View All
               </Link>
@@ -129,8 +138,8 @@ const HeroSlideshow = () => {
           </div>
 
           {/* Image */}
-          <div className="relative h-80 lg:h-96 animate-float">
-            <div className="relative h-full w-full rounded-3xl overflow-hidden shadow-2xl">
+          <div className="relative h-64 md:h-80 lg:h-96 animate-float">
+            <div className="relative h-full w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
               <Image
                 src={slide.image}
                 alt={slide.title}
@@ -140,8 +149,8 @@ const HeroSlideshow = () => {
               />
             </div>
             {/* Decorative elements */}
-            <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary-200 rounded-full blur-3xl opacity-50"></div>
-            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-primary-300 rounded-full blur-3xl opacity-40"></div>
+            <div className="absolute -top-4 -right-4 w-20 h-20 md:w-24 md:h-24 bg-primary-300 rounded-full blur-3xl opacity-50"></div>
+            <div className="absolute -bottom-4 -left-4 w-24 h-24 md:w-32 md:h-32 bg-primary-400 rounded-full blur-3xl opacity-40"></div>
           </div>
         </div>
       </div>
@@ -149,29 +158,29 @@ const HeroSlideshow = () => {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all z-20 hover:scale-110"
+        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 md:p-3 rounded-full shadow-lg transition-all z-20 hover:scale-110"
         aria-label="Previous slide"
       >
-        <ChevronLeft size={24} className="text-neutral-800" />
+        <ChevronLeft size={20} className="text-neutral-800 md:w-6 md:h-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all z-20 hover:scale-110"
+        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 md:p-3 rounded-full shadow-lg transition-all z-20 hover:scale-110"
         aria-label="Next slide"
       >
-        <ChevronRight size={24} className="text-neutral-800" />
+        <ChevronRight size={20} className="text-neutral-800 md:w-6 md:h-6" />
       </button>
 
       {/* Dots Navigation */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3 z-20">
+      <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 md:space-x-3 z-20">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
             className={`transition-all ${
               currentSlide === index
-                ? 'bg-primary-600 w-8 h-3'
-                : 'bg-white/60 hover:bg-white/80 w-3 h-3'
+                ? 'bg-primary-700 w-6 md:w-8 h-2 md:h-3'
+                : 'bg-white/60 hover:bg-white/80 w-2 md:w-3 h-2 md:h-3'
             } rounded-full`}
             aria-label={`Go to slide ${index + 1}`}
           />
