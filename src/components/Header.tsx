@@ -90,27 +90,28 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-blush-100">
       {/* Top Banner */}
-      <div className="premium-gradient text-white text-center py-2 text-sm">
-        <p className="flex items-center justify-center space-x-2">
-          <Sparkles size={16} className="inline" />
-          <span>Free Shipping on Orders Over ৳5,000 | New Arrivals Every Week!</span>
+      <div className="premium-gradient text-white text-center py-2 text-sm relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20 pattern-dots"></div>
+        <p className="flex items-center justify-center space-x-2 relative z-10">
+          <Sparkles size={16} className="inline animate-spin-slow" />
+          <span className="font-medium">Free Shipping on Orders Over ৳5,000 | New Arrivals Every Week!</span>
           <ShoppingBag size={16} className="inline" />
         </p>
       </div>
 
       {/* Main Header */}
-      <div className="border-b border-neutral-200">
+      <div className="border-b border-blush-100/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <Link href="/" className="flex items-center space-x-3">
-                <div className="relative w-10 h-10">
+              <Link href="/" className="flex items-center space-x-3 group">
+                <div className="relative w-10 h-10 transition-transform group-hover:scale-110 duration-300">
                   <Image
                     src="https://iili.io/KU7rz92.png"
-                    alt="AZANIKA M"
+                    alt="AZANIKA"
                     fill
                     className="object-contain"
                     priority
@@ -129,14 +130,14 @@ const Header = () => {
                       <button
                         onClick={() => setActiveDropdown(activeDropdown === item.name ? null : item.name)}
                         onMouseEnter={() => setActiveDropdown(item.name)}
-                        className="flex items-center space-x-1 text-neutral-700 hover:text-primary-600 font-medium transition-colors duration-200 py-2 text-[15px] uppercase tracking-wide"
+                        className="flex items-center space-x-1 text-neutral-700 hover:text-blush-600 font-semibold smooth-transition py-2 text-[15px] uppercase tracking-wide"
                       >
                         <span>{item.name}</span>
-                        <ChevronDown size={16} className={`transition-transform ${activeDropdown === item.name ? 'rotate-180' : ''}`} />
+                        <ChevronDown size={16} className={`smooth-transition ${activeDropdown === item.name ? 'rotate-180' : ''}`} />
                       </button>
                       {activeDropdown === item.name && (
                         <div 
-                          className="absolute top-full left-0 mt-2 bg-white border border-neutral-200 rounded-xl shadow-2xl min-w-[220px] py-3 z-50 animate-fade-in"
+                          className="absolute top-full left-0 mt-2 glass-effect rounded-2xl shadow-2xl min-w-[220px] py-3 z-50 animate-fade-in-down border border-blush-100"
                           onMouseLeave={() => setActiveDropdown(null)}
                         >
                           {item.dropdown.map((subItem: any) => {
@@ -146,7 +147,7 @@ const Header = () => {
                                 key={subItem.name}
                                 href={subItem.href}
                                 onClick={() => setActiveDropdown(null)}
-                                className="flex items-center space-x-3 px-5 py-2.5 text-neutral-700 hover:bg-blush-50 hover:text-blush-600 transition-colors group"
+                                className="flex items-center space-x-3 px-5 py-2.5 text-neutral-700 hover:bg-gradient-to-r hover:from-blush-50 hover:to-transparent hover:text-blush-600 smooth-transition group rounded-lg mx-2"
                               >
                                 {IconComponent && <IconComponent className="w-5 h-5 icon-float" />}
                                 <span className="text-[14px]">{subItem.name}</span>
@@ -173,27 +174,28 @@ const Header = () => {
               {/* Search */}
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="text-neutral-700 hover:text-primary-600 p-2.5 transition-colors rounded-lg hover:bg-neutral-100"
+                className="text-neutral-700 hover:text-blush-600 p-2.5 smooth-transition rounded-lg hover:bg-blush-50"
                 title="Search"
               >
                 <Search size={22} />
               </button>
 
               {/* Wishlist - Desktop only */}
-              <button className="hidden sm:block text-neutral-700 hover:text-primary-600 p-2.5 transition-colors rounded-lg hover:bg-neutral-100" title="Wishlist">
+              <button className="hidden sm:block text-neutral-700 hover:text-blush-600 p-2.5 smooth-transition rounded-lg hover:bg-blush-50 relative group" title="Wishlist">
                 <Heart size={22} />
+                <span className="absolute inset-0 rounded-lg bg-blush-100 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-20 smooth-transition -z-10"></span>
               </button>
 
               {/* User Account - Desktop only */}
-              <button className="hidden sm:block text-neutral-700 hover:text-primary-600 p-2.5 transition-colors rounded-lg hover:bg-neutral-100" title="Account">
+              <button className="hidden sm:block text-neutral-700 hover:text-blush-600 p-2.5 smooth-transition rounded-lg hover:bg-blush-50" title="Account">
                 <User size={22} />
               </button>
 
               {/* Shopping Cart */}
-              <Link href="/cart" className="relative text-neutral-700 hover:text-primary-600 p-2.5 transition-colors rounded-lg hover:bg-neutral-100" title="Cart">
+              <Link href="/cart" className="relative text-neutral-700 hover:text-blush-600 p-2.5 smooth-transition rounded-lg hover:bg-blush-50 group" title="Cart">
                 <ShoppingCart size={22} />
                 {itemCount > 0 && (
-                  <span className="absolute top-1 right-1 bg-primary-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-semibold">
+                  <span className="absolute top-1 right-1 premium-gradient text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-bold shadow-md group-hover:scale-110 smooth-transition">
                     {itemCount}
                   </span>
                 )}

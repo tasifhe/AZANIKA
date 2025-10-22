@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Heart, ShoppingCart, Star } from 'lucide-react';
+import { Heart, ShoppingCart, Star, Eye } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useCart } from '@/lib/cart-context';
 
 interface ProductCardProps {
@@ -14,6 +15,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const { addToCart } = useCart();
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -35,53 +37,93 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
     : 0;
 
   return (
-    <div className={`group relative bg-white rounded-xl md:rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-neutral-100 ${className}`}>
+    <motion.div 
+      className={`group relative bg-white rounded-xl md:rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-neutral-100 ${className}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ y: -8 }}
+    >
       {/* Discount Badge */}
       {discountPercent > 0 && (
-        <div className="absolute top-3 md:top-4 left-3 md:left-4 bg-gradient-to-r from-blush-500 to-blush-400 text-white px-3 md:px-4 py-1 md:py-1.5 text-xs md:text-sm font-bold rounded-lg z-10 shadow-lg">
+        <motion.div 
+          className="absolute top-3 md:top-4 left-3 md:left-4 bg-gradient-to-r from-blush-500 to-blush-400 text-white px-3 md:px-4 py-1 md:py-1.5 text-xs md:text-sm font-bold rounded-lg z-10 shadow-lg"
+          initial={{ scale: 0, rotate: -12 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+        >
           -{discountPercent}% OFF
-        </div>
+        </motion.div>
       )}
 
-      {/* Wishlist Button */}
-      <button
-        onClick={handleWishlist}
-        className="absolute top-3 md:top-4 right-3 md:right-4 p-2 md:p-2.5 bg-white/95 backdrop-blur-sm rounded-full opacity-0 md:opacity-0 md:group-hover:opacity-100 transition-all z-10 hover:scale-110 shadow-md active:scale-95"
-        aria-label="Add to wishlist"
-      >
-        <Heart 
-          size={18} 
-          className={`${isWishlisted ? 'text-blush-500 fill-current' : 'text-gray-600'} md:w-5 md:h-5`}
-        />
-      </button>
+      {/* Action Buttons */}
+      <div className="absolute top-3 md:top-4 right-3 md:right-4 z-10 flex flex-col gap-2">
+        <motion.button
+          onClick={handleWishlist}
+          className="p-2 md:p-2.5 glass-effect rounded-full hover:scale-110 shadow-md active:scale-95"
+          aria-label="Add to wishlist"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: isHovered ? 1 : 0, x: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <Heart 
+            size={18} 
+            className={`${isWishlisted ? 'text-blush-500 fill-current' : 'text-gray-600'} md:w-5 md:h-5 transition-colors`}
+          />
+        </motion.button>
+        
+        <motion.button
+          className="p-2 md:p-2.5 glass-effect rounded-full hover:scale-110 shadow-md active:scale-95"
+          aria-label="Quick view"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: isHovered ? 1 : 0, x: 0 }}
+          transition={{ duration: 0.2, delay: 0.05 }}
+        >
+          <Eye size={18} className="text-gray-600 md:w-5 md:h-5" />
+        </motion.button>
+      </div>
 
       <Link href={`/product/${product.id}`}>
         {/* Image Container */}
         <div 
           className="relative h-52 sm:h-56 md:h-72 lg:h-80 overflow-hidden bg-gradient-to-br from-blush-50 to-cream-50"
-          onMouseEnter={() => product.images && product.images.length > 1 && setCurrentImageIndex(1)}
-          onMouseLeave={() => setCurrentImageIndex(0)}
         >
-          <Image
-            src={productImage}
-            alt={product.name}
-            fill
-            className="object-cover transition-all duration-500 group-hover:scale-105"
-            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-            priority={false}
-          />
+          <motion.div
+            animate={{ scale: isHovered ? 1.08 : 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="w-full h-full"
+          >
+            <Image
+              src={productImage}
+              alt={product.name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+              priority={false}
+            />
+          </motion.div>
           
           {/* Overlay gradient on hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+          />
           
           {/* Quick Add to Cart Button - Desktop only */}
-          <button
+          <motion.button
             onClick={handleAddToCart}
-            className="hidden md:flex absolute bottom-4 left-4 right-4 premium-gradient text-white py-3 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 items-center justify-center space-x-2 shadow-lg font-semibold transform group-hover:translate-y-0 translate-y-2 hover:shadow-xl active:scale-95"
+            className="hidden md:flex absolute bottom-4 left-4 right-4 premium-gradient text-white py-3 px-4 rounded-lg items-center justify-center space-x-2 shadow-lg font-semibold hover:shadow-xl active:scale-95 smooth-transition"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
+            transition={{ duration: 0.3 }}
           >
             <ShoppingCart size={18} />
             <span>Add to Cart</span>
-          </button>
+          </motion.button>
         </div>
 
         {/* Product Info */}
@@ -178,7 +220,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
           </div>
         </div>
       </Link>
-    </div>
+    </motion.div>
   );
 };
 
