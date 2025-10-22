@@ -105,8 +105,8 @@ const Header = () => {
               <Link href="/" className="flex items-center space-x-3">
                 <div className="relative w-10 h-10">
                   <Image
-                    src="/AZANIKA_LOGO.png"
-                    alt="AZANIKA Logo"
+                    src="https://iili.io/KU7rz92.png"
+                    alt="AZANIKA M"
                     fill
                     className="object-contain"
                     priority

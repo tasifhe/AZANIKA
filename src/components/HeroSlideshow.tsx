@@ -99,7 +99,8 @@ const HeroSlideshow = () => {
       <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30">
         <img
           src="https://iili.io/KU7rz92.png"
-          alt="Azanika Logo"
+          alt="AZANIKA M"
+          border="0"
           className="mx-auto mb-4 h-16 w-auto drop-shadow-lg"
         />
       </div>
