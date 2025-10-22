@@ -93,7 +93,11 @@ const Header = () => {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       {/* Top Banner */}
       <div className="premium-gradient text-white text-center py-2 text-sm">
-        <p>🎉 Free Shipping on Orders Over ৳5,000 | New Arrivals Every Week! 🛍️</p>
+        <p className="flex items-center justify-center space-x-2">
+          <Sparkles size={16} className="inline" />
+          <span>Free Shipping on Orders Over ৳5,000 | New Arrivals Every Week!</span>
+          <ShoppingBag size={16} className="inline" />
+        </p>
       </div>
 
       {/* Main Header */}

@@ -35,29 +35,30 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
     : 0;
 
   return (
-    <div className={`group relative bg-white rounded-xl md:rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 ${className}`}>
+    <div className={`group relative bg-white rounded-xl md:rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-neutral-100 ${className}`}>
       {/* Discount Badge */}
       {discountPercent > 0 && (
-        <div className="absolute top-2 md:top-3 left-2 md:left-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 md:px-3 py-0.5 md:py-1 text-[10px] md:text-xs font-bold rounded-full z-10 shadow-lg">
-          -{discountPercent}%
+        <div className="absolute top-3 md:top-4 left-3 md:left-4 bg-gradient-to-r from-blush-500 to-blush-400 text-white px-3 md:px-4 py-1 md:py-1.5 text-xs md:text-sm font-bold rounded-lg z-10 shadow-lg">
+          -{discountPercent}% OFF
         </div>
       )}
 
       {/* Wishlist Button */}
       <button
         onClick={handleWishlist}
-        className="absolute top-2 md:top-3 right-2 md:right-3 p-1.5 md:p-2.5 bg-white/90 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all z-10 hover:scale-110 shadow-lg"
+        className="absolute top-3 md:top-4 right-3 md:right-4 p-2 md:p-2.5 bg-white/95 backdrop-blur-sm rounded-full opacity-0 md:opacity-0 md:group-hover:opacity-100 transition-all z-10 hover:scale-110 shadow-md active:scale-95"
+        aria-label="Add to wishlist"
       >
         <Heart 
-          size={16} 
-          className={`${isWishlisted ? 'text-red-500 fill-current' : 'text-gray-600'} md:w-[18px] md:h-[18px]`}
+          size={18} 
+          className={`${isWishlisted ? 'text-blush-500 fill-current' : 'text-gray-600'} md:w-5 md:h-5`}
         />
       </button>
 
       <Link href={`/product/${product.id}`}>
         {/* Image Container */}
         <div 
-          className="relative h-48 md:h-72 overflow-hidden bg-gradient-to-br from-neutral-50 to-neutral-100"
+          className="relative h-52 sm:h-56 md:h-72 lg:h-80 overflow-hidden bg-gradient-to-br from-blush-50 to-cream-50"
           onMouseEnter={() => product.images && product.images.length > 1 && setCurrentImageIndex(1)}
           onMouseLeave={() => setCurrentImageIndex(0)}
         >
@@ -65,17 +66,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
             src={productImage}
             alt={product.name}
             fill
-            className="object-cover transition-all duration-500 group-hover:scale-110"
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            className="object-cover transition-all duration-500 group-hover:scale-105"
+            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+            priority={false}
           />
           
           {/* Overlay gradient on hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           
           {/* Quick Add to Cart Button - Desktop only */}
           <button
             onClick={handleAddToCart}
-            className="hidden md:flex absolute bottom-4 left-4 right-4 premium-gradient text-white py-3 px-4 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 items-center justify-center space-x-2 shadow-xl font-semibold transform group-hover:translate-y-0 translate-y-2"
+            className="hidden md:flex absolute bottom-4 left-4 right-4 premium-gradient text-white py-3 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 items-center justify-center space-x-2 shadow-lg font-semibold transform group-hover:translate-y-0 translate-y-2 hover:shadow-xl active:scale-95"
           >
             <ShoppingCart size={18} />
             <span>Add to Cart</span>
@@ -83,37 +85,37 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
         </div>
 
         {/* Product Info */}
-        <div className="p-2 md:p-4">
-          <h3 className="font-medium text-neutral-900 mb-1 line-clamp-2 group-hover:text-primary-700 transition-colors text-xs md:text-base">
+        <div className="p-3 md:p-5">
+          <h3 className="font-semibold text-neutral-900 mb-2 line-clamp-2 group-hover:text-blush-600 transition-colors text-sm md:text-base leading-snug">
             {product.name}
           </h3>
           
           {/* Rating */}
-          <div className="flex items-center space-x-1 mb-1 md:mb-2">
-            <div className="flex">
+          <div className="flex items-center space-x-1.5 mb-2 md:mb-3">
+            <div className="flex gap-0.5">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
                   key={star}
-                  size={12}
+                  size={14}
                   className={`${
                     star <= (product.rating || 0)
-                      ? 'text-amber-500 fill-current'
+                      ? 'text-amber-400 fill-current'
                       : 'text-gray-300'
-                  } md:w-[14px] md:h-[14px]`}
+                  } md:w-4 md:h-4`}
                 />
               ))}
             </div>
-            <span className="text-[10px] md:text-xs text-neutral-500">({product.reviewCount || 0})</span>
+            <span className="text-xs md:text-sm text-neutral-500 font-medium">({product.reviewCount || 0})</span>
           </div>
 
           {/* Price */}
-          <div className="flex items-center space-x-1 md:space-x-2 mb-2">
-            <span className="text-sm md:text-lg font-bold text-blush-600">
-              ৳{typeof product.price === 'number' ? product.price.toFixed(0) : product.price}
+          <div className="flex items-center space-x-2 mb-3">
+            <span className="text-lg md:text-xl font-bold text-blush-600">
+              ৳{typeof product.price === 'number' ? product.price.toLocaleString() : product.price}
             </span>
             {product.originalPrice && (
-              <span className="text-xs md:text-sm text-neutral-500 line-through">
-                ৳{product.originalPrice.toFixed(0)}
+              <span className="text-sm md:text-base text-neutral-400 line-through">
+                ৳{product.originalPrice.toLocaleString()}
               </span>
             )}
           </div>
@@ -150,12 +152,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
           )}
 
           {/* Stock Status */}
-          <div className="mt-2">
-            {inStock ? (
-              <span className="text-xs text-green-600 font-medium">In Stock</span>
-            ) : (
-              <span className="text-xs text-red-600 font-medium">Out of Stock</span>
-            )}
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-neutral-100">
+            <div>
+              {inStock ? (
+                <span className="text-xs md:text-sm text-emerald-600 font-semibold flex items-center gap-1">
+                  <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                  In Stock
+                </span>
+              ) : (
+                <span className="text-xs md:text-sm text-red-600 font-semibold flex items-center gap-1">
+                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                  Out of Stock
+                </span>
+              )}
+            </div>
+            
+            {/* Mobile Add to Cart */}
+            <button
+              onClick={handleAddToCart}
+              className="md:hidden p-2 premium-gradient text-white rounded-lg shadow-md active:scale-95 transition-transform"
+              aria-label="Add to cart"
+            >
+              <ShoppingCart size={16} />
+            </button>
           </div>
         </div>
       </Link>
