@@ -13,10 +13,10 @@ const AdminSettingsPage = () => {
   const [storeSettings, setStoreSettings] = useState({
     storeName: 'AZANIKA',
     storeEmail: 'contact@azanika.com',
-    storePhone: '+1 (555) 123-4567',
-    storeAddress: '123 Fashion Street, NY 10001',
-    currency: 'USD',
-    taxRate: '8.5'
+    storePhone: '+880 1234-567890',
+    storeAddress: 'Dhaka, Bangladesh',
+    currency: 'BDT',
+    taxRate: '0'
   });
 
   const [profileSettings, setProfileSettings] = useState({
@@ -167,10 +167,11 @@ const AdminSettingsPage = () => {
                   onChange={(e) => setStoreSettings({ ...storeSettings, currency: e.target.value })}
                   className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
                 >
-                  <option value="USD">USD - US Dollar</option>
-                  <option value="EUR">EUR - Euro</option>
-                  <option value="GBP">GBP - British Pound</option>
-                  <option value="INR">INR - Indian Rupee</option>
+                  <option value="BDT">BDT - Bangladeshi Taka (৳)</option>
+                  <option value="USD">USD - US Dollar ($)</option>
+                  <option value="EUR">EUR - Euro (€)</option>
+                  <option value="GBP">GBP - British Pound (£)</option>
+                  <option value="INR">INR - Indian Rupee (₹)</option>
                 </select>
               </div>
               <div className="md:col-span-2">
