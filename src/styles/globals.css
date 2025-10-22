@@ -75,22 +75,59 @@ body {
 /* Gradient backgrounds */
 .gradient-bg {
   background: linear-gradient(135deg, #fef9f8 0%, #fef3f2 25%, #fdfaf8 100%);
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .gradient-text {
   background: linear-gradient(135deg, #F6B6B1, #F4A7A3, #e89088);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradientText 3s ease infinite;
+}
+
+@keyframes gradientText {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* Premium gradient overlays */
 .premium-gradient {
   background: linear-gradient(135deg, #F6B6B1 0%, #F4A7A3 50%, #FADCD9 100%);
+  background-size: 200% 200%;
+  animation: gradientFlow 4s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .elegant-shadow {
   box-shadow: 0 10px 25px rgba(246, 182, 177, 0.15), 0 5px 10px rgba(244, 167, 163, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.elegant-shadow:hover {
+  box-shadow: 0 15px 35px rgba(246, 182, 177, 0.25), 0 8px 15px rgba(244, 167, 163, 0.15);
 }
 
 .luxury-border {
@@ -100,6 +137,51 @@ body {
 /* Premium gold accent gradient */
 .gold-gradient {
   background: linear-gradient(135deg, #e89b8a 0%, #db7b68 50%, #c96050 100%);
+}
+
+/* Animated background patterns */
+.pattern-dots {
+  background-image: radial-gradient(circle, rgba(246, 182, 177, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: patternMove 20s linear infinite;
+}
+
+@keyframes patternMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 20px 20px;
+  }
+}
+
+/* Icon animations */
+.icon-float {
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.icon-pulse {
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 }
 
 /* Mobile optimizations */

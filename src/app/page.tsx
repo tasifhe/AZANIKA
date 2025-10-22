@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Star, Truck, Shield, RefreshCw, Award, Sparkles, TrendingUp } from 'lucide-react';
+import { ArrowRight, Star, Truck, Shield, RefreshCw, Award, Sparkles, TrendingUp, ShoppingBag, Gem } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
@@ -51,19 +51,19 @@ const HomePage = () => {
       name: 'Jewelry',
       image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80',
       link: '/category/Jewelry',
-      icon: '💎'
+      icon: Gem
     },
     {
       name: 'Handbags',
       image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&q=80',
       link: '/category/Bags',
-      icon: '👜'
+      icon: ShoppingBag
     },
     {
       name: 'Accessories',
       image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&q=80',
       link: '/category/Accessories',
-      icon: '✨'
+      icon: Sparkles
     }
   ];
 
@@ -75,36 +75,36 @@ const HomePage = () => {
       <HeroSlideshow />
 
       {/* Features Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-blush-50">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-blush-50 pattern-dots">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-blush-100 to-blush-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
-                <Truck className="text-blush-600" size={24} />
+              <div className="bg-gradient-to-br from-blush-100 to-blush-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                <Truck className="text-blush-600 icon-pulse" size={24} />
               </div>
               <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Free Shipping</h3>
               <p className="text-neutral-600 text-xs md:text-sm">Orders over ৳5,000</p>
             </div>
             
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-blush-200 to-blush-100 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
-                <Shield className="text-blush-700" size={24} />
+              <div className="bg-gradient-to-br from-blush-200 to-blush-100 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                <Shield className="text-blush-700 icon-pulse" size={24} />
               </div>
               <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Secure Payment</h3>
               <p className="text-neutral-600 text-xs md:text-sm">SSL encryption</p>
             </div>
             
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-blush-100 to-blush-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
-                <RefreshCw className="text-blush-600" size={24} />
+              <div className="bg-gradient-to-br from-blush-100 to-blush-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                <RefreshCw className="text-blush-600 icon-pulse" size={24} />
               </div>
               <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Easy Returns</h3>
               <p className="text-neutral-600 text-xs md:text-sm">7-day returns</p>
             </div>
             
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-blush-200 to-blush-100 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300">
-                <Award className="text-blush-700" size={24} />
+              <div className="bg-gradient-to-br from-blush-200 to-blush-100 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                <Award className="text-blush-700 icon-pulse" size={24} />
               </div>
               <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Premium Quality</h3>
               <p className="text-neutral-600 text-xs md:text-sm">Luxury items</p>
@@ -144,9 +144,11 @@ const HomePage = () => {
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-                  <div className="absolute inset-0 bg-primary-700/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-blush-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8">
-                    <div className="text-3xl md:text-5xl mb-2 md:mb-3">{category.icon}</div>
+                    <div className="mb-2 md:mb-3 text-white">
+                      <category.icon className="w-10 h-10 md:w-14 md:h-14 icon-float" />
+                    </div>
                     <h3 className="text-white text-xl md:text-2xl font-bold mb-1 md:mb-2 transform group-hover:translate-x-2 transition-transform">
                       {category.name}
                     </h3>

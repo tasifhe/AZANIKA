@@ -95,14 +95,6 @@ const HeroSlideshow = () => {
       {/* Background gradient */}
       <div className={`absolute inset-0 bg-gradient-to-br ${slide.bgGradient} transition-all duration-1000`}></div>
 
-      {/* Logo at the top */}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30">
-        <img
-          src="https://iili.io/KU7rz92.png"
-          alt="AZANIKA M"
-          className="mx-auto mb-4 h-16 w-auto drop-shadow-lg"
-        />
-      </div>
 
       {/* Content */}
       <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

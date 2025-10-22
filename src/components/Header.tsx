@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ShoppingCart, Search, Menu, X, User, Heart, ChevronDown } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, User, Heart, ChevronDown, Gem, ShoppingBag, Sparkles, Glasses, Watch } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { searchProducts } from '@/lib/data';
 
@@ -76,12 +76,12 @@ const Header = () => {
     { 
       name: 'Categories',
       dropdown: [
-        { name: 'Jewelry', href: '/category/Jewelry', icon: '💎' },
-        { name: 'Handbags', href: '/category/Bags', icon: '👜' },
-        { name: 'Accessories', href: '/category/Accessories', icon: '✨' },
-        { name: 'Scarves', href: '/category/scarves', icon: '🧣' },
-        { name: 'Sunglasses', href: '/category/sunglasses', icon: '🕶️' },
-        { name: 'Watches', href: '/category/watches', icon: '⌚' },
+        { name: 'Jewelry', href: '/category/Jewelry', icon: Gem },
+        { name: 'Handbags', href: '/category/Bags', icon: ShoppingBag },
+        { name: 'Accessories', href: '/category/Accessories', icon: Sparkles },
+        { name: 'Scarves', href: '/category/scarves', icon: Heart },
+        { name: 'Sunglasses', href: '/category/sunglasses', icon: Glasses },
+        { name: 'Watches', href: '/category/watches', icon: Watch },
       ]
     },
     { name: 'Collections', href: '/products?featured=true' },
@@ -135,17 +135,20 @@ const Header = () => {
                           className="absolute top-full left-0 mt-2 bg-white border border-neutral-200 rounded-xl shadow-2xl min-w-[220px] py-3 z-50 animate-fade-in"
                           onMouseLeave={() => setActiveDropdown(null)}
                         >
-                          {item.dropdown.map((subItem: any) => (
-                            <Link
-                              key={subItem.name}
-                              href={subItem.href}
-                              onClick={() => setActiveDropdown(null)}
-                              className="flex items-center space-x-3 px-5 py-2.5 text-neutral-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
-                            >
-                              {subItem.icon && <span className="text-xl">{subItem.icon}</span>}
-                              <span className="text-[14px]">{subItem.name}</span>
-                            </Link>
-                          ))}
+                          {item.dropdown.map((subItem: any) => {
+                            const IconComponent = subItem.icon;
+                            return (
+                              <Link
+                                key={subItem.name}
+                                href={subItem.href}
+                                onClick={() => setActiveDropdown(null)}
+                                className="flex items-center space-x-3 px-5 py-2.5 text-neutral-700 hover:bg-blush-50 hover:text-blush-600 transition-colors group"
+                              >
+                                {IconComponent && <IconComponent className="w-5 h-5 icon-float" />}
+                                <span className="text-[14px]">{subItem.name}</span>
+                              </Link>
+                            );
+                          })}
                         </div>
                       )}
                     </div>
@@ -275,17 +278,20 @@ const Header = () => {
                 {item.dropdown ? (
                   <div className="py-1">
                     <div className="px-3 py-2 text-sm font-semibold text-neutral-900 uppercase tracking-wide">{item.name}</div>
-                    {item.dropdown.map((subItem: any) => (
-                      <Link
-                        key={subItem.name}
-                        href={subItem.href}
-                        className="flex items-center px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-neutral-50"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {subItem.icon && <span className="mr-2 text-lg">{subItem.icon}</span>}
-                        <span>{subItem.name}</span>
-                      </Link>
-                    ))}
+                    {item.dropdown.map((subItem: any) => {
+                      const IconComponent = subItem.icon;
+                      return (
+                        <Link
+                          key={subItem.name}
+                          href={subItem.href}
+                          className="flex items-center px-6 py-2 text-gray-700 hover:text-blush-600 hover:bg-blush-50"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {IconComponent && <IconComponent className="w-5 h-5 mr-2" />}
+                          <span>{subItem.name}</span>
+                        </Link>
+                      );
+                    })}
                   </div>
                 ) : (
                   <Link
