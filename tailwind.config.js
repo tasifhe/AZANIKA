@@ -116,6 +116,7 @@ module.exports = {
       fontFamily: {
         'display': ['Inter', 'system-ui', 'sans-serif'],
         'body': ['Inter', 'system-ui', 'sans-serif'],
+        'cursive': ['Brush Script MT', 'Lucida Handwriting', 'cursive'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

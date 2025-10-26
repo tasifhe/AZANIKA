@@ -9,6 +9,7 @@ import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
 import NewsletterSignup from '@/components/NewsletterSignup';
 import HeroSlideshow from '@/components/HeroSlideshow';
+import PromoPopup from '@/components/PromoPopup';
 import { AnimatedContent, FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/animations/AnimatedContent';
 import { AnimatedGrid } from '@/components/animations/AnimatedList';
 import { Parallax } from '@/components/animations/ScrollAnimations';
@@ -73,6 +74,9 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      
+      {/* Promotional Popup */}
+      <PromoPopup />
       
       {/* Hero Slideshow */}
       <HeroSlideshow />

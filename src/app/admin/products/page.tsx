@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminSidebar from '@/components/AdminSidebar';
+import RichTextEditor from '@/components/RichTextEditor';
 import { productsApi } from '@/lib/api';
 import { Plus, Edit, Trash2, Search, Package } from 'lucide-react';
 
@@ -207,7 +208,9 @@ const AdminProductsPage = () => {
                       </div>
                       <div>
                         <p className="font-medium text-neutral-900">{product.name}</p>
-                        <p className="text-sm text-neutral-500">{product.description.substring(0, 50)}...</p>
+                        <p className="text-sm text-neutral-500">
+                          {product.description.replace(/<[^>]*>/g, '').substring(0, 50)}...
+                        </p>
                       </div>
                     </div>
                   </td>
@@ -268,13 +271,14 @@ const AdminProductsPage = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-neutral-700 mb-2">Description</label>
-                    <textarea
+                    <RichTextEditor
                       value={formData.description}
-                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                      className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
-                      rows={3}
-                      required
+                      onChange={(value) => setFormData({ ...formData, description: value })}
+                      placeholder="Enter product description with formatting..."
                     />
+                    <p className="text-xs text-neutral-500 mt-2">
+                      Use the toolbar above to format your description. Bold, italic, lists, and more are supported.
+                    </p>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>

@@ -208,9 +208,12 @@ const ProductDetailPage = () => {
               </div>
 
               {/* Description */}
-              <p className="text-neutral-600 mb-6 leading-relaxed">
-                {product.description || 'No description available.'}
-              </p>
+              <div 
+                className="text-neutral-600 mb-6 leading-relaxed prose prose-sm max-w-none"
+                dangerouslySetInnerHTML={{ 
+                  __html: product.description || 'No description available.' 
+                }}
+              />
 
               {/* Stock Status */}
               <div className="mb-6">

@@ -11,7 +11,11 @@ import {
   Truck,
   CheckCircle,
   Clock,
-  Download
+  Download,
+  X,
+  MapPin,
+  CreditCard,
+  Calendar
 } from 'lucide-react';
 
 interface Order {
@@ -20,12 +24,27 @@ interface Order {
   customer: {
     name: string;
     email: string;
+    phone?: string;
   };
   items: number;
   total: number;
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
   date: string;
   paymentMethod: string;
+  shippingAddress?: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+  };
+  orderItems?: Array<{
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image?: string;
+  }>;
 }
 
 const OrdersPage = () => {
@@ -55,52 +74,128 @@ const OrdersPage = () => {
     {
       id: '1',
       orderNumber: 'ORD-001',
-      customer: { name: 'Sarah Johnson', email: 'sarah@example.com' },
+      customer: { 
+        name: 'Sarah Johnson', 
+        email: 'sarah@example.com',
+        phone: '+880 1712-345678'
+      },
       items: 3,
       total: 289.97,
       status: 'delivered',
       date: '2025-10-21',
-      paymentMethod: 'Credit Card'
+      paymentMethod: 'Credit Card',
+      shippingAddress: {
+        street: '123 Main Street, Apt 4B',
+        city: 'Dhaka',
+        state: 'Dhaka',
+        zipCode: '1000',
+        country: 'Bangladesh'
+      },
+      orderItems: [
+        { id: '1', name: 'Gold Plated Necklace', price: 99.99, quantity: 1, image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=100&q=80' },
+        { id: '2', name: 'Silver Bracelet', price: 79.99, quantity: 1, image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=100&q=80' },
+        { id: '3', name: 'Pearl Earrings', price: 109.99, quantity: 1, image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=100&q=80' }
+      ]
     },
     {
       id: '2',
       orderNumber: 'ORD-002',
-      customer: { name: 'Mike Smith', email: 'mike@example.com' },
+      customer: { 
+        name: 'Mike Smith', 
+        email: 'mike@example.com',
+        phone: '+880 1812-345678'
+      },
       items: 2,
       total: 149.99,
       status: 'processing',
       date: '2025-10-21',
-      paymentMethod: 'PayPal'
+      paymentMethod: 'PayPal',
+      shippingAddress: {
+        street: '456 Park Avenue',
+        city: 'Chittagong',
+        state: 'Chittagong',
+        zipCode: '4000',
+        country: 'Bangladesh'
+      },
+      orderItems: [
+        { id: '4', name: 'Leather Handbag', price: 129.99, quantity: 1, image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=100&q=80' },
+        { id: '5', name: 'Silk Scarf', price: 19.99, quantity: 1, image: 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=100&q=80' }
+      ]
     },
     {
       id: '3',
       orderNumber: 'ORD-003',
-      customer: { name: 'Emma Wilson', email: 'emma@example.com' },
+      customer: { 
+        name: 'Emma Wilson', 
+        email: 'emma@example.com',
+        phone: '+880 1912-345678'
+      },
       items: 1,
       total: 39.99,
       status: 'pending',
       date: '2025-10-20',
-      paymentMethod: 'Credit Card'
+      paymentMethod: 'Credit Card',
+      shippingAddress: {
+        street: '789 Ocean Drive',
+        city: 'Sylhet',
+        state: 'Sylhet',
+        zipCode: '3100',
+        country: 'Bangladesh'
+      },
+      orderItems: [
+        { id: '6', name: 'Designer Sunglasses', price: 39.99, quantity: 1, image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=100&q=80' }
+      ]
     },
     {
       id: '4',
       orderNumber: 'ORD-004',
-      customer: { name: 'John Doe', email: 'john@example.com' },
+      customer: { 
+        name: 'John Doe', 
+        email: 'john@example.com',
+        phone: '+880 1612-345678'
+      },
       items: 4,
       total: 399.96,
       status: 'shipped',
       date: '2025-10-20',
-      paymentMethod: 'Credit Card'
+      paymentMethod: 'Credit Card',
+      shippingAddress: {
+        street: '321 Beach Road',
+        city: 'Cox\'s Bazar',
+        state: 'Chittagong',
+        zipCode: '4700',
+        country: 'Bangladesh'
+      },
+      orderItems: [
+        { id: '7', name: 'Rose Gold Watch', price: 199.99, quantity: 1, image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=100&q=80' },
+        { id: '8', name: 'Diamond Ring', price: 149.99, quantity: 1, image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=100&q=80' },
+        { id: '9', name: 'Gold Bracelet', price: 49.99, quantity: 2, image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=100&q=80' }
+      ]
     },
     {
       id: '5',
       orderNumber: 'ORD-005',
-      customer: { name: 'Lisa Brown', email: 'lisa@example.com' },
+      customer: { 
+        name: 'Lisa Brown', 
+        email: 'lisa@example.com',
+        phone: '+880 1512-345678'
+      },
       items: 2,
       total: 169.98,
       status: 'processing',
       date: '2025-10-19',
-      paymentMethod: 'Debit Card'
+      paymentMethod: 'Debit Card',
+      shippingAddress: {
+        street: '555 Garden Street',
+        city: 'Rajshahi',
+        state: 'Rajshahi',
+        zipCode: '6000',
+        country: 'Bangladesh'
+      },
+      orderItems: [
+        { id: '10', name: 'Crossbody Bag', price: 89.99, quantity: 1, image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=100&q=80' },
+        { id: '11', name: 'Wallet', price: 79.99, quantity: 1, image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=100&q=80' }
+      ]
     }
   ];
 
@@ -287,6 +382,166 @@ const OrdersPage = () => {
             </div>
           )}
         </div>
+
+        {/* Order Detail Modal */}
+        {selectedOrder && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              {/* Modal Header */}
+              <div className="sticky top-0 bg-white border-b border-neutral-200 px-6 py-4 flex items-center justify-between z-10">
+                <div>
+                  <h2 className="text-2xl font-bold text-neutral-900">Order Details</h2>
+                  <p className="text-sm text-neutral-600 mt-1">{selectedOrder.orderNumber}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedOrder(null)}
+                  className="p-2 hover:bg-neutral-100 rounded-lg transition-colors"
+                  aria-label="Close modal"
+                >
+                  <X size={24} className="text-neutral-600" />
+                </button>
+              </div>
+
+              {/* Modal Content */}
+              <div className="p-6 space-y-6">
+                {/* Order Status & Date */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-neutral-50 rounded-lg p-4">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Calendar size={18} className="text-neutral-600" />
+                      <p className="text-sm font-medium text-neutral-700">Order Date</p>
+                    </div>
+                    <p className="text-lg font-semibold text-neutral-900">{selectedOrder.date}</p>
+                  </div>
+                  <div className="bg-neutral-50 rounded-lg p-4">
+                    <p className="text-sm font-medium text-neutral-700 mb-2">Order Status</p>
+                    <div className="flex items-center space-x-2">
+                      <span className={`px-4 py-2 rounded-full text-sm font-medium flex items-center space-x-2 ${getStatusColor(selectedOrder.status)}`}>
+                        {getStatusIcon(selectedOrder.status)}
+                        <span className="capitalize">{selectedOrder.status}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Customer Information */}
+                <div className="border border-neutral-200 rounded-lg p-5">
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-4">Customer Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-neutral-600 mb-1">Name</p>
+                      <p className="font-medium text-neutral-900">{selectedOrder.customer.name}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-neutral-600 mb-1">Email</p>
+                      <p className="font-medium text-neutral-900">{selectedOrder.customer.email}</p>
+                    </div>
+                    {selectedOrder.customer.phone && (
+                      <div>
+                        <p className="text-sm text-neutral-600 mb-1">Phone</p>
+                        <p className="font-medium text-neutral-900">{selectedOrder.customer.phone}</p>
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-sm text-neutral-600 mb-1">Payment Method</p>
+                      <div className="flex items-center space-x-2">
+                        <CreditCard size={16} className="text-neutral-600" />
+                        <p className="font-medium text-neutral-900">{selectedOrder.paymentMethod}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Shipping Address */}
+                {selectedOrder.shippingAddress && (
+                  <div className="border border-neutral-200 rounded-lg p-5">
+                    <div className="flex items-center space-x-2 mb-3">
+                      <MapPin size={20} className="text-neutral-600" />
+                      <h3 className="text-lg font-semibold text-neutral-900">Shipping Address</h3>
+                    </div>
+                    <div className="text-neutral-700 space-y-1">
+                      <p>{selectedOrder.shippingAddress.street}</p>
+                      <p>{selectedOrder.shippingAddress.city}, {selectedOrder.shippingAddress.state} {selectedOrder.shippingAddress.zipCode}</p>
+                      <p>{selectedOrder.shippingAddress.country}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Order Items */}
+                <div className="border border-neutral-200 rounded-lg p-5">
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-4">Order Items</h3>
+                  <div className="space-y-3">
+                    {selectedOrder.orderItems && selectedOrder.orderItems.length > 0 ? (
+                      selectedOrder.orderItems.map((item) => (
+                        <div key={item.id} className="flex items-center space-x-4 py-3 border-b border-neutral-100 last:border-0">
+                          {item.image && (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-16 h-16 object-cover rounded-lg"
+                            />
+                          )}
+                          <div className="flex-1">
+                            <p className="font-medium text-neutral-900">{item.name}</p>
+                            <p className="text-sm text-neutral-600">Quantity: {item.quantity}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-semibold text-neutral-900">৳{item.price.toFixed(2)}</p>
+                            {item.quantity > 1 && (
+                              <p className="text-xs text-neutral-600">৳{(item.price * item.quantity).toFixed(2)} total</p>
+                            )}
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-neutral-600 text-center py-4">No item details available</p>
+                    )}
+                  </div>
+
+                  {/* Order Summary */}
+                  <div className="mt-6 pt-4 border-t border-neutral-200">
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-neutral-700">
+                        <span>Subtotal ({selectedOrder.items} items)</span>
+                        <span>৳{selectedOrder.total.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-neutral-700">
+                        <span>Shipping</span>
+                        <span className="text-green-600 font-medium">Free</span>
+                      </div>
+                      <div className="flex justify-between text-lg font-bold text-neutral-900 pt-2 border-t border-neutral-200">
+                        <span>Total</span>
+                        <span>৳{selectedOrder.total.toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                  <select
+                    value={selectedOrder.status}
+                    onChange={(e) => {
+                      updateOrderStatus(selectedOrder.id, e.target.value as Order['status']);
+                      setSelectedOrder({...selectedOrder, status: e.target.value as Order['status']});
+                    }}
+                    className="flex-1 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 font-medium"
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                  <button className="px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors flex items-center justify-center space-x-2">
+                    <Download size={20} />
+                    <span>Download Invoice</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
