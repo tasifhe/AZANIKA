@@ -65,14 +65,41 @@ const server = app.listen(PORT, () => {
   testDBConnection();
 });
 
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received, shutting down gracefully');
+// Graceful shutdown handlers
+const gracefulShutdown = async (signal: string) => {
+  console.log(`${signal} received, shutting down gracefully...`);
+  
   server.close(async () => {
-    await pool.end();
-    console.log('Server closed');
-    process.exit(0);
+    try {
+      await pool.end();
+      console.log('✅ Database connections closed');
+      console.log('✅ Server shut down successfully');
+      process.exit(0);
+    } catch (error) {
+      console.error('❌ Error during shutdown:', error);
+      process.exit(1);
+    }
   });
+
+  // Force shutdown after 30 seconds
+  setTimeout(() => {
+    console.error('⚠️ Forced shutdown after timeout');
+    process.exit(1);
+  }, 30000);
+};
+
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+
+// Handle uncaught errors
+process.on('uncaughtException', (error) => {
+  console.error('❌ Uncaught Exception:', error);
+  gracefulShutdown('UNCAUGHT_EXCEPTION');
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+  gracefulShutdown('UNHANDLED_REJECTION');
 });
 
 export default app;
