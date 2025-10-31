@@ -47,10 +47,10 @@ const testDBConnection = async () => {
 };
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT || '5000', 10);
 
-const server = app.listen(PORT, () => {
-  console.log(`🚀 Server is running on port ${PORT}`);
+const server = app.listen(PORT, 'localhost', () => {
+  console.log(`🚀 Server is running on http://localhost:${PORT}`);
   testDBConnection();
 });
 
