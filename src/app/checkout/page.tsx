@@ -98,9 +98,9 @@ const CheckoutPage = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm text-neutral-600 mb-8">
-          <Link href="/" className="hover:text-primary-600">Home</Link>
+          <Link href="/" className="hover:text-blush-600">Home</Link>
           <span>/</span>
-          <Link href="/cart" className="hover:text-primary-600">Cart</Link>
+          <Link href="/cart" className="hover:text-blush-600">Cart</Link>
           <span>/</span>
           <span className="text-neutral-900">Checkout</span>
         </nav>
@@ -125,7 +125,7 @@ const CheckoutPage = () => {
                       required
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                     />
                   </div>
                   <div>
@@ -138,7 +138,7 @@ const CheckoutPage = () => {
                       required
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -151,7 +151,7 @@ const CheckoutPage = () => {
                       required
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -164,7 +164,7 @@ const CheckoutPage = () => {
                       required
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                     />
                   </div>
                 </div>
@@ -187,7 +187,7 @@ const CheckoutPage = () => {
                       required
                       value={formData.address}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                     />
                   </div>
                   <div>
@@ -200,7 +200,7 @@ const CheckoutPage = () => {
                       required
                       value={formData.city}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                     />
                   </div>
                   <div>
@@ -213,7 +213,7 @@ const CheckoutPage = () => {
                       required
                       value={formData.state}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -226,7 +226,7 @@ const CheckoutPage = () => {
                       required
                       value={formData.zipCode}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                     />
                   </div>
                 </div>
@@ -249,7 +249,7 @@ const CheckoutPage = () => {
                       required
                       value={formData.cardName}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                     />
                   </div>
                   <div>
@@ -263,7 +263,7 @@ const CheckoutPage = () => {
                       placeholder="1234 5678 9012 3456"
                       value={formData.cardNumber}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
@@ -278,7 +278,7 @@ const CheckoutPage = () => {
                         placeholder="MM/YY"
                         value={formData.expiryDate}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                       />
                     </div>
                     <div>
@@ -292,7 +292,7 @@ const CheckoutPage = () => {
                         placeholder="123"
                         value={formData.cvv}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                       />
                     </div>
                   </div>
@@ -384,7 +384,7 @@ const CheckoutPage = () => {
         <div className="mt-8">
           <Link
             href="/cart"
-            className="text-primary-600 hover:text-primary-700 font-medium inline-flex items-center"
+            className="text-blush-600 hover:text-blush-700 font-medium inline-flex items-center"
           >
             <ArrowLeft className="mr-2" size={20} />
             Back to Cart

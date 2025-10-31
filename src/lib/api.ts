@@ -1,5 +1,5 @@
 // API configuration and utilities
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://azanika.onrender.com/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://azanika-backend.onrender.com/api';
 
 interface ApiResponse<T> {
   success: boolean;
