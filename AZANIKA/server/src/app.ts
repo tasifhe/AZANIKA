@@ -77,9 +77,12 @@ const testDBConnection = async () => {
 
 // Start server
 const PORT = parseInt(process.env.PORT || '5000', 10);
+// For production deployment, bind to 0.0.0.0. For local development, use localhost
+const HOST = process.env.NODE_ENV === 'production' || process.env.PORT ? '0.0.0.0' : 'localhost';
 
-const server = app.listen(PORT, 'localhost', () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+const server = app.listen(PORT, HOST, () => {
+  console.log(`🚀 Server is running on http://${HOST}:${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
   testDBConnection();
 });
 
