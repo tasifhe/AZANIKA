@@ -1,10 +1,8 @@
 // API configuration and utilities
-// Primary backend: Railway (faster, better performance)
-// Fallback: Render
-// Railway: 'https://azanika-backend-production.up.railway.app/api'
-// Render: 'https://azanika.onrender.com/api'
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://azanika-backend-production.up.railway.app/api';
+// Using Vercel Serverless Functions - same domain, no CORS issues!
+// Production: /api (same domain as frontend)
+// Development: http://localhost:3000/api or Railway fallback
+const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 interface ApiResponse<T> {
   success: boolean;
