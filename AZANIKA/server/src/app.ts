@@ -19,15 +19,40 @@ const allowedOrigins = [
   'http://localhost:3001',
   'https://azanika.vercel.app',
   'https://azanika-frontend.vercel.app',
+  // Add any potential Vercel preview deployments
+  /^https:\/\/azanika.*\.vercel\.app$/,
   process.env.CLIENT_URL
-].filter((origin): origin is string => Boolean(origin));
+].filter((origin): origin is string | RegExp => Boolean(origin));
 
 console.log('Allowed CORS origins:', allowedOrigins);
 
-app.use(cors({
-  origin: allowedOrigins,
+// More permissive CORS for production debugging
+const corsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    // Check if origin matches any allowed origins
+    const isAllowed = allowedOrigins.some(allowedOrigin => {
+      if (typeof allowedOrigin === 'string') {
+        return allowedOrigin === origin;
+      } else if (allowedOrigin instanceof RegExp) {
+        return allowedOrigin.test(origin);
+      }
+      return false;
+    });
+
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      console.log(`CORS blocked origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'), false);
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: [
     'Content-Type',
     'Authorization',
@@ -35,20 +60,44 @@ app.use(cors({
     'X-Requested-With',
     'Accept',
     'Access-Control-Request-Method',
-    'Access-Control-Request-Headers'
+    'Access-Control-Request-Headers',
+    'Cache-Control',
+    'Pragma'
   ],
   exposedHeaders: ['Access-Control-Allow-Origin'],
   optionsSuccessStatus: 200,
   preflightContinue: false
-}));
+};
+
+app.use(cors(corsOptions));
 
 // Manual OPTIONS handler for additional CORS support
 app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Origin, X-Requested-With, Accept');
+  const origin = req.headers.origin;
+  console.log(`OPTIONS request from origin: ${origin}`);
+  
+  // Allow the requesting origin if it's in our allowed list
+  if (origin && (
+    origin === 'https://azanika.vercel.app' ||
+    origin.match(/^https:\/\/azanika.*\.vercel\.app$/) ||
+    origin.includes('localhost')
+  )) {
+    res.header('Access-Control-Allow-Origin', origin);
+  } else {
+    res.header('Access-Control-Allow-Origin', 'https://azanika.vercel.app');
+  }
+  
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Origin, X-Requested-With, Accept, Cache-Control, Pragma');
   res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Max-Age', '86400'); // Cache preflight for 24 hours
   res.status(200).end();
+});
+
+// Request logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path} - Origin: ${req.headers.origin || 'none'}`);
+  next();
 });
 
 app.use(express.json());
