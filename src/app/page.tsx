@@ -15,8 +15,10 @@ import { AnimatedContent, FadeIn, ScaleIn, StaggerContainer, StaggerItem } from 
 import { AnimatedGrid } from '@/components/animations/AnimatedList';
 import { Parallax } from '@/components/animations/ScrollAnimations';
 import { productsApi } from '@/lib/api';
+import { DatabaseProduct } from '@/types';
 
-interface Product {
+// Map DatabaseProduct to display format
+interface DisplayProduct {
   id: string;
   name: string;
   price: number;
@@ -28,7 +30,7 @@ interface Product {
 }
 
 const HomePage = () => {
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [featuredProducts, setFeaturedProducts] = useState<DisplayProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,7 +41,17 @@ const HomePage = () => {
     try {
       const response = await productsApi.getAll();
       if (response.success && response.data) {
-        const products = response.data as Product[];
+        // Map DatabaseProduct to DisplayProduct
+        const products: DisplayProduct[] = response.data.map((p: DatabaseProduct) => ({
+          id: String(p.id),
+          name: p.name,
+          price: p.price,
+          image_url: p.image_url || (p.images && p.images[0]) || '',
+          images: p.images,
+          category: p.category,
+          rating: p.rating,
+          featured: p.featured
+        }));
         // Get featured products or first 6 products
         const featured = products.filter(p => p.featured).slice(0, 6);
         setFeaturedProducts(featured.length > 0 ? featured : products.slice(0, 6));

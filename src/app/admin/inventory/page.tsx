@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminSidebar from '@/components/AdminSidebar';
 import { productsApi } from '@/lib/api';
+import { DatabaseProduct } from '@/types';
 import { 
   Search, 
   AlertTriangle,
@@ -16,24 +17,13 @@ import {
   X
 } from 'lucide-react';
 
-interface Product {
-  id: number;
-  sku: string;
-  name: string;
-  category: string;
-  stock: number;
-  price: string;
-  description: string;
-  image_url?: string;
-}
-
 const InventoryPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [products, setProducts] = useState<DatabaseProduct[]>([]);
+  const [editingProduct, setEditingProduct] = useState<DatabaseProduct | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -68,7 +58,7 @@ const InventoryPage = () => {
     router.push('/admin/login');
   };
 
-  const getStockStatus = (product: Product) => {
+  const getStockStatus = (product: DatabaseProduct) => {
     const stock = product.stock || 0;
     if (stock === 0) return 'critical';
     if (stock <= 5) return 'low';
@@ -77,10 +67,21 @@ const InventoryPage = () => {
 
   const handleSaveProduct = async () => {
     try {
+      // Convert form data to proper types
+      const productData = {
+        name: formData.name,
+        description: formData.description,
+        price: parseFloat(formData.price) || 0,
+        category: formData.category,
+        image_url: formData.image_url,
+        stock: parseInt(formData.stock) || 0,
+        sku: formData.sku
+      };
+      
       if (editingProduct) {
-        await productsApi.update(String(editingProduct.id), formData);
+        await productsApi.update(String(editingProduct.id), productData);
       } else {
-        await productsApi.create(formData);
+        await productsApi.create(productData);
       }
       fetchProducts();
       setShowAddModal(false);
@@ -92,7 +93,7 @@ const InventoryPage = () => {
     }
   };
 
-  const handleEditProduct = (product: Product) => {
+  const handleEditProduct = (product: DatabaseProduct) => {
     setEditingProduct(product);
     setFormData({
       name: product.name,
