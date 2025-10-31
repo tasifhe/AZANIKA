@@ -19,7 +19,7 @@ const ForgotPasswordPage = () => {
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     // Here you would typically call your password reset API
-    console.log('Password reset requested for:', email);
+    // TODO: Implement actual password reset logic
     
     setIsLoading(false);
     setIsSuccess(true);

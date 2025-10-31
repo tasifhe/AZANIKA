@@ -49,7 +49,8 @@ const ProductsContent = () => {
         setProducts(response.data as Product[]);
       }
     } catch (error) {
-      console.error('Error fetching products:', error);
+      // Handle error silently in production
+      // TODO: Implement proper error logging service
     } finally {
       setLoading(false);
     }

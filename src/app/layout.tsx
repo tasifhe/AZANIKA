@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google'
 import '../styles/globals.css'
 import { CartProvider } from '@/lib/cart-context'
 import { Toaster } from 'react-hot-toast'
+import ErrorBoundary from '@/components/ErrorBoundary'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -60,19 +61,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CartProvider>
-          {children}
-          <Toaster 
-            position="top-right"
-            toastOptions={{
-              duration: 3000,
-              style: {
-                background: '#363636',
-                color: '#fff',
-              },
-            }}
-          />
-        </CartProvider>
+        <ErrorBoundary>
+          <CartProvider>
+            {children}
+            <Toaster 
+              position="top-right"
+              toastOptions={{
+                duration: 3000,
+                style: {
+                  background: '#363636',
+                  color: '#fff',
+                },
+              }}
+            />
+          </CartProvider>
+        </ErrorBoundary>
       </body>
     </html>
   )

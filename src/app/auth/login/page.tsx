@@ -22,7 +22,7 @@ const LoginPage = () => {
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     // Here you would typically call your authentication API
-    console.log('Login attempt:', formData);
+    // TODO: Implement actual authentication logic
     
     setIsLoading(false);
   };

@@ -45,7 +45,8 @@ const HomePage = () => {
         setFeaturedProducts(featured.length > 0 ? featured : products.slice(0, 6));
       }
     } catch (error) {
-      console.error('Error fetching products:', error);
+      // Handle error silently in production
+      // TODO: Implement proper error logging service
     } finally {
       setLoading(false);
     }

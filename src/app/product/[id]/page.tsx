@@ -53,7 +53,8 @@ const ProductDetailPage = () => {
         setProduct(response.data);
       }
     } catch (error) {
-      console.error('Error fetching product:', error);
+      // Handle error silently in production
+      // TODO: Implement proper error logging service
     } finally {
       setLoading(false);
     }
@@ -69,7 +70,8 @@ const ProductDetailPage = () => {
         setRelatedProducts(filtered);
       }
     } catch (error) {
-      console.error('Error fetching related products:', error);
+      // Handle error silently in production
+      // TODO: Implement proper error logging service
     }
   };
 

@@ -87,7 +87,7 @@ const InventoryPage = () => {
       setEditingProduct(null);
       setFormData({ name: '', description: '', price: '', category: '', image_url: '', stock: '', sku: '' });
     } catch (error) {
-      console.error('Error saving product:', error);
+      // Handle error silently in production
       alert('Failed to save product');
     }
   };
@@ -112,7 +112,7 @@ const InventoryPage = () => {
         await productsApi.delete(String(id));
         fetchProducts();
       } catch (error) {
-        console.error('Error deleting product:', error);
+        // Handle error silently in production
         alert('Failed to delete product');
       }
     }

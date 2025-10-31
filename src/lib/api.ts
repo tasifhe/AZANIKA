@@ -1,11 +1,7 @@
 // API configuration and utilities
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://azanika-backend.onrender.com/api';
+import { ApiResponse, DatabaseProduct, Order, DashboardStats, LoginCredentials, SignupData, AuthResponse } from '@/types';
 
-interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: string;
-}
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://azanika-backend.onrender.com/api';
 
 // Helper function for API calls
 async function apiCall<T>(
@@ -48,19 +44,19 @@ async function apiCall<T>(
 
 // Products API
 export const productsApi = {
-  getAll: () => apiCall('/products'),
-  getById: (id: string) => apiCall(`/products/${id}`),
-  create: (productData: any) =>
+  getAll: (): Promise<ApiResponse<DatabaseProduct[]>> => apiCall('/products'),
+  getById: (id: string): Promise<ApiResponse<DatabaseProduct>> => apiCall(`/products/${id}`),
+  create: (productData: Partial<DatabaseProduct>): Promise<ApiResponse<DatabaseProduct>> =>
     apiCall('/products', {
       method: 'POST',
       body: JSON.stringify(productData),
     }),
-  update: (id: string, productData: any) =>
+  update: (id: string, productData: Partial<DatabaseProduct>): Promise<ApiResponse<DatabaseProduct>> =>
     apiCall(`/products/${id}`, {
       method: 'PUT',
       body: JSON.stringify(productData),
     }),
-  delete: (id: string) =>
+  delete: (id: string): Promise<ApiResponse<void>> =>
     apiCall(`/products/${id}`, {
       method: 'DELETE',
     }),
@@ -68,14 +64,14 @@ export const productsApi = {
 
 // Orders API
 export const ordersApi = {
-  getAll: () => apiCall('/orders'),
-  getById: (id: string) => apiCall(`/orders/${id}`),
-  create: (orderData: any) =>
+  getAll: (): Promise<ApiResponse<Order[]>> => apiCall('/orders'),
+  getById: (id: string): Promise<ApiResponse<Order>> => apiCall(`/orders/${id}`),
+  create: (orderData: Partial<Order>): Promise<ApiResponse<Order>> =>
     apiCall('/orders', {
       method: 'POST',
       body: JSON.stringify(orderData),
     }),
-  updateStatus: (id: string, status: string) =>
+  updateStatus: (id: string, status: Order['status']): Promise<ApiResponse<Order>> =>
     apiCall(`/orders/${id}/status`, {
       method: 'PATCH',
       body: JSON.stringify({ status }),
@@ -84,21 +80,26 @@ export const ordersApi = {
 
 // Auth API
 export const authApi = {
-  login: (email: string, password: string) =>
+  login: (credentials: LoginCredentials): Promise<ApiResponse<AuthResponse>> =>
     apiCall('/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify(credentials),
     }),
-  register: (email: string, password: string, name: string) =>
+  register: (userData: SignupData): Promise<ApiResponse<AuthResponse>> =>
     apiCall('/auth/register', {
       method: 'POST',
-      body: JSON.stringify({ email, password, name }),
+      body: JSON.stringify(userData),
+    }),
+  forgotPassword: (email: string): Promise<ApiResponse<{ message: string }>> =>
+    apiCall('/auth/forgot-password', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
     }),
 };
 
 // Dashboard stats
 export const dashboardApi = {
-  getStats: async () => {
+  getStats: async (): Promise<ApiResponse<DashboardStats>> => {
     try {
       const [productsRes, ordersRes] = await Promise.all([
         productsApi.getAll(),
@@ -110,14 +111,14 @@ export const dashboardApi = {
 
       // Calculate stats
       const totalRevenue = orders.reduce(
-        (sum: number, order: any) => sum + parseFloat(order.total_amount || 0),
+        (sum: number, order: Order) => sum + (order.total || 0),
         0
       );
       const totalOrders = orders.length;
       const totalProducts = products.length;
 
       // Low stock products
-      const lowStockProducts = products.filter((p: any) => p.stock < 10);
+      const lowStockProducts = products.filter((p: DatabaseProduct) => (p.stock || 0) < 10);
 
       return {
         success: true,

@@ -222,7 +222,7 @@ const OrdersPage = () => {
 
   const updateOrderStatus = (orderId: string, newStatus: Order['status']) => {
     // TODO: Implement API call to update order status
-    console.log(`Updating order ${orderId} to status: ${newStatus}`);
+    // Status update logic would go here
   };
 
   const filteredOrders = orders.filter(order => {
