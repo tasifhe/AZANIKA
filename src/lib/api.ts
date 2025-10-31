@@ -2,7 +2,7 @@
 // Using Vercel Serverless Functions - same domain, no CORS issues!
 // Production: /api (same domain as frontend)
 // Development: http://localhost:3000/api or Railway fallback
-const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
+const API_URL = 'https://azanika-backend.onrender.com/api';
 
 interface ApiResponse<T> {
   success: boolean;
