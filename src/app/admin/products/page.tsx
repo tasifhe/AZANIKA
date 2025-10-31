@@ -5,29 +5,16 @@ import { useRouter } from 'next/navigation';
 import AdminSidebar from '@/components/AdminSidebar';
 import RichTextEditor from '@/components/RichTextEditor';
 import { productsApi } from '@/lib/api';
+import { DatabaseProduct } from '@/types';
 import { Plus, Edit, Trash2, Search, Package } from 'lucide-react';
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  stock: number;
-  category: string;
-  image_url?: string;
-  images?: string[];
-  colors?: string[];
-  sizes?: string[];
-  sku: string;
-}
 
 const AdminProductsPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<DatabaseProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [editingProduct, setEditingProduct] = useState<DatabaseProduct | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -71,6 +58,8 @@ const AdminProductsPage = () => {
     // Format the data for API
     const productData = {
       ...formData,
+      price: parseFloat(formData.price),
+      stock: parseInt(formData.stock),
       images: formData.images ? formData.images.split(',').map(s => s.trim()).filter(Boolean) : [],
       colors: formData.colors ? formData.colors.split(',').map(s => s.trim()).filter(Boolean) : [],
       sizes: formData.sizes ? formData.sizes.split(',').map(s => s.trim()).filter(Boolean) : [],
@@ -94,6 +83,8 @@ const AdminProductsPage = () => {
     // Format the data for API
     const productData = {
       ...formData,
+      price: parseFloat(formData.price),
+      stock: parseInt(formData.stock),
       images: formData.images ? formData.images.split(',').map(s => s.trim()).filter(Boolean) : [],
       colors: formData.colors ? formData.colors.split(',').map(s => s.trim()).filter(Boolean) : [],
       sizes: formData.sizes ? formData.sizes.split(',').map(s => s.trim()).filter(Boolean) : [],
@@ -122,25 +113,25 @@ const AdminProductsPage = () => {
     }
   };
 
-  const startEdit = (product: Product) => {
+  const startEdit = (product: DatabaseProduct) => {
     setEditingProduct(product);
     setFormData({
       name: product.name,
-      description: product.description,
-      price: product.price,
-      stock: product.stock.toString(),
+      description: product.description || '',
+      price: product.price.toString(),
+      stock: (product.stock || 0).toString(),
       category: product.category,
       image_url: product.image_url || '',
       images: Array.isArray(product.images) ? product.images.join(', ') : '',
       colors: Array.isArray(product.colors) ? product.colors.join(', ') : '',
       sizes: Array.isArray(product.sizes) ? product.sizes.join(', ') : '',
-      sku: product.sku
+      sku: product.sku || ''
     });
   };
 
   const filteredProducts = products.filter(p => 
     p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.sku.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    p.sku?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     p.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -209,7 +200,7 @@ const AdminProductsPage = () => {
                       <div>
                         <p className="font-medium text-neutral-900">{product.name}</p>
                         <p className="text-sm text-neutral-500">
-                          {product.description.replace(/<[^>]*>/g, '').substring(0, 50)}...
+                          {product.description?.replace(/<[^>]*>/g, '').substring(0, 50)}...
                         </p>
                       </div>
                     </div>
@@ -223,9 +214,9 @@ const AdminProductsPage = () => {
                   <td className="py-4 px-6 text-sm font-medium text-neutral-900">৳{product.price}</td>
                   <td className="py-4 px-6">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      product.stock < 10 ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
+                      (product.stock || 0) < 10 ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
                     }`}>
-                      {product.stock} units
+                      {product.stock || 0} units
                     </span>
                   </td>
                   <td className="py-4 px-6">
