@@ -10,6 +10,7 @@ import ProductCard from '@/components/ProductCard';
 import NewsletterSignup from '@/components/NewsletterSignup';
 import HeroSlideshow from '@/components/HeroSlideshow';
 import PromoPopup from '@/components/PromoPopup';
+import Testimonials from '@/components/Testimonials';
 import { AnimatedContent, FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/animations/AnimatedContent';
 import { AnimatedGrid } from '@/components/animations/AnimatedList';
 import { Parallax } from '@/components/animations/ScrollAnimations';
@@ -39,9 +40,9 @@ const HomePage = () => {
       const response = await productsApi.getAll();
       if (response.success && response.data) {
         const products = response.data as Product[];
-        // Get featured products or first 4 products
-        const featured = products.filter(p => p.featured).slice(0, 4);
-        setFeaturedProducts(featured.length > 0 ? featured : products.slice(0, 4));
+        // Get featured products or first 6 products
+        const featured = products.filter(p => p.featured).slice(0, 6);
+        setFeaturedProducts(featured.length > 0 ? featured : products.slice(0, 6));
       }
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -81,57 +82,93 @@ const HomePage = () => {
       {/* Hero Slideshow */}
       <HeroSlideshow />
 
-      {/* Features Section with Animations */}
-      <section className="py-12 md:py-16 bg-gradient-to-b from-white via-blush-50/30 to-white pattern-mesh">
+      {/* New Arrivals Banner - Mobile Optimized */}
+      <section className="py-6 md:py-8 bg-gradient-to-r from-pink-50 via-blush-50 to-pink-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedGrid className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8" staggerDelay={0.15}>
-            <div className="text-center group">
-              <div className="bg-gradient-to-br from-blush-100 to-blush-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 glow-on-hover">
-                <Truck className="text-blush-600 bounce-gentle" size={24} />
+          <div className="relative bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-lg">
+            <div className="absolute inset-0 bg-gradient-to-br from-blush-100/50 via-transparent to-pink-100/50"></div>
+            <div className="relative p-6 md:p-10 text-center">
+              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-pink-500 to-blush-500 text-white px-3 md:px-4 py-1 md:py-1.5 rounded-full mb-3 md:mb-4 text-xs md:text-sm font-bold shadow-md animate-pulse">
+                <Sparkles size={14} />
+                <span>LATEST TRENDS</span>
               </div>
-              <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Free Shipping</h3>
-              <p className="text-neutral-600 text-xs md:text-sm">Orders over ৳5,000</p>
+              <h2 className="text-2xl md:text-4xl font-bold text-neutral-900 mb-2 md:mb-3">
+                New Arrivals
+              </h2>
+              <p className="text-sm md:text-base text-neutral-600 mb-4 md:mb-6 max-w-2xl mx-auto">
+                Be the first to discover our newest additions and stay ahead of fashion trends
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link
+                  href="/products?sort=newest"
+                  className="premium-gradient text-white px-6 md:px-8 py-2.5 md:py-3 rounded-lg md:rounded-xl font-semibold text-sm md:text-base inline-flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                >
+                  Shop Now
+                  <ArrowRight className="ml-2" size={18} />
+                </Link>
+                <Link
+                  href="/products"
+                  className="bg-white border-2 border-blush-200 text-blush-600 px-6 md:px-8 py-2.5 md:py-3 rounded-lg md:rounded-xl font-semibold text-sm md:text-base inline-flex items-center justify-center hover:bg-blush-50 transition-all"
+                >
+                  View All
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section with Animations */}
+      <section className="py-8 md:py-16 bg-gradient-to-b from-white via-blush-50/30 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedGrid className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8" staggerDelay={0.15}>
+            <div className="text-center group p-4 md:p-6 bg-white rounded-2xl hover:shadow-lg transition-all duration-300">
+              <div className="bg-gradient-to-br from-blush-100 to-blush-50 w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-md group-hover:shadow-xl transition-all duration-300">
+                <Truck className="text-blush-600" size={20} />
+              </div>
+              <h3 className="font-bold text-neutral-900 mb-1 text-xs md:text-base">Free Shipping</h3>
+              <p className="text-neutral-600 text-[10px] md:text-sm leading-tight">Orders over ৳2,000</p>
             </div>
             
-            <div className="text-center group">
-              <div className="bg-gradient-to-br from-blush-200 to-blush-100 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 glow-on-hover">
-                <Shield className="text-blush-700 bounce-gentle" size={24} />
+            <div className="text-center group p-4 md:p-6 bg-white rounded-2xl hover:shadow-lg transition-all duration-300">
+              <div className="bg-gradient-to-br from-blush-200 to-blush-100 w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-md group-hover:shadow-xl transition-all duration-300">
+                <Shield className="text-blush-700" size={20} />
               </div>
-              <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Secure Payment</h3>
-              <p className="text-neutral-600 text-xs md:text-sm">SSL encryption</p>
+              <h3 className="font-bold text-neutral-900 mb-1 text-xs md:text-base">Secure Payment</h3>
+              <p className="text-neutral-600 text-[10px] md:text-sm leading-tight">SSL encryption</p>
             </div>
             
-            <div className="text-center group">
-              <div className="bg-gradient-to-br from-blush-100 to-blush-50 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 glow-on-hover">
-                <RefreshCw className="text-blush-600 bounce-gentle" size={24} />
+            <div className="text-center group p-4 md:p-6 bg-white rounded-2xl hover:shadow-lg transition-all duration-300">
+              <div className="bg-gradient-to-br from-blush-100 to-blush-50 w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-md group-hover:shadow-xl transition-all duration-300">
+                <RefreshCw className="text-blush-600" size={20} />
               </div>
-              <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Easy Returns</h3>
-              <p className="text-neutral-600 text-xs md:text-sm">7-day returns</p>
+              <h3 className="font-bold text-neutral-900 mb-1 text-xs md:text-base">Easy Returns</h3>
+              <p className="text-neutral-600 text-[10px] md:text-sm leading-tight">7-day returns</p>
             </div>
             
-            <div className="text-center group">
-              <div className="bg-gradient-to-br from-blush-200 to-blush-100 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 glow-on-hover">
-                <Award className="text-blush-700 bounce-gentle" size={24} />
+            <div className="text-center group p-4 md:p-6 bg-white rounded-2xl hover:shadow-lg transition-all duration-300">
+              <div className="bg-gradient-to-br from-blush-200 to-blush-100 w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-md group-hover:shadow-xl transition-all duration-300">
+                <Award className="text-blush-700" size={20} />
               </div>
-              <h3 className="font-bold text-neutral-900 mb-1 md:mb-2 text-sm md:text-lg">Premium Quality</h3>
-              <p className="text-neutral-600 text-xs md:text-sm">Luxury items</p>
+              <h3 className="font-bold text-neutral-900 mb-1 text-xs md:text-base">Premium Quality</h3>
+              <p className="text-neutral-600 text-[10px] md:text-sm leading-tight">Luxury items</p>
             </div>
           </AnimatedGrid>
         </div>
       </section>
 
       {/* Categories Section */}
-      <section className="py-12 md:py-20 pattern-gradient-bg">
+      <section className="py-8 md:py-20 bg-gradient-blush-dream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedContent direction="up" className="text-center mb-8 md:mb-12">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blush-100 to-blush-50 text-blush-700 px-3 md:px-4 py-2 rounded-full mb-3 md:mb-4 shadow-sm">
-              <Sparkles size={18} className="animate-spin-slow" />
-              <span className="font-semibold text-sm md:text-base">Shop by Category</span>
+          <AnimatedContent direction="up" className="text-center mb-6 md:mb-12">
+            <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm text-blush-700 px-3 md:px-4 py-1.5 md:py-2 rounded-full mb-3 md:mb-4 shadow-sm">
+              <Sparkles size={16} className="animate-spin-slow" />
+              <span className="font-semibold text-xs md:text-base">Shop by Category</span>
             </div>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-neutral-900 mb-3 md:mb-4 px-4">
+            <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-neutral-900 mb-2 md:mb-4 px-4">
               Discover Your Style
             </h2>
-            <p className="text-base md:text-xl text-neutral-600 max-w-2xl mx-auto px-4">
+            <p className="text-sm md:text-xl text-neutral-600 max-w-2xl mx-auto px-4">
               Explore our curated collection of premium accessories
             </p>
           </AnimatedContent>
@@ -143,7 +180,7 @@ const HomePage = () => {
                 href={category.link}
                 className="group relative"
               >
-                <div className="relative h-64 md:h-80 rounded-2xl md:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 glow-on-hover">
+                <div className="relative h-56 md:h-80 rounded-2xl md:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
                   <Image
                     src={category.image}
                     alt={category.name}
@@ -154,14 +191,14 @@ const HomePage = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-blush-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8">
                     <div className="mb-2 md:mb-3 text-white transform group-hover:scale-110 transition-transform">
-                      <category.icon className="w-10 h-10 md:w-14 md:h-14" />
+                      <category.icon className="w-8 h-8 md:w-14 md:h-14" />
                     </div>
-                    <h3 className="text-white text-xl md:text-2xl font-bold mb-1 md:mb-2 transform group-hover:translate-x-2 transition-transform duration-300">
+                    <h3 className="text-white text-lg md:text-2xl font-bold mb-1 md:mb-2 transform group-hover:translate-x-2 transition-transform duration-300">
                       {category.name}
                     </h3>
                     <div className="flex items-center text-white/90 group-hover:text-white transform group-hover:translate-x-2 transition-all duration-300">
                       <span className="text-xs md:text-sm font-medium">Explore Collection</span>
-                      <ArrowRight className="ml-2 transform group-hover:translate-x-2 transition-transform" size={16} />
+                      <ArrowRight className="ml-1 md:ml-2 transform group-hover:translate-x-2 transition-transform" size={14} />
                     </div>
                   </div>
                 </div>
@@ -172,46 +209,56 @@ const HomePage = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="py-12 md:py-20 bg-gradient-blush-dream">
+      <section className="py-8 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedContent direction="up" className="text-center mb-8 md:mb-12">
-            <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm text-blush-700 px-3 md:px-4 py-2 rounded-full mb-3 md:mb-4 shadow-md">
-              <TrendingUp size={18} />
-              <span className="font-semibold text-sm md:text-base">Trending Now</span>
+          <AnimatedContent direction="up" className="text-center mb-6 md:mb-12">
+            <div className="inline-flex items-center space-x-2 bg-blush-50 text-blush-700 px-3 md:px-4 py-1.5 md:py-2 rounded-full mb-2 md:mb-4 shadow-md">
+              <TrendingUp size={16} />
+              <span className="font-semibold text-xs md:text-base">Trending Now</span>
             </div>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-neutral-900 mb-3 md:mb-4 px-4">
+            <h2 className="text-xl md:text-3xl lg:text-5xl font-bold text-neutral-900 mb-2 md:mb-4 px-4">
               Featured Products
             </h2>
-            <p className="text-base md:text-xl text-neutral-600 max-w-2xl mx-auto px-4">
-              Handpicked favorites from our latest collection
+            <p className="text-sm md:text-xl text-neutral-600 max-w-2xl mx-auto px-4">
+              Discover our handpicked favorites - curated just for you
             </p>
           </AnimatedContent>
 
           {loading ? (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-12">
-              {[...Array(4)].map((_, i) => (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-6 mb-6 md:mb-12">
+              {[...Array(6)].map((_, i) => (
                 <div key={i} className="bg-white/60 backdrop-blur rounded-2xl h-72 md:h-96 animate-pulse shimmer"></div>
               ))}
             </div>
           ) : (
-            <AnimatedGrid className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-12" staggerDelay={0.1}>
-              {featuredProducts.map((product) => (
+            <AnimatedGrid className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-6 mb-6 md:mb-12" staggerDelay={0.1}>
+              {featuredProducts.slice(0, 6).map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </AnimatedGrid>
           )}
 
-          <FadeIn className="text-center" delay={0.3}>
+          <FadeIn className="text-center space-y-3 md:space-y-4" delay={0.3}>
             <Link
               href="/products"
-              className="btn-hover premium-gradient text-white px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center elegant-shadow hover:shadow-xl transition-all pulse-ring"
+              className="btn-hover premium-gradient text-white px-6 md:px-10 py-2.5 md:py-4 rounded-lg md:rounded-xl font-semibold text-sm md:text-lg inline-flex items-center elegant-shadow hover:shadow-xl transition-all pulse-ring mx-1 md:mx-2"
             >
-              View All Products
-              <ArrowRight className="ml-2" size={20} />
+              Shop All Products
+              <ArrowRight className="ml-2" size={18} />
+            </Link>
+            <Link
+              href="/products?sort=newest"
+              className="btn-hover bg-white text-blush-600 border-2 border-blush-200 px-6 md:px-10 py-2.5 md:py-4 rounded-lg md:rounded-xl font-semibold text-sm md:text-lg inline-flex items-center hover:bg-blush-50 transition-all mx-1 md:mx-2"
+            >
+              View New Arrivals
+              <Sparkles className="ml-2" size={18} />
             </Link>
           </FadeIn>
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <Testimonials />
 
       {/* Newsletter Section */}
       <section className="py-12 md:py-20 relative overflow-hidden">

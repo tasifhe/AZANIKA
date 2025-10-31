@@ -87,6 +87,7 @@ const Header = () => {
     { name: 'Collections', href: '/products?featured=true' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
+    { name: 'FAQ', href: '/faq' },
   ];
 
   return (
@@ -149,8 +150,10 @@ const Header = () => {
                                 onClick={() => setActiveDropdown(null)}
                                 className="flex items-center space-x-3 px-5 py-2.5 text-neutral-700 hover:bg-gradient-to-r hover:from-blush-50 hover:to-transparent hover:text-blush-600 smooth-transition group rounded-lg mx-2"
                               >
-                                {IconComponent && <IconComponent className="w-5 h-5 icon-float" />}
-                                <span className="text-[14px]">{subItem.name}</span>
+                                {IconComponent && (
+                                  <IconComponent className="w-5 h-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 ease-out" />
+                                )}
+                                <span className="text-[14px] group-hover:translate-x-1 transition-transform duration-300">{subItem.name}</span>
                               </Link>
                             );
                           })}
@@ -160,7 +163,7 @@ const Header = () => {
                   ) : (
                     <Link
                       href={item.href || '/'}
-                      className="text-neutral-700 hover:text-primary-600 font-medium transition-colors duration-200 text-[15px] uppercase tracking-wide"
+                      className="text-neutral-700 hover:text-blush-600 font-semibold smooth-transition py-2 text-[15px] uppercase tracking-wide"
                     >
                       {item.name}
                     </Link>
@@ -187,16 +190,20 @@ const Header = () => {
               </button>
 
               {/* User Account - Desktop only */}
-              <button className="hidden sm:block text-neutral-700 hover:text-blush-600 p-2.5 smooth-transition rounded-lg hover:bg-blush-50" title="Account">
+              <Link 
+                href="/auth/login" 
+                className="hidden sm:block text-neutral-700 hover:text-blush-600 p-2.5 smooth-transition rounded-lg hover:bg-blush-50" 
+                title="Account"
+              >
                 <User size={22} />
-              </button>
+              </Link>
 
               {/* Shopping Cart */}
               <Link href="/cart" className="relative text-neutral-700 hover:text-blush-600 p-2.5 smooth-transition rounded-lg hover:bg-blush-50 group" title="Cart">
                 <ShoppingCart size={22} />
                 {itemCount > 0 && (
-                  <span className="absolute top-1 right-1 premium-gradient text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-bold shadow-md group-hover:scale-110 smooth-transition">
-                    {itemCount}
+                  <span className="absolute -top-1 -right-1 premium-gradient text-white rounded-full text-xs min-w-[20px] h-5 px-1.5 flex items-center justify-center font-bold shadow-lg group-hover:scale-110 smooth-transition animate-pulse">
+                    {itemCount > 99 ? '99+' : itemCount}
                   </span>
                 )}
               </Link>
@@ -204,7 +211,7 @@ const Header = () => {
               {/* Mobile menu button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden text-neutral-700 hover:text-primary-600 p-2.5 transition-colors rounded-lg hover:bg-neutral-100"
+                className="lg:hidden text-neutral-700 hover:text-blush-600 p-2.5 smooth-transition rounded-lg hover:bg-blush-50"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -224,10 +231,10 @@ const Header = () => {
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-4 pr-10 py-2 border border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                  className="w-full pl-4 pr-10 py-2 border border-neutral-300 rounded-lg focus:ring-blush-500 focus:border-blush-500"
                   autoFocus
                 />
-                <button type="submit" className="absolute right-3 top-2.5 text-neutral-400 hover:text-primary-600">
+                <button type="submit" className="absolute right-3 top-2.5 text-neutral-400 hover:text-blush-600">
                   <Search size={16} />
                 </button>
               </form>
@@ -263,7 +270,7 @@ const Header = () => {
                         setShowResults(false);
                         setSearchQuery('');
                       }}
-                      className="block w-full p-3 text-center text-primary-600 hover:bg-primary-50 border-t border-neutral-200 font-medium"
+                      className="block w-full p-3 text-center text-blush-600 hover:bg-blush-50 border-t border-neutral-200 font-medium"
                     >
                       View all results for "{searchQuery}"
                     </Link>
@@ -302,7 +309,7 @@ const Header = () => {
                 ) : (
                   <Link
                     href={item.href || '/'}
-                    className="block px-3 py-2 text-gray-700 hover:text-primary-600 font-medium uppercase tracking-wide"
+                    className="block px-3 py-2 text-neutral-700 hover:text-blush-600 hover:bg-blush-50 font-semibold uppercase tracking-wide smooth-transition rounded-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}

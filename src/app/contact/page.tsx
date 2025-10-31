@@ -57,9 +57,19 @@ const ContactPage = () => {
           <h1 className="text-4xl font-bold text-neutral-900 mb-4">
             Get in <span className="gradient-text">Touch</span>
           </h1>
-          <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
+          <p className="text-xl text-neutral-600 max-w-2xl mx-auto mb-6">
             We'd love to hear from you! Send us a message and we'll respond as soon as possible.
           </p>
+          {/* WhatsApp CTA */}
+          <a 
+            href="https://wa.me/8801712345678" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse-slow"
+          >
+            <MessageCircle size={24} />
+            <span>Chat on WhatsApp</span>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -86,8 +96,21 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-neutral-900">Phone</h3>
-                    <p className="text-neutral-600">+1 (555) 123-4567</p>
-                    <p className="text-neutral-600">+1 (555) 987-6543</p>
+                    <p className="text-neutral-600">+880 1712-345678</p>
+                    <p className="text-neutral-600">+880 1812-345678</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <MessageCircle className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-neutral-900">WhatsApp</h3>
+                    <a href="https://wa.me/8801712345678" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-700 font-medium">
+                      +880 1712-345678
+                    </a>
+                    <p className="text-neutral-500 text-sm mt-1">Chat with us instantly!</p>
                   </div>
                 </div>
                 
@@ -98,9 +121,9 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-semibold text-neutral-900">Address</h3>
                     <p className="text-neutral-600">
-                      123 Fashion Street<br />
-                      New York, NY 10001<br />
-                      United States
+                      House 123, Road 12<br />
+                      Dhanmondi, Dhaka 1209<br />
+                      Bangladesh
                     </p>
                   </div>
                 </div>
