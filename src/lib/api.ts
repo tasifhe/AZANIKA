@@ -1,7 +1,7 @@
 // API configuration and utilities
 import { ApiResponse, DatabaseProduct, Order, DashboardStats, LoginCredentials, SignupData, AuthResponse } from '@/types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://azanika-backend.onrender.com/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://azanika.onrender.com/api';
 
 // Helper function for API calls
 async function apiCall<T>(
