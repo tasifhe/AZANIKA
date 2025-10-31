@@ -1,14 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Pool } from 'pg';
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+import { getPool } from '@/lib/db';
 
 export async function GET() {
+  const pool = getPool();
+  
   try {
     const result = await pool.query(
       'SELECT * FROM products ORDER BY created_at DESC'
@@ -17,13 +12,21 @@ export async function GET() {
   } catch (error: any) {
     console.error('Error fetching products:', error);
     return NextResponse.json(
-      { message: 'Error fetching products', error: error.message },
+      { 
+        message: 'Error fetching products', 
+        error: error.message,
+        details: process.env.DATABASE_URL ? 'DB URL is set' : 'DB URL is missing'
+      },
       { status: 500 }
     );
+  } finally {
+    await pool.end();
   }
 }
 
 export async function POST(request: NextRequest) {
+  const pool = getPool();
+  
   try {
     const body = await request.json();
     const { 
@@ -53,5 +56,7 @@ export async function POST(request: NextRequest) {
       { message: 'Error creating product', error: error.message },
       { status: 500 }
     );
+  } finally {
+    await pool.end();
   }
 }
