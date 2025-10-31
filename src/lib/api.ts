@@ -1,4 +1,8 @@
 // API configuration and utilities
+// Backend options: Railway (recommended) or Render
+// Railway: 'https://your-app.up.railway.app/api'
+// Render: 'https://azanika.onrender.com/api'
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://azanika.onrender.com/api';
 
 interface ApiResponse<T> {

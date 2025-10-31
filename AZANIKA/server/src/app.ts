@@ -14,9 +14,20 @@ import pool from './config/supabase';
 const app = express();
 
 // Middleware
+const allowedOrigins: string[] = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  process.env.CORS_ORIGIN || '',
+  process.env.FRONTEND_URL || ''
+].filter(origin => origin !== '');
+
 app.use(cors({
-  origin: '*', // Allow all origins for local network testing
-  credentials: true
+  origin: process.env.NODE_ENV === 'production' 
+    ? allowedOrigins 
+    : '*', // Allow all origins in development
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
