@@ -1,0 +1,3 @@
+The favicon.ico file is a binary file that represents the icon for your website. Since I cannot generate binary files directly, you will need to create or obtain a favicon image and save it as `favicon.ico` in the specified directory.
+
+You can create a favicon using online tools or design software, and then save it in the `client/public` directory as `favicon.ico`.
