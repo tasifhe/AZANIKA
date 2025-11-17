@@ -8,6 +8,7 @@ import { Star, Heart, ShoppingCart, ArrowLeft, Truck, Shield, RefreshCw } from '
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
+import ReviewSection from '@/components/ReviewSection';
 import { productsApi } from '@/lib/api';
 import { useCart } from '@/lib/cart-context';
 
@@ -341,6 +342,11 @@ const ProductDetailPage = () => {
             </div>
           </div>
         </div>
+
+        {/* Reviews Section */}
+        <section className="border-t pt-8 md:pt-12">
+          <ReviewSection productId={product.id} />
+        </section>
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (

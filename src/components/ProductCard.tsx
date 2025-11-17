@@ -162,9 +162,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
             )}
           </div>
 
-          {/* Colors - Hidden on smallest screens */}
+          {/* Colors - Now visible on all screens */}
           {product.colors && product.colors.length > 0 && (
-            <div className="hidden sm:flex items-center space-x-1 mb-2">
+            <div className="flex items-center space-x-1 mb-2">
               <span className="text-[10px] md:text-xs text-gray-500">Colors:</span>
               <div className="flex space-x-1">
                 {product.colors.slice(0, 3).map((color: string, index: number) => (

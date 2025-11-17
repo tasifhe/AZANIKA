@@ -1,5 +1,5 @@
 // API configuration and utilities
-import { ApiResponse, DatabaseProduct, Order, DashboardStats, LoginCredentials, SignupData, AuthResponse } from '@/types';
+import { ApiResponse, DatabaseProduct, Order, DashboardStats, LoginCredentials, SignupData, AuthResponse, Review } from '@/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://azanika.onrender.com/api';
 
@@ -137,6 +137,21 @@ export const dashboardApi = {
       };
     }
   },
+};
+
+// Reviews API
+export const reviewsApi = {
+  getByProductId: (productId: string): Promise<ApiResponse<{ reviews: Review[]; averageRating: number; reviewCount: number }>> => 
+    apiCall(`/reviews/product/${productId}`),
+  create: (reviewData: { product_id: string | number; user_name: string; user_email: string; rating: number; comment: string }): Promise<ApiResponse<Review>> =>
+    apiCall('/reviews', {
+      method: 'POST',
+      body: JSON.stringify(reviewData),
+    }),
+  markHelpful: (reviewId: string): Promise<ApiResponse<Review>> =>
+    apiCall(`/reviews/${reviewId}/helpful`, {
+      method: 'POST',
+    }),
 };
 
 export { API_URL };

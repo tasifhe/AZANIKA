@@ -7,6 +7,7 @@ import express from 'express';
 import authRoutes from './routes/auth';
 import productRoutes from './routes/products';
 import orderRoutes from './routes/orders';
+import reviewRoutes from './routes/reviews';
 import cors from 'cors';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import pool from './config/supabase';
@@ -121,6 +122,7 @@ app.get('/cors-test', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 // Error handling middleware (must be last)
 app.use(notFoundHandler);

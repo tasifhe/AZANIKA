@@ -8,7 +8,8 @@
     "dev": "nodemon --exec ts-node src/app.ts",
     "build": "tsc",
     "test": "echo \"No tests specified\" && exit 0",
-    "seed": "ts-node src/scripts/seed-products.ts"
+    "seed": "ts-node src/scripts/seed-products.ts",
+    "setup-reviews": "node src/scripts/setup-reviews.js"
   },
   "dependencies": {
     "@types/bcrypt": "^6.0.0",

@@ -96,8 +96,8 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-neutral-900">Phone</h3>
-                    <p className="text-neutral-600">+880 1712-345678</p>
-                    <p className="text-neutral-600">+880 1812-345678</p>
+                    <p className="text-neutral-600">+880 1410444038</p>
+                    <p className="text-neutral-600">+880 1570212838</p>
                   </div>
                 </div>
 
@@ -108,7 +108,7 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-semibold text-neutral-900">WhatsApp</h3>
                     <a href="https://wa.me/8801712345678" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-700 font-medium">
-                      +880 1712-345678
+                      +880 1410444038
                     </a>
                     <p className="text-neutral-500 text-sm mt-1">Chat with us instantly!</p>
                   </div>
@@ -121,8 +121,8 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-semibold text-neutral-900">Address</h3>
                     <p className="text-neutral-600">
-                      House 123, Road 12<br />
-                      Dhanmondi, Dhaka 1209<br />
+                      House 34, Road 12<br />
+                      Uttara, Dhaka 1230<br />
                       Bangladesh
                     </p>
                   </div>
