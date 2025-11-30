@@ -12,46 +12,109 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  color: #4a433f;
+  color: #3d3835;
+  background-color: #fefdfb;
+  letter-spacing: 0.01em;
 }
 
 /* Typography Improvements */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-playfair), Georgia, serif;
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: #6e655d;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #2d2620;
+  margin-bottom: 0.5em;
 }
 
 h1 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
 }
 
 h2 {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 700;
 }
 
 h3 {
-  font-size: clamp(1.25rem, 3vw, 1.875rem);
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
 }
 
 p {
-  line-height: 1.7;
-  letter-spacing: 0.01em;
+  line-height: 1.75;
+  letter-spacing: 0.015em;
+  margin-bottom: 1.25em;
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  color: #5a524c;
 }
 
 /* Button Enhancements */
 .btn-primary {
-  @apply premium-gradient text-white font-sans font-semibold px-6 py-3 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95;
+  @apply premium-gradient text-white font-sans font-bold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 active:scale-95 text-base tracking-wide;
 }
 
 .btn-secondary {
-  @apply border-2 luxury-border text-rosegold-600 font-sans font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:bg-rosegold-50 hover:border-rosegold-400 active:scale-95;
+  @apply border-2 luxury-border text-copper-600 font-sans font-bold px-8 py-4 rounded-xl transition-all duration-300 hover:bg-gold-50 hover:border-gold-400 active:scale-95 text-base tracking-wide;
 }
 
 .btn-outline {
-  @apply border-2 border-warmgray-300 text-warmgray-700 font-sans font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:border-rosegold-400 hover:text-rosegold-600 hover:bg-rosegold-50 active:scale-95;
+  @apply border-2 border-warmgray-300 text-warmgray-800 font-sans font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:border-gold-400 hover:text-gold-700 hover:bg-gold-50 active:scale-95 text-base;
+}
+
+/* Premium Container Styles */
+.premium-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (min-width: 768px) {
+  .premium-container {
+    padding: 0 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .premium-container {
+    padding: 0 4rem;
+  }
+}
+
+.premium-section {
+  padding: 5rem 0;
+}
+
+@media (min-width: 768px) {
+  .premium-section {
+    padding: 7rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .premium-section {
+    padding: 9rem 0;
+  }
+}
+
+/* Premium Card Styling */
+.premium-card {
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.premium-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
 }
 
 /* Custom scrollbar */
@@ -256,12 +319,26 @@ p {
 }
 
 .elegant-shadow {
-  box-shadow: 0 10px 25px rgba(232, 149, 109, 0.15), 0 5px 10px rgba(219, 123, 104, 0.1);
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(232, 149, 109, 0.08), 0 2px 8px rgba(219, 123, 104, 0.06);
+  transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .elegant-shadow:hover {
-  box-shadow: 0 15px 35px rgba(232, 149, 109, 0.25), 0 8px 15px rgba(219, 123, 104, 0.15);
+  box-shadow: 0 12px 45px rgba(232, 149, 109, 0.15), 0 6px 20px rgba(219, 123, 104, 0.1);
+}
+
+.premium-shadow {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 4px 12px rgba(0, 0, 0, 0.04),
+    0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+.premium-shadow-lg {
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.05),
+    0 8px 24px rgba(0, 0, 0, 0.06),
+    0 16px 48px rgba(0, 0, 0, 0.08);
 }
 
 .luxury-border {

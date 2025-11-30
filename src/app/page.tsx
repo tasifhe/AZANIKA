@@ -96,32 +96,32 @@ const HomePage = () => {
       <HeroSlideshow />
 
       {/* New Arrivals Banner - Mobile Optimized */}
-      <section className="py-6 md:py-8 bg-gradient-to-r from-cream-50 via-gold-50 to-cream-50">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-cream-50 via-gold-50 to-cream-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-lg">
+          <div className="relative bg-white rounded-3xl md:rounded-[2rem] overflow-hidden shadow-xl premium-shadow-lg">
             <div className="absolute inset-0 bg-gradient-to-br from-gold-100/50 via-transparent to-cream-100/50"></div>
-            <div className="relative p-6 md:p-10 text-center">
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-gold-500 to-copper-500 text-white px-3 md:px-4 py-1 md:py-1.5 rounded-full mb-3 md:mb-4 text-xs md:text-sm font-bold shadow-md animate-pulse">
-                <Sparkles size={14} />
-                <span>LATEST TRENDS</span>
+            <div className="relative p-10 md:p-16 text-center">
+              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-gold-500 to-copper-500 text-white px-5 md:px-6 py-2 md:py-2.5 rounded-full mb-4 md:mb-5 text-sm md:text-base font-bold shadow-lg animate-pulse">
+                <Sparkles size={18} />
+                <span className="tracking-wider">LATEST TRENDS</span>
               </div>
-              <h2 className="text-2xl md:text-4xl font-bold text-neutral-900 mb-2 md:mb-3">
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-neutral-900 mb-3 md:mb-5 tracking-tight">
                 New Arrivals
               </h2>
-              <p className="text-sm md:text-base text-neutral-600 mb-4 md:mb-6 max-w-2xl mx-auto">
+              <p className="text-base md:text-lg text-neutral-600 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed">
                 Be the first to discover our newest additions and stay ahead of fashion trends
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/products?sort=newest"
-                  className="premium-gradient text-white px-6 md:px-8 py-2.5 md:py-3 rounded-lg md:rounded-xl font-semibold text-sm md:text-base inline-flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                  className="premium-gradient text-white px-8 md:px-10 py-3.5 md:py-4 rounded-xl md:rounded-2xl font-bold text-base md:text-lg inline-flex items-center justify-center shadow-xl hover:shadow-2xl transition-all hover:scale-105"
                 >
                   Shop Now
-                  <ArrowRight className="ml-2" size={18} />
+                  <ArrowRight className="ml-2" size={20} />
                 </Link>
                 <Link
                   href="/products"
-                  className="bg-white border-2 border-gold-200 text-gold-600 px-6 md:px-8 py-2.5 md:py-3 rounded-lg md:rounded-xl font-semibold text-sm md:text-base inline-flex items-center justify-center hover:bg-gold-50 transition-all"
+                  className="bg-white border-2 border-gold-200 text-gold-600 px-8 md:px-10 py-3.5 md:py-4 rounded-xl md:rounded-2xl font-bold text-base md:text-lg inline-flex items-center justify-center hover:bg-gold-50 transition-all"
                 >
                   View All
                 </Link>
@@ -132,53 +132,53 @@ const HomePage = () => {
       </section>
 
       {/* Features Section with Animations */}
-      <section className="py-8 md:py-16 bg-gradient-to-b from-white via-cream-50/30 to-white">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-white via-cream-50/30 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedGrid className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8" staggerDelay={0.15}>
-            <div className="text-center group p-4 md:p-6 bg-white rounded-2xl hover:shadow-lg transition-all duration-300">
-              <div className="bg-gradient-to-br from-gold-100 to-cream-50 w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-md group-hover:shadow-xl transition-all duration-300">
-                <Truck className="text-gold-600" size={20} />
+          <AnimatedGrid className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10" staggerDelay={0.15}>
+            <div className="text-center group p-6 md:p-8 bg-white rounded-2xl premium-shadow hover:premium-shadow-lg transition-all duration-300">
+              <div className="bg-gradient-to-br from-gold-100 to-cream-50 w-16 h-16 md:w-24 md:h-24 rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-5 shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+                <Truck className="text-gold-600" size={24} />
               </div>
-              <h3 className="font-bold text-neutral-900 mb-1 text-xs md:text-base">Free Shipping</h3>
-              <p className="text-neutral-600 text-[10px] md:text-sm leading-tight">Orders over ৳2,000</p>
+              <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-lg">Free Shipping</h3>
+              <p className="text-neutral-600 text-xs md:text-base leading-relaxed">Orders over ৳2,000</p>
             </div>
             
-            <div className="text-center group p-4 md:p-6 bg-white rounded-2xl hover:shadow-lg transition-all duration-300">
-              <div className="bg-gradient-to-br from-copper-200 to-gold-100 w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-md group-hover:shadow-xl transition-all duration-300">
-                <Shield className="text-copper-700" size={20} />
+            <div className="text-center group p-6 md:p-8 bg-white rounded-2xl premium-shadow hover:premium-shadow-lg transition-all duration-300">
+              <div className="bg-gradient-to-br from-copper-200 to-gold-100 w-16 h-16 md:w-24 md:h-24 rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-5 shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+                <Shield className="text-copper-700" size={24} />
               </div>
-              <h3 className="font-bold text-neutral-900 mb-1 text-xs md:text-base">Secure Payment</h3>
-              <p className="text-neutral-600 text-[10px] md:text-sm leading-tight">SSL encryption</p>
+              <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-lg">Secure Payment</h3>
+              <p className="text-neutral-600 text-xs md:text-base leading-relaxed">SSL encryption</p>
             </div>
             
-            <div className="text-center group p-4 md:p-6 bg-white rounded-2xl hover:shadow-lg transition-all duration-300">
-              <div className="bg-gradient-to-br from-gold-100 to-cream-50 w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-md group-hover:shadow-xl transition-all duration-300">
-                <RefreshCw className="text-gold-600" size={20} />
+            <div className="text-center group p-6 md:p-8 bg-white rounded-2xl premium-shadow hover:premium-shadow-lg transition-all duration-300">
+              <div className="bg-gradient-to-br from-gold-100 to-cream-50 w-16 h-16 md:w-24 md:h-24 rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-5 shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+                <RefreshCw className="text-gold-600" size={24} />
               </div>
-              <h3 className="font-bold text-neutral-900 mb-1 text-xs md:text-base">Easy Returns</h3>
-              <p className="text-neutral-600 text-[10px] md:text-sm leading-tight">7-day returns</p>
+              <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-lg">Easy Returns</h3>
+              <p className="text-neutral-600 text-xs md:text-base leading-relaxed">7-day returns</p>
             </div>
             
-            <div className="text-center group p-4 md:p-6 bg-white rounded-2xl hover:shadow-lg transition-all duration-300">
-              <div className="bg-gradient-to-br from-copper-200 to-gold-100 w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-md group-hover:shadow-xl transition-all duration-300">
-                <Award className="text-copper-700" size={20} />
+            <div className="text-center group p-6 md:p-8 bg-white rounded-2xl premium-shadow hover:premium-shadow-lg transition-all duration-300">
+              <div className="bg-gradient-to-br from-copper-200 to-gold-100 w-16 h-16 md:w-24 md:h-24 rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-5 shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+                <Award className="text-copper-700" size={24} />
               </div>
-              <h3 className="font-bold text-neutral-900 mb-1 text-xs md:text-base">Premium Quality</h3>
-              <p className="text-neutral-600 text-[10px] md:text-sm leading-tight">Luxury items</p>
+              <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-lg">Premium Quality</h3>
+              <p className="text-neutral-600 text-xs md:text-base leading-relaxed">Luxury items</p>
             </div>
           </AnimatedGrid>
         </div>
       </section>
 
       {/* Categories Section */}
-      <section className="py-8 md:py-20 gradient-warm-elegance">
+      <section className="py-16 md:py-28 gradient-warm-elegance">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedContent direction="up" className="text-center mb-6 md:mb-12">
-            <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm text-gold-700 px-3 md:px-4 py-1.5 md:py-2 rounded-full mb-3 md:mb-4 shadow-sm">
-              <Sparkles size={16} className="animate-spin-slow" />
-              <span className="font-semibold text-xs md:text-base">Shop by Category</span>
+          <AnimatedContent direction="up" className="text-center mb-12 md:mb-16">
+            <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm text-gold-700 px-5 md:px-6 py-2 md:py-2.5 rounded-full mb-4 md:mb-5 shadow-sm">
+              <Sparkles size={20} className="animate-spin-slow" />
+              <span className="font-bold text-sm md:text-base tracking-wider">Shop by Category</span>
             </div>
-            <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-neutral-900 mb-2 md:mb-4 px-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-neutral-900 mb-4 md:mb-6 px-4 tracking-tight">
               Discover Your Style
             </h2>
             <p className="text-sm md:text-xl text-neutral-600 max-w-2xl mx-auto px-4">
@@ -186,14 +186,14 @@ const HomePage = () => {
             </p>
           </AnimatedContent>
 
-          <AnimatedGrid className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+          <AnimatedGrid className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
             {categories.map((category) => (
               <Link
                 key={category.name}
                 href={category.link}
                 className="group relative"
               >
-                <div className="relative h-56 md:h-80 rounded-2xl md:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+                <div className="relative h-64 md:h-96 rounded-3xl overflow-hidden premium-shadow-lg hover:shadow-2xl transition-all duration-500">
                   <Image
                     src={category.image}
                     alt={category.name}
@@ -222,14 +222,14 @@ const HomePage = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="py-8 md:py-20 bg-white">
+      <section className="py-16 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedContent direction="up" className="text-center mb-6 md:mb-12">
-            <div className="inline-flex items-center space-x-2 bg-gold-50 text-gold-700 px-3 md:px-4 py-1.5 md:py-2 rounded-full mb-2 md:mb-4 shadow-md">
-              <TrendingUp size={16} />
-              <span className="font-semibold text-xs md:text-base">Trending Now</span>
+          <AnimatedContent direction="up" className="text-center mb-12 md:mb-16">
+            <div className="inline-flex items-center space-x-2 bg-gold-50 text-gold-700 px-5 md:px-6 py-2 md:py-2.5 rounded-full mb-3 md:mb-5 shadow-md">
+              <TrendingUp size={20} />
+              <span className="font-bold text-sm md:text-base tracking-wider">Trending Now</span>
             </div>
-            <h2 className="text-xl md:text-3xl lg:text-5xl font-bold text-neutral-900 mb-2 md:mb-4 px-4">
+            <h2 className="text-3xl md:text-4xl lg:text-6xl font-black text-neutral-900 mb-4 md:mb-6 px-4 tracking-tight">
               Featured Products
             </h2>
             <p className="text-sm md:text-xl text-neutral-600 max-w-2xl mx-auto px-4">

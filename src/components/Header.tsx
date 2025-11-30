@@ -93,23 +93,23 @@ const Header = () => {
   return (
     <header className="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gold-100">
       {/* Top Banner */}
-      <div className="premium-gradient text-white text-center py-2 text-sm relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 pattern-dots"></div>
-        <p className="flex items-center justify-center space-x-2 relative z-10">
-          <Sparkles size={16} className="inline animate-spin-slow" />
-          <span className="font-medium">Free Shipping on Orders Over ৳5,000 | New Arrivals Every Week!</span>
-          <ShoppingBag size={16} className="inline" />
+      <div className="premium-gradient text-white text-center py-3 text-sm relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 pattern-dots"></div>
+        <p className="flex items-center justify-center space-x-3 relative z-10 font-medium tracking-wide">
+          <Sparkles size={18} className="inline animate-spin-slow" />
+          <span className="font-semibold">Free Shipping on Orders Over ৳5,000 | New Arrivals Every Week!</span>
+          <ShoppingBag size={18} className="inline" />
         </p>
       </div>
 
       {/* Main Header */}
       <div className="border-b border-gold-100/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-24">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <Link href="/" className="flex items-center space-x-3 group">
-                <div className="relative w-10 h-10 transition-transform group-hover:scale-110 duration-300">
+              <Link href="/" className="flex items-center space-x-4 group">
+                <div className="relative w-12 h-12 transition-transform group-hover:scale-110 duration-300">
                   <Image
                     src="https://iili.io/KU7rz92.png"
                     alt="AZANIKA"
@@ -118,12 +118,12 @@ const Header = () => {
                     priority
                   />
                 </div>
-                <span className="text-2xl font-bold gradient-text tracking-wide">AZANIKA</span>
+                <span className="text-3xl font-bold gradient-text tracking-tight">AZANIKA</span>
               </Link>
             </div>
 
             {/* Desktop Navigation - Centered */}
-            <nav className="hidden lg:flex items-center space-x-8 flex-1 justify-center" ref={dropdownRef}>
+            <nav className="hidden lg:flex items-center space-x-10 flex-1 justify-center" ref={dropdownRef}>
               {navigation.map((item) => (
                 <div key={item.name} className="relative">
                   {item.dropdown ? (
@@ -131,14 +131,14 @@ const Header = () => {
                       <button
                         onClick={() => setActiveDropdown(activeDropdown === item.name ? null : item.name)}
                         onMouseEnter={() => setActiveDropdown(item.name)}
-                        className="flex items-center space-x-1 text-neutral-700 hover:text-gold-600 font-semibold smooth-transition py-2 text-[15px] uppercase tracking-wide"
+                        className="flex items-center space-x-1 text-warmgray-800 hover:text-gold-600 font-semibold smooth-transition py-2 text-sm uppercase tracking-widest">
                       >
                         <span>{item.name}</span>
                         <ChevronDown size={16} className={`smooth-transition ${activeDropdown === item.name ? 'rotate-180' : ''}`} />
                       </button>
                       {activeDropdown === item.name && (
                         <div 
-                          className="absolute top-full left-0 mt-2 glass-effect rounded-2xl shadow-2xl min-w-[220px] py-3 z-50 animate-fade-in-down border border-gold-100"
+                          className="absolute top-full left-0 mt-3 glass-effect rounded-2xl shadow-2xl min-w-[240px] py-4 z-50 animate-fade-in-down border border-gold-100"
                           onMouseLeave={() => setActiveDropdown(null)}
                         >
                           {item.dropdown.map((subItem: any) => {
@@ -148,12 +148,12 @@ const Header = () => {
                                 key={subItem.name}
                                 href={subItem.href}
                                 onClick={() => setActiveDropdown(null)}
-                                className="flex items-center space-x-3 px-5 py-2.5 text-neutral-700 hover:bg-gradient-to-r hover:from-gold-50 hover:to-transparent hover:text-gold-600 smooth-transition group rounded-lg mx-2"
+                                className="flex items-center space-x-3 px-6 py-3 text-warmgray-800 hover:bg-gradient-to-r hover:from-gold-50 hover:to-transparent hover:text-gold-700 smooth-transition group rounded-xl mx-2"
                               >
                                 {IconComponent && (
                                   <IconComponent className="w-5 h-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 ease-out" />
                                 )}
-                                <span className="text-[14px] group-hover:translate-x-1 transition-transform duration-300">{subItem.name}</span>
+                                <span className="text-sm font-medium group-hover:translate-x-1 transition-transform duration-300">{subItem.name}</span>
                               </Link>
                             );
                           })}
@@ -163,7 +163,7 @@ const Header = () => {
                   ) : (
                     <Link
                       href={item.href || '/'}
-                      className="text-neutral-700 hover:text-gold-600 font-semibold smooth-transition py-2 text-[15px] uppercase tracking-wide"
+                      className="text-warmgray-800 hover:text-gold-600 font-semibold smooth-transition py-2 text-sm uppercase tracking-widest">
                     >
                       {item.name}
                     </Link>
@@ -173,7 +173,7 @@ const Header = () => {
             </nav>
 
             {/* Right side icons */}
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
               {/* Search */}
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
