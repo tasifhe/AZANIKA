@@ -8,17 +8,20 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-lora), Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  color: #4a433f;
 }
 
 /* Typography Improvements */
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), Georgia, serif;
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
+  color: #6e655d;
 }
 
 h1 {
@@ -40,15 +43,15 @@ p {
 
 /* Button Enhancements */
 .btn-primary {
-  @apply premium-gradient text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95;
+  @apply premium-gradient text-white font-sans font-semibold px-6 py-3 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95;
 }
 
 .btn-secondary {
-  @apply border-2 luxury-border text-blush-600 font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:bg-blush-50 hover:border-blush-400 active:scale-95;
+  @apply border-2 luxury-border text-rosegold-600 font-sans font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:bg-rosegold-50 hover:border-rosegold-400 active:scale-95;
 }
 
 .btn-outline {
-  @apply border-2 border-neutral-300 text-neutral-700 font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:border-blush-400 hover:text-blush-600 hover:bg-blush-50 active:scale-95;
+  @apply border-2 border-warmgray-300 text-warmgray-700 font-sans font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:border-rosegold-400 hover:text-rosegold-600 hover:bg-rosegold-50 active:scale-95;
 }
 
 /* Custom scrollbar */
@@ -112,7 +115,7 @@ p {
 
 /* Gradient backgrounds */
 .gradient-bg {
-  background: linear-gradient(135deg, #fef9f8 0%, #fef3f2 25%, #fdfaf8 100%);
+  background: linear-gradient(135deg, #fef8f5 0%, #feeee7 25%, #fddac7 50%, #fef8f5 100%);
   animation: gradientShift 8s ease infinite;
 }
 
@@ -126,7 +129,7 @@ p {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #ff6b47, #ef5f98, #a855f7);
+  background: linear-gradient(135deg, #e8956d, #db7b68, #c96050);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -134,9 +137,9 @@ p {
   animation: gradientText 3s ease infinite;
 }
 
-/* Coral to Blush text gradient */
+/* Rose Gold to Copper text gradient */
 .text-gradient-coral-blush {
-  background: linear-gradient(135deg, #ff6b47 0%, #ef5f98 100%);
+  background: linear-gradient(135deg, #e8956d 0%, #ea6776 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -144,23 +147,23 @@ p {
 
 /* Rose Gold text gradient */
 .text-gradient-rosegold {
-  background: linear-gradient(135deg, #f99171 0%, #de4a2b 50%, #ba3a22 100%);
+  background: linear-gradient(135deg, #f09c6e 0%, #e8956d 50%, #db7b68 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Lavender Dream text gradient */
-.text-gradient-lavender {
-  background: linear-gradient(135deg, #e9d5ff 0%, #c084fc 50%, #a855f7 100%);
+/* Cream Dream text gradient */
+.text-gradient-cream {
+  background: linear-gradient(135deg, #fdf3eb 0%, #ecc69f 50%, #dda978 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Rainbow text gradient */
+/* Brand text gradient */
 .text-gradient-rainbow {
-  background: linear-gradient(135deg, #ff6b47 0%, #ef5f98 25%, #a855f7 50%, #14b8a6 75%, #f59e0b 100%);
+  background: linear-gradient(135deg, #e8956d 0%, #ea6776 25%, #f0ad2e 50%, #d97045 75%, #e8956d 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -179,52 +182,46 @@ p {
 
 /* Premium gradient overlays */
 .premium-gradient {
-  background: linear-gradient(135deg, #ff6b47 0%, #ef5f98 50%, #a855f7 100%);
+  background: linear-gradient(135deg, #e8956d 0%, #d97045 50%, #c85a36 100%);
   background-size: 200% 200%;
   animation: gradientFlow 4s ease infinite;
 }
 
 /* Luxury Rose Gold Gradient */
 .rosegold-gradient {
-  background: linear-gradient(135deg, #f99171 0%, #de4a2b 50%, #ba3a22 100%);
+  background: linear-gradient(135deg, #fddac7 0%, #f09c6e 25%, #e8956d 50%, #db7b68 75%, #c96050 100%);
   background-size: 200% 200%;
   animation: gradientFlow 6s ease infinite;
 }
 
-/* Coral Dreams Gradient */
-.coral-gradient {
-  background: linear-gradient(135deg, #ffe8e3 0%, #ff8f74 25%, #ff6b47 50%, #f04e28 100%);
+/* Copper Dreams Gradient */
+.copper-gradient {
+  background: linear-gradient(135deg, #fbe9e1 0%, #efb399 25%, #d97045 50%, #c85a36 100%);
 }
 
 /* Blush Beauty Gradient */
 .blush-gradient {
-  background: linear-gradient(135deg, #fdedf3 0%, #fabbd4 25%, #f78eb8 50%, #ef5f98 100%);
+  background: linear-gradient(135deg, #fef7f7 0%, #fbd9dc 25%, #f38d99 50%, #ea6776 100%);
 }
 
-/* Lavender Luxury Gradient */
-.lavender-gradient {
-  background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 25%, #c084fc 50%, #a855f7 100%);
-}
-
-/* Mint Fresh Gradient */
-.mint-gradient {
-  background: linear-gradient(135deg, #ccfbef 0%, #5fe9d0 50%, #14b8a6 100%);
+/* Cream Elegance Gradient */
+.cream-gradient {
+  background: linear-gradient(135deg, #fefdfb 0%, #fdf3eb 25%, #f5d7bc 50%, #ecc69f 100%);
 }
 
 /* Gold Elegance Gradient */
 .gold-gradient {
-  background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 50%, #f59e0b 100%);
+  background: linear-gradient(135deg, #fef7e6 0%, #f5c45a 50%, #f0ad2e 100%);
 }
 
-/* Rainbow Gradient for Special Items */
+/* Brand Gradient for Special Items */
 .rainbow-gradient {
   background: linear-gradient(135deg, 
-    #ff6b47 0%,    /* Coral */
-    #ef5f98 20%,   /* Blush */
-    #a855f7 40%,   /* Lavender */
-    #14b8a6 60%,   /* Mint */
-    #f59e0b 80%,   /* Gold */
-    #ff6b47 100%   /* Back to Coral */
+    #e8956d 0%,    /* Rose Gold */
+    #d97045 25%,   /* Copper */
+    #ea6776 50%,   /* Blush */
+    #f0ad2e 75%,   /* Gold */
+    #e8956d 100%   /* Back to Rose Gold */
   );
   background-size: 200% 200%;
   animation: rainbowFlow 8s ease infinite;
@@ -241,12 +238,12 @@ p {
 
 /* Sunset Vibes Gradient */
 .sunset-gradient {
-  background: linear-gradient(135deg, #fff5f3 0%, #ffe8e3 15%, #ffd5cc 30%, #ff8f74 50%, #f04e28 70%, #d93f1d 100%);
+  background: linear-gradient(135deg, #fef8f5 0%, #feeee7 20%, #fddac7 40%, #f09c6e 60%, #db7b68 80%, #c96050 100%);
 }
 
 /* Peach Sorbet Gradient */
 .peach-gradient {
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 25%, #fed8cb 50%, #f99171 75%, #de4a2b 100%);
+  background: linear-gradient(135deg, #fefdfb 0%, #fef7e6 25%, #fddac7 50%, #f09c6e 75%, #db7b68 100%);
 }
 
 @keyframes gradientFlow {
@@ -259,16 +256,16 @@ p {
 }
 
 .elegant-shadow {
-  box-shadow: 0 10px 25px rgba(246, 182, 177, 0.15), 0 5px 10px rgba(244, 167, 163, 0.1);
+  box-shadow: 0 10px 25px rgba(232, 149, 109, 0.15), 0 5px 10px rgba(219, 123, 104, 0.1);
   transition: box-shadow 0.3s ease;
 }
 
 .elegant-shadow:hover {
-  box-shadow: 0 15px 35px rgba(246, 182, 177, 0.25), 0 8px 15px rgba(244, 167, 163, 0.15);
+  box-shadow: 0 15px 35px rgba(232, 149, 109, 0.25), 0 8px 15px rgba(219, 123, 104, 0.15);
 }
 
 .luxury-border {
-  border: 1px solid rgba(246, 182, 177, 0.3);
+  border: 1px solid rgba(232, 149, 109, 0.3);
 }
 
 /* Premium gold accent gradient */
@@ -278,7 +275,7 @@ p {
 
 /* Animated background patterns - Inspired by gradienty.codes */
 .pattern-dots {
-  background-image: radial-gradient(circle, rgba(246, 182, 177, 0.1) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(232, 149, 109, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
   animation: patternMove 20s linear infinite;
 }
@@ -295,10 +292,10 @@ p {
 /* Modern gradient patterns */
 .pattern-waves {
   background: 
-    linear-gradient(135deg, rgba(246, 182, 177, 0.05) 25%, transparent 25%),
-    linear-gradient(225deg, rgba(250, 220, 217, 0.05) 25%, transparent 25%),
-    linear-gradient(45deg, rgba(244, 167, 163, 0.05) 25%, transparent 25%),
-    linear-gradient(315deg, rgba(246, 182, 177, 0.05) 25%, #ffffff 25%);
+    linear-gradient(135deg, rgba(232, 149, 109, 0.05) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(253, 218, 199, 0.05) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(219, 123, 104, 0.05) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(232, 149, 109, 0.05) 25%, #ffffff 25%);
   background-position: 40px 0, 40px 0, 0 0, 0 0;
   background-size: 80px 80px;
   background-repeat: repeat;
@@ -316,12 +313,12 @@ p {
 
 .pattern-mesh {
   background: 
-    radial-gradient(at 40% 20%, rgba(246, 182, 177, 0.15) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(250, 220, 217, 0.2) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, rgba(244, 167, 163, 0.15) 0px, transparent 50%),
-    radial-gradient(at 80% 50%, rgba(246, 182, 177, 0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(250, 220, 217, 0.2) 0px, transparent 50%),
-    radial-gradient(at 80% 100%, rgba(244, 167, 163, 0.15) 0px, transparent 50%);
+    radial-gradient(at 40% 20%, rgba(232, 149, 109, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(253, 218, 199, 0.2) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(219, 123, 104, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(232, 149, 109, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(253, 218, 199, 0.2) 0px, transparent 50%),
+    radial-gradient(at 80% 100%, rgba(219, 123, 104, 0.15) 0px, transparent 50%);
   animation: meshMove 20s ease infinite;
 }
 
@@ -336,8 +333,8 @@ p {
 
 .pattern-gradient-bg {
   background: 
-    linear-gradient(90deg, rgba(246, 182, 177, 0.03) 1px, transparent 1px),
-    linear-gradient(rgba(246, 182, 177, 0.03) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(232, 149, 109, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(232, 149, 109, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
@@ -350,10 +347,10 @@ p {
 }
 
 .glass-effect-dark {
-  background: rgba(246, 182, 177, 0.1);
+  background: rgba(232, 149, 109, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(246, 182, 177, 0.2);
+  border: 1px solid rgba(232, 149, 109, 0.2);
 }
 
 /* Icon animations */
@@ -483,9 +480,9 @@ p {
 
 .glow-on-hover:hover {
   box-shadow: 
-    0 0 20px rgba(246, 182, 177, 0.4),
-    0 0 40px rgba(246, 182, 177, 0.2),
-    0 0 60px rgba(246, 182, 177, 0.1);
+    0 0 20px rgba(232, 149, 109, 0.4),
+    0 0 40px rgba(232, 149, 109, 0.2),
+    0 0 60px rgba(232, 149, 109, 0.1);
 }
 
 /* Smooth transitions */
@@ -546,7 +543,7 @@ p {
   inset: 0;
   border-radius: inherit;
   padding: 2px;
-  background: linear-gradient(135deg, #F6B6B1, #F4A7A3, #FADCD9);
+  background: linear-gradient(135deg, #e8956d, #db7b68, #fddac7);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -612,7 +609,7 @@ p {
   position: absolute;
   inset: -10px;
   border-radius: inherit;
-  background: radial-gradient(circle, rgba(246, 182, 177, 0.4) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(232, 149, 109, 0.4) 0%, transparent 70%);
   animation: pulseRing 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
 }
 
@@ -629,50 +626,46 @@ p {
 
 /* Enhanced gradient backgrounds for women's fashion aesthetic */
 .gradient-rose-gold {
-  background: linear-gradient(135deg, #fef6f3 0%, #fed8cb 25%, #f99171 50%, #de4a2b 75%, #ba3a22 100%);
+  background: linear-gradient(135deg, #fef8f5 0%, #fddac7 25%, #f09c6e 50%, #e8956d 75%, #db7b68 100%);
 }
 
 .gradient-sunset {
-  background: linear-gradient(135deg, #fff5f3 0%, #ffe8e3 20%, #ffb8a8 40%, #ff6b47 60%, #f04e28 80%, #d93f1d 100%);
+  background: linear-gradient(135deg, #fef8f5 0%, #feeee7 20%, #fddac7 40%, #f09c6e 60%, #db7b68 80%, #c96050 100%);
 }
 
 .gradient-peachy {
-  background: linear-gradient(135deg, #fffef7 0%, #fffceb 20%, #fef3c7 40%, #fed8cb 60%, #ff8f74 80%, #f04e28 100%);
+  background: linear-gradient(135deg, #fefdfb 0%, #fef7e6 20%, #fddac7 40%, #f09c6e 60%, #e8956d 80%, #db7b68 100%);
 }
 
 .gradient-blush-dream {
-  background: linear-gradient(135deg, #fef6f9 0%, #fdedf3 20%, #fabbd4 40%, #f78eb8 60%, #ef5f98 80%, #d93d7a 100%);
+  background: linear-gradient(135deg, #fef7f7 0%, #fdedf3 20%, #fbd9dc 40%, #f38d99 60%, #ea6776 80%, #d84659 100%);
   background-size: 200% 200%;
   animation: gradientShift 8s ease infinite;
 }
 
-.gradient-lavender-mist {
-  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 25%, #e9d5ff 50%, #c084fc 75%, #a855f7 100%);
-}
-
-.gradient-mint-fresh {
-  background: linear-gradient(135deg, #f0fdf9 0%, #ccfbef 25%, #99f6e0 50%, #5fe9d0 75%, #14b8a6 100%);
+.gradient-warm-elegance {
+  background: linear-gradient(135deg, #fefdfb 0%, #fdf3eb 25%, #f5d7bc 50%, #ecc69f 75%, #dda978 100%);
 }
 
 .gradient-golden-hour {
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 20%, #fde68a 40%, #fcd34d 60%, #f59e0b 80%, #d97706 100%);
+  background: linear-gradient(135deg, #fffcf5 0%, #fef7e6 20%, #fcedc4 40%, #f5c45a 60%, #f0ad2e 80%, #e19216 100%);
 }
 
 /* Shimmer gradient for premium products */
 .gradient-shimmer {
   background: linear-gradient(
     90deg,
-    #ff6b47 0%,
-    #f99171 10%,
-    #fed8cb 20%,
-    #fef6f3 30%,
-    #fed8cb 40%,
-    #f99171 50%,
-    #ff6b47 60%,
-    #ef5f98 70%,
-    #fabbd4 80%,
-    #ef5f98 90%,
-    #ff6b47 100%
+    #e8956d 0%,
+    #f09c6e 10%,
+    #fddac7 20%,
+    #fef8f5 30%,
+    #fddac7 40%,
+    #f09c6e 50%,
+    #e8956d 60%,
+    #ea6776 70%,
+    #fbd9dc 80%,
+    #ea6776 90%,
+    #e8956d 100%
   );
   background-size: 200% 100%;
   animation: shimmerMove 3s linear infinite;

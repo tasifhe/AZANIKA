@@ -1,10 +1,43 @@
-import { Inter } from 'next/font/google'
+import { Playfair_Display, Cormorant_Garamond, Lora, Montserrat, Dancing_Script } from 'next/font/google'
 import '../styles/globals.css'
 import { CartProvider } from '@/lib/cart-context'
 import { Toaster } from 'react-hot-toast'
 import ErrorBoundary from '@/components/ErrorBoundary'
 
-const inter = Inter({ subsets: ['latin'] })
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-playfair',
+  display: 'swap',
+})
+
+const cormorant = Cormorant_Garamond({ 
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-cormorant',
+  display: 'swap',
+})
+
+const lora = Lora({ 
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-lora',
+  display: 'swap',
+})
+
+const montserrat = Montserrat({ 
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-montserrat',
+  display: 'swap',
+})
+
+const dancing = Dancing_Script({ 
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-dancing',
+  display: 'swap',
+})
 
 export const metadata = {
   title: {
@@ -50,7 +83,7 @@ export const metadata = {
     },
   },
   viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#e8956d',
+  themeColor: '#e8956d',  // Rose gold from logo
 }
 
 export default function RootLayout({
@@ -60,7 +93,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${lora.variable} ${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${dancing.variable} font-body`}>
         <ErrorBoundary>
           <CartProvider>
             {children}

@@ -8,115 +8,91 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Main Brand Colors - Coral Pink (Primary)
-        coral: {
-          50: '#fff5f3',
-          100: '#ffe8e3',
-          200: '#ffd5cc',
-          300: '#ffb8a8',
-          400: '#ff8f74',
-          500: '#ff6b47',  // Main coral
-          600: '#f04e28',
-          700: '#d93f1d',
-          800: '#b3351d',
-          900: '#93301f',
-        },
-        // Rose Gold - Luxury accent
+        // Primary Brand Colors - Rose Gold & Copper (from logo)
         rosegold: {
-          50: '#fef6f3',
-          100: '#feeae3',
-          200: '#fed8cb',
-          300: '#fcbba6',
-          400: '#f99171',
-          500: '#f26d4c',
-          600: '#de4a2b',
-          700: '#ba3a22',
-          800: '#993221',
-          900: '#7d2d20',
+          50: '#fef8f5',
+          100: '#feeee7',
+          200: '#fddac7',
+          300: '#f9c0a0',
+          400: '#f09c6e',
+          500: '#e8956d',  // Main rose gold from logo
+          600: '#db7b68',
+          700: '#c96050',
+          800: '#a64f42',
+          900: '#884239',
         },
-        // Blush Pink - Soft & Feminine
-        blush: {
-          50: '#fef6f9',
-          100: '#fdedf3',
-          200: '#fcdce9',
-          300: '#fabbd4',
-          400: '#f78eb8',
-          500: '#ef5f98',  // Main blush
-          600: '#d93d7a',
-          700: '#b82c61',
-          800: '#992952',
-          900: '#802747',
+        // Copper - Deep metallic accent
+        copper: {
+          50: '#fdf6f3',
+          100: '#fbe9e1',
+          200: '#f6d1c2',
+          300: '#efb399',
+          400: '#e68b68',
+          500: '#d97045',
+          600: '#c85a36',
+          700: '#a7472d',
+          800: '#883c2a',
+          900: '#6f3526',
         },
-        // Lavender - Elegant & Calming
-        lavender: {
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',  // Main lavender
-          600: '#9333ea',
-          700: '#7e22ce',
-          800: '#6b21a8',
-          900: '#581c87',
-        },
-        // Mint - Fresh & Modern
-        mint: {
-          50: '#f0fdf9',
-          100: '#ccfbef',
-          200: '#99f6e0',
-          300: '#5fe9d0',
-          400: '#2dd4bf',
-          500: '#14b8a6',  // Main mint
-          600: '#0d9488',
-          700: '#0f766e',
-          800: '#115e59',
-          900: '#134e4a',
-        },
-        // Gold - Luxury & Premium
-        gold: {
-          50: '#fffbeb',
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f59e0b',  // Main gold
-          600: '#d97706',
-          700: '#b45309',
-          800: '#92400e',
-          900: '#78350f',
-        },
-        // Warm Neutrals - Sophisticated base
-        sand: {
-          50: '#fafaf9',
-          100: '#f5f5f4',
-          200: '#e7e5e4',
-          300: '#d6d3d1',
-          400: '#a8a29e',
-          500: '#78716c',
-          600: '#57534e',
-          700: '#44403c',
-          800: '#292524',
-          900: '#1c1917',
-        },
-        // Cream - Soft backgrounds
+        // Warm Cream - Elegant backgrounds
         cream: {
-          50: '#fffef7',
-          100: '#fffceb',
-          200: '#fff8d6',
-          300: '#fff0b3',
-          400: '#ffe380',
-          500: '#ffd13d',
-          600: '#f0b816',
-          700: '#d19a0b',
-          800: '#a67a0d',
-          900: '#885f0e',
+          50: '#fefdfb',
+          100: '#fef9f5',
+          200: '#fdf3eb',
+          300: '#fae8d9',
+          400: '#f5d7bc',
+          500: '#ecc69f',
+          600: '#dda978',
+          700: '#c68a59',
+          800: '#a4704a',
+          900: '#875d3f',
+        },
+        // Blush - Soft feminine accent
+        blush: {
+          50: '#fef7f7',
+          100: '#fdedef',
+          200: '#fbd9dc',
+          300: '#f8b8be',
+          400: '#f38d99',
+          500: '#ea6776',
+          600: '#d84659',
+          700: '#b8354a',
+          800: '#992f43',
+          900: '#812b3e',
+        },
+        // Warm Gray - Sophisticated neutrals
+        warmgray: {
+          50: '#fafaf9',
+          100: '#f5f4f2',
+          200: '#eae7e3',
+          300: '#d9d4cf',
+          400: '#bfb8b0',
+          500: '#a39a8f',
+          600: '#877d72',
+          700: '#6e655d',
+          800: '#5a524c',
+          900: '#4a433f',
+        },
+        // Gold - Luxury accents
+        gold: {
+          50: '#fffcf5',
+          100: '#fef7e6',
+          200: '#fcedc4',
+          300: '#f9dd97',
+          400: '#f5c45a',
+          500: '#f0ad2e',
+          600: '#e19216',
+          700: '#bb7512',
+          800: '#965c16',
+          900: '#7a4d18',
         },
       },
       fontFamily: {
-        'display': ['Inter', 'system-ui', 'sans-serif'],
-        'body': ['Inter', 'system-ui', 'sans-serif'],
-        'cursive': ['Brush Script MT', 'Lucida Handwriting', 'cursive'],
+        'display': ['Playfair Display', 'Georgia', 'serif'],
+        'heading': ['Cormorant Garamond', 'Garamond', 'serif'],
+        'body': ['Lora', 'Georgia', 'serif'],
+        'sans': ['Montserrat', 'system-ui', 'sans-serif'],
+        'script': ['Dancing Script', 'cursive'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
