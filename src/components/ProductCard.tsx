@@ -49,7 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
       {/* Discount Badge */}
       {discountPercent > 0 && (
         <motion.div 
-          className="absolute top-2 md:top-3 lg:top-4 left-2 md:left-3 lg:left-4 bg-gradient-to-r from-blush-500 to-blush-400 text-white px-2 py-1 md:px-3 md:py-1 lg:px-4 lg:py-1.5 text-[10px] md:text-xs lg:text-sm font-bold rounded-md md:rounded-lg z-10 shadow-lg"
+          className="absolute top-2 md:top-3 lg:top-4 left-2 md:left-3 lg:left-4 bg-gradient-to-r from-gold-500 to-gold-400 text-white px-2 py-1 md:px-3 md:py-1 lg:px-4 lg:py-1.5 text-[10px] md:text-xs lg:text-sm font-bold rounded-md md:rounded-lg z-10 shadow-lg"
           initial={{ scale: 0, rotate: -12 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
@@ -70,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
         >
           <Heart 
             size={18} 
-            className={`${isWishlisted ? 'text-blush-500 fill-current' : 'text-gray-600'} lg:w-5 lg:h-5 transition-colors`}
+            className={`${isWishlisted ? 'text-gold-500 fill-current' : 'text-gray-600'} lg:w-5 lg:h-5 transition-colors`}
           />
         </motion.button>
         
@@ -88,7 +88,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
       <Link href={`/product/${product.id}`}>
         {/* Image Container */}
         <div 
-          className="relative h-40 sm:h-48 md:h-56 lg:h-72 xl:h-80 overflow-hidden bg-gradient-to-br from-blush-50 to-cream-50"
+          className="relative h-40 sm:h-48 md:h-56 lg:h-72 xl:h-80 overflow-hidden bg-gradient-to-br from-cream-50 to-gold-50"
         >
           <motion.div
             animate={{ scale: isHovered ? 1.08 : 1 }}
@@ -128,7 +128,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
 
         {/* Product Info */}
         <div className="p-2.5 sm:p-3 md:p-4 lg:p-5">
-          <h3 className="font-semibold text-neutral-900 mb-1.5 md:mb-2 line-clamp-2 group-hover:text-blush-600 transition-colors text-xs sm:text-sm md:text-base leading-snug min-h-[2.5rem] sm:min-h-[2.8rem]">
+          <h3 className="font-semibold text-neutral-900 mb-1.5 md:mb-2 line-clamp-2 group-hover:text-gold-600 transition-colors text-xs sm:text-sm md:text-base leading-snug min-h-[2.5rem] sm:min-h-[2.8rem]">
             {product.name}
           </h3>
           
@@ -152,7 +152,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
 
           {/* Price */}
           <div className="flex items-baseline space-x-1.5 md:space-x-2 mb-2 md:mb-3">
-            <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-blush-600">
+            <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-copper-600">
               ৳{typeof product.price === 'number' ? product.price.toLocaleString() : product.price}
             </span>
             {product.originalPrice && (

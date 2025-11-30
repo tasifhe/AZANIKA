@@ -18,13 +18,13 @@ const Footer = () => {
               Discover elegance, embrace sophistication.
             </p>
             <div className="flex space-x-4">
-              <Link href="https://www.facebook.com/AzanikaFashion" className="text-gray-400 hover:text-blush-400 transition-colors">
+              <Link href="https://www.facebook.com/AzanikaFashion" className="text-gray-400 hover:text-gold-400 transition-colors">
                 <Facebook size={20} />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-blush-400 transition-colors">
+              <Link href="#" className="text-gray-400 hover:text-gold-400 transition-colors">
                 <Instagram size={20} />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-blush-400 transition-colors">
+              <Link href="#" className="text-gray-400 hover:text-gold-400 transition-colors">
                 <Twitter size={20} />
               </Link>
             </div>
@@ -46,11 +46,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold">Categories</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/category/Jewelry" className="text-gray-300 hover:text-blush-300 transition-colors flex items-center space-x-2"><Gem size={16} /><span>Jewelry</span></Link></li>
-              <li><Link href="/category/Bags" className="text-gray-300 hover:text-blush-300 transition-colors flex items-center space-x-2"><ShoppingBag size={16} /><span>Handbags</span></Link></li>
-              <li><Link href="/category/Accessories" className="text-gray-300 hover:text-blush-300 transition-colors flex items-center space-x-2"><Sparkles size={16} /><span>Accessories</span></Link></li>
-              <li><Link href="/category/scarves" className="text-gray-300 hover:text-blush-300 transition-colors flex items-center space-x-2"><Heart size={16} /><span>Scarves</span></Link></li>
-              <li><Link href="/category/sunglasses" className="text-gray-300 hover:text-blush-300 transition-colors flex items-center space-x-2"><Glasses size={16} /><span>Sunglasses</span></Link></li>
+              <li><Link href="/category/Jewelry" className="text-gray-300 hover:text-gold-300 transition-colors flex items-center space-x-2"><Gem size={16} /><span>Jewelry</span></Link></li>
+              <li><Link href="/category/Bags" className="text-gray-300 hover:text-gold-300 transition-colors flex items-center space-x-2"><ShoppingBag size={16} /><span>Handbags</span></Link></li>
+              <li><Link href="/category/Accessories" className="text-gray-300 hover:text-gold-300 transition-colors flex items-center space-x-2"><Sparkles size={16} /><span>Accessories</span></Link></li>
+              <li><Link href="/category/scarves" className="text-gray-300 hover:text-gold-300 transition-colors flex items-center space-x-2"><Heart size={16} /><span>Scarves</span></Link></li>
+              <li><Link href="/category/sunglasses" className="text-gray-300 hover:text-gold-300 transition-colors flex items-center space-x-2"><Glasses size={16} /><span>Sunglasses</span></Link></li>
             </ul>
           </div>
 
@@ -59,15 +59,15 @@ const Footer = () => {
             <h4 className="text-lg font-semibold">Contact Us</h4>
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-2">
-                <Mail size={16} className="text-blush-400" />
+                <Mail size={16} className="text-gold-400" />
                 <span className="text-gray-300">contact@azanika.com</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone size={16} className="text-blush-400" />
+                <Phone size={16} className="text-gold-400" />
                 <span className="text-gray-300">+880 1234-567890</span>
               </div>
               <div className="flex items-center space-x-2">
-                <MapPin size={16} className="text-blush-400" />
+                <MapPin size={16} className="text-gold-400" />
                 <span className="text-gray-300">Dhaka, Bangladesh</span>
               </div>
             </div>

@@ -96,7 +96,7 @@ const Testimonials = () => {
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center space-x-2 bg-blush-50 text-blush-700 px-4 py-2 rounded-full mb-4 shadow-md">
+          <div className="inline-flex items-center space-x-2 bg-gold-50 text-gold-700 px-4 py-2 rounded-full mb-4 shadow-md">
             <Star size={18} className="fill-current" />
             <span className="font-semibold">Customer Reviews</span>
           </div>
@@ -110,9 +110,9 @@ const Testimonials = () => {
 
         <div className="relative max-w-4xl mx-auto">
           {/* Main Testimonial Card */}
-          <div className="bg-gradient-to-br from-blush-50 to-lavender-50 rounded-3xl p-8 md:p-12 shadow-2xl border border-blush-100 relative">
+          <div className="bg-gradient-to-br from-cream-50 to-gold-50 rounded-3xl p-8 md:p-12 shadow-2xl border border-gold-100 relative">
             {/* Quote Icon */}
-            <div className="absolute top-6 right-6 text-blush-200">
+            <div className="absolute top-6 right-6 text-gold-200">
               <Quote size={64} className="opacity-50" />
             </div>
 
@@ -144,7 +144,7 @@ const Testimonials = () => {
               </p>
 
               {/* Product Badge */}
-              <div className="inline-flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium text-blush-700 shadow-md">
+              <div className="inline-flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium text-gold-700 shadow-md">
                 Purchased: {current.product}
               </div>
             </div>
@@ -153,14 +153,14 @@ const Testimonials = () => {
           {/* Navigation Arrows */}
           <button
             onClick={prevTestimonial}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-16 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-blush-600 hover:bg-blush-50 transition-all duration-300 hover:scale-110"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-16 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gold-600 hover:bg-gold-50 transition-all duration-300 hover:scale-110"
             aria-label="Previous testimonial"
           >
             <ChevronLeft size={24} />
           </button>
           <button
             onClick={nextTestimonial}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-16 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-blush-600 hover:bg-blush-50 transition-all duration-300 hover:scale-110"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-16 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gold-600 hover:bg-gold-50 transition-all duration-300 hover:scale-110"
             aria-label="Next testimonial"
           >
             <ChevronRight size={24} />
@@ -175,7 +175,7 @@ const Testimonials = () => {
                 className={`transition-all duration-300 rounded-full ${
                   index === currentIndex
                     ? 'w-8 h-3 premium-gradient'
-                    : 'w-3 h-3 bg-blush-200 hover:bg-blush-300'
+                    : 'w-3 h-3 bg-gold-200 hover:bg-gold-300'
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />
@@ -184,7 +184,7 @@ const Testimonials = () => {
         </div>
 
         {/* Stats Bar */}
-        <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto mt-12 pt-12 border-t border-blush-100">
+        <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto mt-12 pt-12 border-t border-gold-100">
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">10,000+</div>
             <div className="text-sm md:text-base text-neutral-600">Happy Customers</div>

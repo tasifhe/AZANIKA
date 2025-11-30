@@ -25,7 +25,7 @@ const slides: Slide[] = [
     image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80',
     cta: 'Shop Jewelry',
     ctaLink: '/category/Jewelry',
-    bgGradient: 'from-blush-50 to-cream-50'
+    bgGradient: 'from-cream-50 to-gold-50'
   },
   {
     id: 2,
@@ -35,7 +35,7 @@ const slides: Slide[] = [
     image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80',
     cta: 'Shop Bags',
     ctaLink: '/category/Bags',
-    bgGradient: 'from-blush-100 to-blush-50'
+    bgGradient: 'from-gold-100 to-cream-50'
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ const slides: Slide[] = [
     image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800&q=80',
     cta: 'Shop Accessories',
     ctaLink: '/category/Accessories',
-    bgGradient: 'from-cream-100 to-blush-50'
+    bgGradient: 'from-cream-100 to-gold-50'
   },
   {
     id: 4,
@@ -55,7 +55,7 @@ const slides: Slide[] = [
     image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',
     cta: 'Shop New',
     ctaLink: '/products?sort=newest',
-    bgGradient: 'from-blush-50 to-cream-100'
+    bgGradient: 'from-gold-50 to-cream-100'
   }
 ];
 
@@ -102,7 +102,7 @@ const HeroSlideshow = () => {
           {/* Text Content */}
           <div className="text-center lg:text-left space-y-3 sm:space-y-4 md:space-y-6 z-10 order-2 lg:order-1">
             <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
-              <p className="text-blush-600 font-bold text-xs sm:text-sm md:text-base lg:text-lg tracking-wide uppercase animate-fade-in">
+              <p className="text-gold-600 font-bold text-xs sm:text-sm md:text-base lg:text-lg tracking-wide uppercase animate-fade-in">
                 {slide.subtitle}
               </p>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-neutral-900 leading-tight animate-slide-up px-2 sm:px-0">
@@ -122,7 +122,7 @@ const HeroSlideshow = () => {
               </Link>
               <Link 
                 href="/products"
-                className="luxury-border border-2 text-blush-600 px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-lg font-semibold text-sm sm:text-base md:text-lg inline-flex items-center justify-center hover:bg-blush-50 transition-all active:scale-95"
+                className="luxury-border border-2 text-gold-600 px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-lg font-semibold text-sm sm:text-base md:text-lg inline-flex items-center justify-center hover:bg-gold-50 transition-all active:scale-95"
               >
                 View All
               </Link>
@@ -172,7 +172,7 @@ const HeroSlideshow = () => {
             onClick={() => goToSlide(index)}
             className={`transition-all ${
               currentSlide === index
-                ? 'bg-blush-600 w-5 sm:w-6 md:w-8 h-1.5 sm:h-2 md:h-3'
+                ? 'bg-gold-600 w-5 sm:w-6 md:w-8 h-1.5 sm:h-2 md:h-3'
                 : 'bg-white/70 hover:bg-white/90 w-1.5 sm:w-2 md:w-3 h-1.5 sm:h-2 md:h-3'
             } rounded-full shadow-sm`}
             aria-label={`Go to slide ${index + 1}`}
