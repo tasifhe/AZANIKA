@@ -110,11 +110,12 @@ const Header = () => {
             <Link href="/" className="flex items-center group">
               <div className="relative h-14 w-36 md:h-16 md:w-44">
                 <Image
-                  src="/AZANIKA_LOGO.png"
+                  src="https://iili.io/fiQnCaS.png"
                   alt="AZANIKA"
                   fill
                   className="object-contain"
                   priority
+                  unoptimized
                 />
               </div>
             </Link>
