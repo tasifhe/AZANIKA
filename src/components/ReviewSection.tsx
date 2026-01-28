@@ -144,8 +144,8 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ productId }) => {
                     size={24}
                     className={
                       star <= Math.round(averageRating)
-                        ? 'text-amber-400 fill-current'
-                        : 'text-gray-300'
+                        ? 'text-brand-500 fill-current'
+                        : 'text-pearl-300'
                     }
                   />
                 ))}
@@ -228,8 +228,8 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ productId }) => {
                         size={32}
                         className={
                           star <= (hoverRating || rating)
-                            ? 'text-amber-400 fill-current'
-                            : 'text-gray-300'
+                            ? 'text-brand-500 fill-current'
+                            : 'text-pearl-300'
                         }
                       />
                     </button>
@@ -299,8 +299,8 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ productId }) => {
                           size={16}
                           className={
                             star <= review.rating
-                              ? 'text-amber-400 fill-current'
-                              : 'text-gray-300'
+                              ? 'text-brand-500 fill-current'
+                              : 'text-pearl-300'
                           }
                         />
                       ))}

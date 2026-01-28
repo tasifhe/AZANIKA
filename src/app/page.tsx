@@ -3,17 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Star, Truck, Shield, RefreshCw, Award, Sparkles, TrendingUp, ShoppingBag, Gem } from 'lucide-react';
+import { ArrowRight, Star, Truck, Shield, RefreshCw, Award, Sparkles, TrendingUp, ShoppingBag, Gem, Package, HeartHandshake } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
-import NewsletterSignup from '@/components/NewsletterSignup';
 import HeroSlideshow from '@/components/HeroSlideshow';
 import PromoPopup from '@/components/PromoPopup';
 import Testimonials from '@/components/Testimonials';
-import { AnimatedContent, FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/animations/AnimatedContent';
-import { AnimatedGrid } from '@/components/animations/AnimatedList';
-import { Parallax } from '@/components/animations/ScrollAnimations';
 import { productsApi } from '@/lib/api';
 import { DatabaseProduct } from '@/types';
 
@@ -41,7 +37,6 @@ const HomePage = () => {
     try {
       const response = await productsApi.getAll();
       if (response.success && response.data) {
-        // Map DatabaseProduct to DisplayProduct
         const products: DisplayProduct[] = response.data.map((p: DatabaseProduct) => ({
           id: String(p.id),
           name: p.name,
@@ -52,13 +47,11 @@ const HomePage = () => {
           rating: p.rating,
           featured: p.featured
         }));
-        // Get featured products or first 6 products
-        const featured = products.filter(p => p.featured).slice(0, 6);
-        setFeaturedProducts(featured.length > 0 ? featured : products.slice(0, 6));
+        const featured = products.filter(p => p.featured).slice(0, 8);
+        setFeaturedProducts(featured.length > 0 ? featured : products.slice(0, 8));
       }
     } catch (error) {
-      // Handle error silently in production
-      // TODO: Implement proper error logging service
+      // Handle silently
     } finally {
       setLoading(false);
     }
@@ -67,22 +60,48 @@ const HomePage = () => {
   const categories = [
     {
       name: 'Jewelry',
-      image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80',
+      subtitle: 'Timeless Elegance',
+      image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=85',
       link: '/category/Jewelry',
       icon: Gem
     },
     {
       name: 'Handbags',
-      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&q=80',
+      subtitle: 'Luxury Collection',
+      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&q=85',
       link: '/category/Bags',
       icon: ShoppingBag
     },
     {
       name: 'Accessories',
-      image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&q=80',
+      subtitle: 'Style Essentials',
+      image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=85',
       link: '/category/Accessories',
       icon: Sparkles
     }
+  ];
+
+  const features = [
+    {
+      icon: Truck,
+      title: 'Free Shipping',
+      description: 'On orders over ৳5,000',
+    },
+    {
+      icon: Shield,
+      title: 'Secure Payment',
+      description: '100% protected checkout',
+    },
+    {
+      icon: RefreshCw,
+      title: 'Easy Returns',
+      description: '7-day return policy',
+    },
+    {
+      icon: HeartHandshake,
+      title: 'Premium Quality',
+      description: 'Handpicked selection',
+    },
   ];
 
   return (
@@ -95,206 +114,170 @@ const HomePage = () => {
       {/* Hero Slideshow */}
       <HeroSlideshow />
 
-      {/* New Arrivals Banner - Mobile Optimized */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-cream-50 via-gold-50 to-cream-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative bg-white rounded-3xl md:rounded-[2rem] overflow-hidden shadow-xl premium-shadow-lg">
-            <div className="absolute inset-0 bg-gradient-to-br from-gold-100/50 via-transparent to-cream-100/50"></div>
+      {/* Features Bar - Elegant Strip */}
+      <section className="bg-pearl-900 py-6 md:py-8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {features.map((feature, index) => (
+              <div 
+                key={index} 
+                className="flex items-center gap-4 group"
+              >
+                <div className="w-12 h-12 rounded-full bg-brand-500/20 flex items-center justify-center group-hover:bg-brand-500/30 transition-colors">
+                  <feature.icon className="text-brand-400" size={22} />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-white text-sm">{feature.title}</h3>
+                  <p className="text-pearl-400 text-xs">{feature.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* New Arrivals Banner */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-white to-pearl-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-brand-50 via-white to-brand-50 border border-brand-100">
+            {/* Decorative Elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-200/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-brand-300/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
+            
             <div className="relative p-10 md:p-16 text-center">
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-gold-500 to-copper-500 text-white px-5 md:px-6 py-2 md:py-2.5 rounded-full mb-4 md:mb-5 text-sm md:text-base font-bold shadow-lg animate-pulse">
-                <Sparkles size={18} />
-                <span className="tracking-wider">LATEST TRENDS</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-neutral-900 mb-3 md:mb-5 tracking-tight">
-                New Arrivals
+              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-500 to-brand-600 text-white text-xs font-bold px-5 py-2 rounded-full mb-6 shadow-lg">
+                <Sparkles size={14} />
+                NEW ARRIVALS
+              </span>
+              <h2 className="text-3xl md:text-5xl font-display font-bold text-pearl-900 mb-4">
+                Latest Collection
               </h2>
-              <p className="text-base md:text-lg text-neutral-600 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed">
-                Be the first to discover our newest additions and stay ahead of fashion trends
+              <p className="text-lg text-pearl-600 mb-8 max-w-xl mx-auto">
+                Discover our newest additions to elevate your style
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/products?sort=newest"
-                  className="premium-gradient text-white px-8 md:px-10 py-3.5 md:py-4 rounded-xl md:rounded-2xl font-bold text-base md:text-lg inline-flex items-center justify-center shadow-xl hover:shadow-2xl transition-all hover:scale-105"
-                >
-                  Shop Now
-                  <ArrowRight className="ml-2" size={20} />
-                </Link>
-                <Link
-                  href="/products"
-                  className="bg-white border-2 border-gold-200 text-gold-600 px-8 md:px-10 py-3.5 md:py-4 rounded-xl md:rounded-2xl font-bold text-base md:text-lg inline-flex items-center justify-center hover:bg-gold-50 transition-all"
-                >
-                  View All
-                </Link>
-              </div>
+              <Link
+                href="/products?sort=newest"
+                className="inline-flex items-center gap-3 bg-pearl-900 hover:bg-pearl-800 text-white px-10 py-4 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              >
+                Shop Now
+                <ArrowRight size={18} />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section with Animations */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-white via-cream-50/30 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedGrid className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10" staggerDelay={0.15}>
-            <div className="text-center group p-6 md:p-8 bg-white rounded-2xl premium-shadow hover:premium-shadow-lg transition-all duration-300">
-              <div className="bg-gradient-to-br from-gold-100 to-cream-50 w-16 h-16 md:w-24 md:h-24 rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-5 shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                <Truck className="text-gold-600" size={24} />
-              </div>
-              <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-lg">Free Shipping</h3>
-              <p className="text-neutral-600 text-xs md:text-base leading-relaxed">Orders over ৳2,000</p>
+      {/* Categories Section - Premium Grid */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="text-center mb-12 md:mb-16">
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <span className="w-16 h-[2px] bg-gradient-to-r from-transparent to-brand-400" />
+              <span className="text-brand-500 text-sm font-semibold tracking-[0.3em] uppercase">Explore</span>
+              <span className="w-16 h-[2px] bg-gradient-to-l from-transparent to-brand-400" />
             </div>
-            
-            <div className="text-center group p-6 md:p-8 bg-white rounded-2xl premium-shadow hover:premium-shadow-lg transition-all duration-300">
-              <div className="bg-gradient-to-br from-copper-200 to-gold-100 w-16 h-16 md:w-24 md:h-24 rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-5 shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                <Shield className="text-copper-700" size={24} />
-              </div>
-              <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-lg">Secure Payment</h3>
-              <p className="text-neutral-600 text-xs md:text-base leading-relaxed">SSL encryption</p>
-            </div>
-            
-            <div className="text-center group p-6 md:p-8 bg-white rounded-2xl premium-shadow hover:premium-shadow-lg transition-all duration-300">
-              <div className="bg-gradient-to-br from-gold-100 to-cream-50 w-16 h-16 md:w-24 md:h-24 rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-5 shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                <RefreshCw className="text-gold-600" size={24} />
-              </div>
-              <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-lg">Easy Returns</h3>
-              <p className="text-neutral-600 text-xs md:text-base leading-relaxed">7-day returns</p>
-            </div>
-            
-            <div className="text-center group p-6 md:p-8 bg-white rounded-2xl premium-shadow hover:premium-shadow-lg transition-all duration-300">
-              <div className="bg-gradient-to-br from-copper-200 to-gold-100 w-16 h-16 md:w-24 md:h-24 rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-5 shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                <Award className="text-copper-700" size={24} />
-              </div>
-              <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-lg">Premium Quality</h3>
-              <p className="text-neutral-600 text-xs md:text-base leading-relaxed">Luxury items</p>
-            </div>
-          </AnimatedGrid>
-        </div>
-      </section>
-
-      {/* Categories Section */}
-      <section className="py-16 md:py-28 gradient-warm-elegance">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedContent direction="up" className="text-center mb-12 md:mb-16">
-            <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm text-gold-700 px-5 md:px-6 py-2 md:py-2.5 rounded-full mb-4 md:mb-5 shadow-sm">
-              <Sparkles size={20} className="animate-spin-slow" />
-              <span className="font-bold text-sm md:text-base tracking-wider">Shop by Category</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-neutral-900 mb-4 md:mb-6 px-4 tracking-tight">
-              Discover Your Style
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-pearl-900 mb-4">
+              Shop by Category
             </h2>
-            <p className="text-sm md:text-xl text-neutral-600 max-w-2xl mx-auto px-4">
-              Explore our curated collection of premium accessories
+            <p className="text-pearl-600 text-lg max-w-2xl mx-auto">
+              Discover our curated collections of premium fashion accessories
             </p>
-          </AnimatedContent>
+          </div>
 
-          <AnimatedGrid className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+          {/* Category Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {categories.map((category) => (
               <Link
                 key={category.name}
                 href={category.link}
-                className="group relative"
+                className="group relative block overflow-hidden rounded-2xl aspect-[4/5] shadow-lg hover:shadow-2xl transition-all duration-500"
               >
-                <div className="relative h-64 md:h-96 rounded-3xl overflow-hidden premium-shadow-lg hover:shadow-2xl transition-all duration-500">
-                  <Image
-                    src={category.image}
-                    alt={category.name}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-br from-gold-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8">
-                    <div className="mb-2 md:mb-3 text-white transform group-hover:scale-110 transition-transform">
-                      <category.icon className="w-8 h-8 md:w-14 md:h-14" />
-                    </div>
-                    <h3 className="text-white text-lg md:text-2xl font-bold mb-1 md:mb-2 transform group-hover:translate-x-2 transition-transform duration-300">
+                {/* Image */}
+                <Image
+                  src={category.image}
+                  alt={category.name}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+                
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-end p-8">
+                  <div className="transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
+                    <p className="text-brand-400 text-sm font-medium tracking-wider uppercase mb-2">
+                      {category.subtitle}
+                    </p>
+                    <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
                       {category.name}
                     </h3>
-                    <div className="flex items-center text-white/90 group-hover:text-white transform group-hover:translate-x-2 transition-all duration-300">
-                      <span className="text-xs md:text-sm font-medium">Explore Collection</span>
-                      <ArrowRight className="ml-1 md:ml-2 transform group-hover:translate-x-2 transition-transform" size={14} />
+                    <div className="flex items-center gap-2 text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <span>Explore Collection</span>
+                      <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
                     </div>
                   </div>
                 </div>
+
+                {/* Decorative Corner */}
+                <div className="absolute top-6 right-6 w-12 h-12 border-2 border-white/30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-100 scale-75">
+                  <category.icon size={20} className="text-white" />
+                </div>
               </Link>
             ))}
-          </AnimatedGrid>
+          </div>
         </div>
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 md:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedContent direction="up" className="text-center mb-12 md:mb-16">
-            <div className="inline-flex items-center space-x-2 bg-gold-50 text-gold-700 px-5 md:px-6 py-2 md:py-2.5 rounded-full mb-3 md:mb-5 shadow-md">
-              <TrendingUp size={20} />
-              <span className="font-bold text-sm md:text-base tracking-wider">Trending Now</span>
+      <section className="py-16 md:py-24 bg-pearl-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-flex items-center gap-2 bg-pearl-900 text-white text-xs font-bold px-5 py-2 rounded-full mb-6">
+              <TrendingUp size={14} />
+              TRENDING NOW
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-6xl font-black text-neutral-900 mb-4 md:mb-6 px-4 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-pearl-900 mb-4">
               Featured Products
             </h2>
-            <p className="text-sm md:text-xl text-neutral-600 max-w-2xl mx-auto px-4">
-              Discover our handpicked favorites - curated just for you
+            <p className="text-pearl-600 text-lg max-w-2xl mx-auto">
+              Discover our handpicked selection of premium fashion accessories
             </p>
-          </AnimatedContent>
+          </div>
 
+          {/* Products Grid */}
           {loading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-6 mb-6 md:mb-12">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-white/60 backdrop-blur rounded-2xl h-72 md:h-96 animate-pulse shimmer"></div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
+              {[...Array(8)].map((_, i) => (
+                <div key={i} className="bg-white rounded-2xl h-96 animate-pulse shadow-soft" />
               ))}
             </div>
           ) : (
-            <AnimatedGrid className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-6 mb-6 md:mb-12" staggerDelay={0.1}>
-              {featuredProducts.slice(0, 6).map((product) => (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
+              {featuredProducts.slice(0, 8).map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
-            </AnimatedGrid>
+            </div>
           )}
 
-          <FadeIn className="text-center space-y-3 md:space-y-4" delay={0.3}>
+          {/* View All Button */}
+          <div className="text-center">
             <Link
               href="/products"
-              className="btn-hover premium-gradient text-white px-6 md:px-10 py-2.5 md:py-4 rounded-lg md:rounded-xl font-semibold text-sm md:text-lg inline-flex items-center elegant-shadow hover:shadow-xl transition-all pulse-ring mx-1 md:mx-2"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white px-10 py-4 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-brand-500/20 transform hover:-translate-y-0.5"
             >
-              Shop All Products
-              <ArrowRight className="ml-2" size={18} />
+              View All Products
+              <ArrowRight size={18} />
             </Link>
-            <Link
-              href="/products?sort=newest"
-              className="btn-hover bg-white text-gold-600 border-2 border-gold-200 px-6 md:px-10 py-2.5 md:py-4 rounded-lg md:rounded-xl font-semibold text-sm md:text-lg inline-flex items-center hover:bg-gold-50 transition-all mx-1 md:mx-2"
-            >
-              View New Arrivals
-              <Sparkles className="ml-2" size={18} />
-            </Link>
-          </FadeIn>
+          </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
       <Testimonials />
-
-      {/* Newsletter Section */}
-      <section className="py-12 md:py-20 relative overflow-hidden">
-        <div className="absolute inset-0 premium-gradient"></div>
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.4"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}></div>
-        <Parallax offset={30} className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <ScaleIn className="bg-white/10 backdrop-blur-sm rounded-2xl md:rounded-3xl p-6 md:p-12 shadow-2xl glass-effect">
-            <div className="mb-6">
-              <div className="inline-block bg-white/20 rounded-full p-3 md:p-4 mb-3 md:mb-4 bounce-gentle">
-                <Star className="text-white" size={24} />
-              </div>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4">
-                Join Our Exclusive Club
-              </h2>
-              <p className="text-sm md:text-xl text-white/90 mb-6 md:mb-8 max-w-2xl mx-auto">
-                Subscribe to get special offers, style inspiration, and early access to new collections
-              </p>
-            </div>
-            
-            <NewsletterSignup />
-          </ScaleIn>
-        </Parallax>
-      </section>
 
       <Footer />
     </div>

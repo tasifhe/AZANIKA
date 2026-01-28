@@ -105,31 +105,31 @@ const ProductsContent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-blush-50/20 to-white pattern-gradient-bg">
+    <div className="min-h-screen bg-gradient-to-b from-white via-brand-50/20 to-white pattern-gradient-bg">
       <Header />
       
       <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 md:py-8">
         {/* Page Header */}
         <AnimatedContent direction="up" className="mb-4 md:mb-8">
-          <nav className="flex items-center space-x-2 text-xs sm:text-sm text-neutral-600 mb-3 md:mb-4 overflow-x-auto">
-            <Link href="/" className="hover:text-blush-600 smooth-transition whitespace-nowrap">Home</Link>
+          <nav className="flex items-center space-x-2 text-xs sm:text-sm text-pearl-600 mb-3 md:mb-4 overflow-x-auto">
+            <Link href="/" className="hover:text-brand-600 smooth-transition whitespace-nowrap">Home</Link>
             <span>/</span>
-            <span className="text-neutral-900 whitespace-nowrap">Products</span>
+            <span className="text-pearl-900 whitespace-nowrap">Products</span>
             {selectedCategory && (
               <>
                 <span>/</span>
-                <span className="text-neutral-900 capitalize whitespace-nowrap">{selectedCategory}</span>
+                <span className="text-pearl-900 capitalize whitespace-nowrap">{selectedCategory}</span>
               </>
             )}
           </nav>
           
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 bg-gradient-to-r from-blush-600 to-blush-400 bg-clip-text text-transparent">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-pearl-900">
             {selectedCategory 
               ? `${selectedCategory} Collection`
               : 'All Products'
             }
           </h1>
-          <p className="text-neutral-600 mt-1 md:mt-2 text-sm md:text-lg">
+          <p className="text-pearl-600 mt-1 md:mt-2 text-sm md:text-lg">
             {filteredAndSortedProducts.length} product{filteredAndSortedProducts.length !== 1 ? 's' : ''} found
           </p>
         </AnimatedContent>

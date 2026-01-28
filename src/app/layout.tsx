@@ -1,6 +1,7 @@
 import { Playfair_Display, Cormorant_Garamond, Lora, Montserrat, Dancing_Script } from 'next/font/google'
 import '../styles/globals.css'
 import { CartProvider } from '@/lib/cart-context'
+import { WishlistProvider } from '@/components/Wishlist'
 import { Toaster } from 'react-hot-toast'
 import ErrorBoundary from '@/components/ErrorBoundary'
 
@@ -93,21 +94,30 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${lora.variable} ${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${dancing.variable} font-body`}>
+      <body className={`${lora.variable} ${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${dancing.variable} font-sans`}>
         <ErrorBoundary>
-          <CartProvider>
-            {children}
-            <Toaster 
-              position="top-right"
-              toastOptions={{
-                duration: 3000,
-                style: {
-                  background: '#363636',
-                  color: '#fff',
-                },
-              }}
-            />
-          </CartProvider>
+          <WishlistProvider>
+            <CartProvider>
+              {children}
+              <Toaster 
+                position="top-right"
+                toastOptions={{
+                  duration: 3000,
+                  style: {
+                    background: '#1c1917',
+                    color: '#fafaf9',
+                    fontFamily: 'var(--font-montserrat)',
+                  },
+                  success: {
+                    iconTheme: {
+                      primary: '#e8824b',
+                      secondary: '#ffffff',
+                    },
+                  },
+                }}
+              />
+            </CartProvider>
+          </WishlistProvider>
         </ErrorBoundary>
       </body>
     </html>

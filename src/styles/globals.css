@@ -1,312 +1,220 @@
+/* Import Luxury Fonts - Must be first */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&family=Dancing+Script:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom CSS */
+/* CSS Variables for Luxury Theme */
+:root {
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-cormorant: 'Cormorant Garamond', Garamond, serif;
+  --font-lora: 'Lora', Georgia, serif;
+  --font-montserrat: 'Montserrat', system-ui, sans-serif;
+  --font-dancing: 'Dancing Script', cursive;
+  
+  --color-champagne: #f2d4a8;
+  --color-rosegold: #e8824b;
+  --color-blush: #ea6280;
+  --color-mauve: #a37b9e;
+  --color-gold: #f0a020;
+}
+
+/* Premium Professional Styles */
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
-  font-family: var(--font-lora), Georgia, serif;
+  font-family: var(--font-montserrat), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  color: #3d3835;
-  background-color: #fefdfb;
-  letter-spacing: 0.01em;
+  color: #1c1917;
+  background: #ffffff;
+  line-height: 1.6;
 }
 
-/* Typography Improvements */
+/* Typography - Luxury Fashion */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-playfair), Georgia, serif;
+  font-family: var(--font-playfair);
   font-weight: 700;
-  line-height: 1.15;
+  color: #111827;
   letter-spacing: -0.02em;
-  color: #2d2620;
-  margin-bottom: 0.5em;
+  line-height: 1.2;
 }
 
-h1 {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+h1 { 
+  font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 800;
 }
 
-h2 {
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
+h2 { 
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
   font-weight: 700;
 }
 
-h3 {
-  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+h3 { 
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 600;
 }
 
 h4 {
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  font-weight: 600;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
 }
 
 p {
-  line-height: 1.75;
-  letter-spacing: 0.015em;
-  margin-bottom: 1.25em;
-  font-size: clamp(1rem, 1.5vw, 1.125rem);
-  color: #5a524c;
+  line-height: 1.8;
+  color: #57534e;
+  font-family: var(--font-montserrat);
 }
 
-/* Button Enhancements */
+.luxury-text {
+  font-family: var(--font-cormorant);
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #44403c;
+}
+
+.script-text {
+  font-family: var(--font-dancing);
+  font-weight: 600;
+}
+
+/* Premium Buttons */
+.btn {
+  @apply px-8 py-3.5 rounded-lg font-semibold transition-all duration-300 ease-out;
+  font-family: var(--font-montserrat);
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
 .btn-primary {
-  @apply premium-gradient text-white font-sans font-bold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 active:scale-95 text-base tracking-wide;
+  @apply bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-luxury hover:shadow-luxury-hover hover:scale-[1.02] active:scale-[0.98];
 }
 
 .btn-secondary {
-  @apply border-2 luxury-border text-copper-600 font-sans font-bold px-8 py-4 rounded-xl transition-all duration-300 hover:bg-gold-50 hover:border-gold-400 active:scale-95 text-base tracking-wide;
+  @apply bg-white text-brand-600 border-2 border-brand-500 hover:bg-brand-50 shadow-soft;
 }
 
-.btn-outline {
-  @apply border-2 border-warmgray-300 text-warmgray-800 font-sans font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:border-gold-400 hover:text-gold-700 hover:bg-gold-50 active:scale-95 text-base;
+.btn-luxury {
+  @apply bg-gradient-to-r from-brand-500 via-brand-400 to-brand-500 text-white shadow-luxury hover:shadow-luxury-hover;
+  background-size: 200% auto;
+  transition: background-position 0.3s ease;
 }
 
-/* Premium Container Styles */
-.premium-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.btn-luxury:hover {
+  background-position: right center;
 }
 
-@media (min-width: 768px) {
-  .premium-container {
-    padding: 0 3rem;
-  }
+/* Premium Gradient - Main CTA gradient */
+.premium-gradient {
+  @apply bg-gradient-to-r from-brand-500 to-brand-600;
 }
 
-@media (min-width: 1024px) {
-  .premium-container {
-    padding: 0 4rem;
-  }
+.premium-gradient:hover {
+  @apply from-brand-600 to-brand-700;
 }
 
-.premium-section {
-  padding: 5rem 0;
+/* Elegant shadow for buttons */
+.elegant-shadow {
+  box-shadow: 0 4px 14px rgba(212, 165, 116, 0.3);
 }
 
-@media (min-width: 768px) {
-  .premium-section {
-    padding: 7rem 0;
-  }
+.elegant-shadow:hover {
+  box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
 }
 
-@media (min-width: 1024px) {
-  .premium-section {
-    padding: 9rem 0;
-  }
+/* Luxury border for outlined buttons */
+.luxury-border {
+  @apply border-brand-500;
 }
 
-/* Premium Card Styling */
-.premium-card {
-  background: white;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-}
-
-.premium-card:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-  transform: translateY(-4px);
-}
-
-/* Custom scrollbar */
+/* Luxury Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #fafaf9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 3px;
+  background: linear-gradient(180deg, #e8824b 0%, #d96744 100%);
+  border-radius: 5px;
+  border: 2px solid #fafaf9;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+  background: linear-gradient(180deg, #d76739 0%, #c54f32 100%);
 }
 
-/* Custom animations */
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0px); }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out;
+/* Utility Classes */
+.container-luxury {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.section-padding {
+  padding: 5rem 0;
 }
 
-.animate-scale-in {
-  animation: scaleIn 0.3s ease-out;
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 3rem 0;
   }
 }
 
-/* Gradient backgrounds */
-.gradient-bg {
-  background: linear-gradient(135deg, #fef8f5 0%, #feeee7 25%, #fddac7 50%, #fef8f5 100%);
-  animation: gradientShift 8s ease infinite;
+.shadow-custom {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-@keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+.shadow-custom-lg {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, #e8956d, #db7b68, #c96050);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradientText 3s ease infinite;
+.luxury-card {
+  @apply bg-white rounded-2xl shadow-elegant hover:shadow-luxury transition-all duration-300 border border-pearl-100;
 }
 
-/* Rose Gold to Copper text gradient */
-.text-gradient-coral-blush {
-  background: linear-gradient(135deg, #e8956d 0%, #ea6776 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.luxury-gradient {
+  background: linear-gradient(135deg, #fef9f3 0%, #feeee7 50%, #fcf2e7 100%);
 }
 
-/* Rose Gold text gradient */
-.text-gradient-rosegold {
-  background: linear-gradient(135deg, #f09c6e 0%, #e8956d 50%, #db7b68 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.brand-gradient {
+  background: linear-gradient(135deg, #d4a574 0%, #c9956c 50%, #b8845f 100%);
 }
 
-/* Cream Dream text gradient */
-.text-gradient-cream {
-  background: linear-gradient(135deg, #fdf3eb 0%, #ecc69f 50%, #dda978 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.shimmer-effect {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }
 
-/* Brand text gradient */
-.text-gradient-rainbow {
-  background: linear-gradient(135deg, #e8956d 0%, #ea6776 25%, #f0ad2e 50%, #d97045 75%, #e8956d 100%);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradientText 4s ease infinite;
+/* Premium Badge Styles */
+.badge-new {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-sm;
 }
 
-@keyframes gradientText {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+.badge-sale {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-blush-500 to-blush-600 text-white shadow-sm;
 }
 
-/* Premium gradient overlays */
-.premium-gradient {
-  background: linear-gradient(135deg, #e8956d 0%, #d97045 50%, #c85a36 100%);
-  background-size: 200% 200%;
-  animation: gradientFlow 4s ease infinite;
-}
-
-/* Luxury Rose Gold Gradient */
-.rosegold-gradient {
-  background: linear-gradient(135deg, #fddac7 0%, #f09c6e 25%, #e8956d 50%, #db7b68 75%, #c96050 100%);
-  background-size: 200% 200%;
-  animation: gradientFlow 6s ease infinite;
-}
-
-/* Copper Dreams Gradient */
-.copper-gradient {
-  background: linear-gradient(135deg, #fbe9e1 0%, #efb399 25%, #d97045 50%, #c85a36 100%);
-}
-
-/* Blush Beauty Gradient */
-.blush-gradient {
-  background: linear-gradient(135deg, #fef7f7 0%, #fbd9dc 25%, #f38d99 50%, #ea6776 100%);
-}
-
-/* Cream Elegance Gradient */
-.cream-gradient {
-  background: linear-gradient(135deg, #fefdfb 0%, #fdf3eb 25%, #f5d7bc 50%, #ecc69f 100%);
-}
-
-/* Gold Elegance Gradient */
-.gold-gradient {
-  background: linear-gradient(135deg, #fef7e6 0%, #f5c45a 50%, #f0ad2e 100%);
-}
-
-/* Brand Gradient for Special Items */
-.rainbow-gradient {
-  background: linear-gradient(135deg, 
-    #e8956d 0%,    /* Rose Gold */
-    #d97045 25%,   /* Copper */
-    #ea6776 50%,   /* Blush */
-    #f0ad2e 75%,   /* Gold */
-    #e8956d 100%   /* Back to Rose Gold */
-  );
-  background-size: 200% 200%;
-  animation: rainbowFlow 8s ease infinite;
-}
-
-@keyframes rainbowFlow {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* Sunset Vibes Gradient */
-.sunset-gradient {
-  background: linear-gradient(135deg, #fef8f5 0%, #feeee7 20%, #fddac7 40%, #f09c6e 60%, #db7b68 80%, #c96050 100%);
-}
-
-/* Peach Sorbet Gradient */
-.peach-gradient {
-  background: linear-gradient(135deg, #fefdfb 0%, #fef7e6 25%, #fddac7 50%, #f09c6e 75%, #db7b68 100%);
+.badge-exclusive {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-brand-400 to-brand-500 text-white shadow-sm;
 }
 
 @keyframes gradientFlow {
@@ -319,26 +227,12 @@ p {
 }
 
 .elegant-shadow {
-  box-shadow: 0 4px 20px rgba(232, 149, 109, 0.08), 0 2px 8px rgba(219, 123, 104, 0.06);
-  transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 25px rgba(232, 149, 109, 0.15), 0 5px 10px rgba(219, 123, 104, 0.1);
+  transition: box-shadow 0.3s ease;
 }
 
 .elegant-shadow:hover {
-  box-shadow: 0 12px 45px rgba(232, 149, 109, 0.15), 0 6px 20px rgba(219, 123, 104, 0.1);
-}
-
-.premium-shadow {
-  box-shadow: 
-    0 1px 3px rgba(0, 0, 0, 0.05),
-    0 4px 12px rgba(0, 0, 0, 0.04),
-    0 10px 30px rgba(0, 0, 0, 0.03);
-}
-
-.premium-shadow-lg {
-  box-shadow: 
-    0 2px 6px rgba(0, 0, 0, 0.05),
-    0 8px 24px rgba(0, 0, 0, 0.06),
-    0 16px 48px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 15px 35px rgba(232, 149, 109, 0.25), 0 8px 15px rgba(219, 123, 104, 0.15);
 }
 
 .luxury-border {

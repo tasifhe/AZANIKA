@@ -13,7 +13,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 'md', cla
   };
 
   return (
-    <div className={`animate-spin rounded-full border-2 border-primary-200 border-t-primary-600 ${sizeClasses[size]} ${className}`} />
+    <div className={`animate-spin rounded-full border-2 border-brand-200 border-t-brand-600 ${sizeClasses[size]} ${className}`} />
   );
 };
 
@@ -24,11 +24,11 @@ interface LoadingCardProps {
 export const LoadingCard: React.FC<LoadingCardProps> = ({ className = '' }) => {
   return (
     <div className={`bg-white rounded-lg shadow-md overflow-hidden animate-pulse ${className}`}>
-      <div className="h-64 bg-neutral-200"></div>
+      <div className="h-64 bg-pearl-200"></div>
       <div className="p-4 space-y-3">
-        <div className="h-4 bg-neutral-200 rounded w-3/4"></div>
-        <div className="h-3 bg-neutral-200 rounded w-1/2"></div>
-        <div className="h-4 bg-neutral-200 rounded w-1/4"></div>
+        <div className="h-4 bg-pearl-200 rounded w-3/4"></div>
+        <div className="h-3 bg-pearl-200 rounded w-1/2"></div>
+        <div className="h-4 bg-pearl-200 rounded w-1/4"></div>
       </div>
     </div>
   );

@@ -4,8 +4,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ShoppingCart, Search, Menu, X, User, Heart, ChevronDown, Gem, ShoppingBag, Sparkles, Glasses, Watch } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, User, Heart, ChevronDown, Gem, ShoppingBag, Sparkles, Glasses, Watch, Package } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
+import { useWishlist } from '@/components/Wishlist';
 import { searchProducts } from '@/lib/data';
 
 const Header = () => {
@@ -16,6 +17,7 @@ const Header = () => {
   const [showResults, setShowResults] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { itemCount } = useCart();
+  const { wishlistCount } = useWishlist();
   const router = useRouter();
   const searchRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -91,39 +93,34 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gold-100">
+    <header className="bg-white shadow-sm sticky top-0 z-50 border-b border-pearl-100">
       {/* Top Banner */}
-      <div className="premium-gradient text-white text-center py-3 text-sm relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pattern-dots"></div>
-        <p className="flex items-center justify-center space-x-3 relative z-10 font-medium tracking-wide">
-          <Sparkles size={18} className="inline animate-spin-slow" />
-          <span className="font-semibold">Free Shipping on Orders Over ৳5,000 | New Arrivals Every Week!</span>
-          <ShoppingBag size={18} className="inline" />
+      <div className="bg-pearl-900 text-white text-center py-2.5 text-xs md:text-sm font-medium tracking-wide">
+        <p className="flex items-center justify-center gap-2">
+          <Package size={14} />
+          <span>Free Shipping on Orders Over ৳5,000 | Luxury Gift Wrapping Available</span>
         </p>
       </div>
 
       {/* Main Header */}
-      <div className="border-b border-gold-100/50">
+      <div className="bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-24">
+          <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <div className="flex-shrink-0">
-              <Link href="/" className="flex items-center space-x-4 group">
-                <div className="relative w-12 h-12 transition-transform group-hover:scale-110 duration-300">
-                  <Image
-                    src="https://iili.io/KU7rz92.png"
-                    alt="AZANIKA"
-                    fill
-                    className="object-contain"
-                    priority
-                  />
-                </div>
-                <span className="text-3xl font-bold gradient-text tracking-tight">AZANIKA</span>
-              </Link>
-            </div>
+            <Link href="/" className="flex items-center group">
+              <div className="relative h-14 w-36 md:h-16 md:w-44">
+                <Image
+                  src="/AZANIKA_LOGO.png"
+                  alt="AZANIKA"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </Link>
 
             {/* Desktop Navigation - Centered */}
-            <nav className="hidden lg:flex items-center space-x-10 flex-1 justify-center" ref={dropdownRef}>
+            <nav className="hidden lg:flex items-center space-x-8 flex-1 justify-center" ref={dropdownRef}>
               {navigation.map((item) => (
                 <div key={item.name} className="relative">
                   {item.dropdown ? (
@@ -131,14 +128,14 @@ const Header = () => {
                       <button
                         onClick={() => setActiveDropdown(activeDropdown === item.name ? null : item.name)}
                         onMouseEnter={() => setActiveDropdown(item.name)}
-                        className="flex items-center space-x-1 text-warmgray-800 hover:text-gold-600 font-semibold smooth-transition py-2 text-sm uppercase tracking-widest">
+                        className="flex items-center gap-1.5 text-pearl-700 hover:text-brand-600 font-semibold transition-all duration-200 py-2 text-sm uppercase tracking-wider"
                       >
                         <span>{item.name}</span>
-                        <ChevronDown size={16} className={`smooth-transition ${activeDropdown === item.name ? 'rotate-180' : ''}`} />
+                        <ChevronDown size={16} className={`transition-transform duration-200 ${activeDropdown === item.name ? 'rotate-180' : ''}`} />
                       </button>
                       {activeDropdown === item.name && (
                         <div 
-                          className="absolute top-full left-0 mt-3 glass-effect rounded-2xl shadow-2xl min-w-[240px] py-4 z-50 animate-fade-in-down border border-gold-100"
+                          className="absolute top-full left-0 mt-2 bg-white rounded-xl shadow-xl border border-pearl-100 min-w-[220px] py-3 z-50 animate-slide-down"
                           onMouseLeave={() => setActiveDropdown(null)}
                         >
                           {item.dropdown.map((subItem: any) => {
@@ -148,12 +145,12 @@ const Header = () => {
                                 key={subItem.name}
                                 href={subItem.href}
                                 onClick={() => setActiveDropdown(null)}
-                                className="flex items-center space-x-3 px-6 py-3 text-warmgray-800 hover:bg-gradient-to-r hover:from-gold-50 hover:to-transparent hover:text-gold-700 smooth-transition group rounded-xl mx-2"
+                                className="flex items-center space-x-3 px-5 py-2.5 text-pearl-700 hover:bg-gradient-to-r hover:from-brand-50 hover:to-transparent hover:text-brand-600 smooth-transition group rounded-lg mx-2"
                               >
                                 {IconComponent && (
                                   <IconComponent className="w-5 h-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 ease-out" />
                                 )}
-                                <span className="text-sm font-medium group-hover:translate-x-1 transition-transform duration-300">{subItem.name}</span>
+                                <span className="text-[14px] group-hover:translate-x-1 transition-transform duration-300">{subItem.name}</span>
                               </Link>
                             );
                           })}
@@ -163,7 +160,7 @@ const Header = () => {
                   ) : (
                     <Link
                       href={item.href || '/'}
-                      className="text-warmgray-800 hover:text-gold-600 font-semibold smooth-transition py-2 text-sm uppercase tracking-widest">
+                      className="text-pearl-700 hover:text-brand-600 font-semibold smooth-transition py-2 text-[15px] uppercase tracking-wide"
                     >
                       {item.name}
                     </Link>
@@ -173,45 +170,57 @@ const Header = () => {
             </nav>
 
             {/* Right side icons */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               {/* Search */}
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="text-neutral-700 hover:text-gold-600 p-2.5 smooth-transition rounded-lg hover:bg-gold-50"
+                className="text-pearl-700 hover:text-brand-600 p-3 transition-all duration-200 rounded-xl hover:bg-brand-50 relative group"
                 title="Search"
               >
-                <Search size={22} />
+                <Search size={20} />
+                <span className="absolute inset-0 rounded-xl bg-brand-100 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-20 transition-all duration-200 -z-10"></span>
               </button>
 
-              {/* Wishlist - Desktop only */}
-              <button className="hidden sm:block text-neutral-700 hover:text-gold-600 p-2.5 smooth-transition rounded-lg hover:bg-gold-50 relative group" title="Wishlist">
-                <Heart size={22} />
-                <span className="absolute inset-0 rounded-lg bg-gold-100 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-20 smooth-transition -z-10"></span>
-              </button>
+              {/* Wishlist */}
+              <Link 
+                href="/wishlist" 
+                className="hidden sm:block text-pearl-700 hover:text-blush-500 p-3 transition-all duration-200 rounded-xl hover:bg-blush-50 relative group" 
+                title="Wishlist"
+              >
+                <Heart size={20} />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-gradient-to-r from-blush-500 to-blush-600 text-white rounded-full text-xs min-w-[18px] h-[18px] flex items-center justify-center font-bold shadow-md group-hover:scale-110 transition-transform">
+                    {wishlistCount > 99 ? '99+' : wishlistCount}
+                  </span>
+                )}
+                <span className="absolute inset-0 rounded-xl bg-blush-100 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-20 transition-all duration-200 -z-10"></span>
+              </Link>
 
               {/* User Account - Desktop only */}
               <Link 
                 href="/auth/login" 
-                className="hidden sm:block text-neutral-700 hover:text-gold-600 p-2.5 smooth-transition rounded-lg hover:bg-gold-50" 
+                className="hidden sm:block text-pearl-700 hover:text-brand-600 p-3 transition-all duration-200 rounded-xl hover:bg-brand-50 relative group" 
                 title="Account"
               >
-                <User size={22} />
+                <User size={20} />
+                <span className="absolute inset-0 rounded-xl bg-brand-100 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-20 transition-all duration-200 -z-10"></span>
               </Link>
 
               {/* Shopping Cart */}
-              <Link href="/cart" className="relative text-neutral-700 hover:text-gold-600 p-2.5 smooth-transition rounded-lg hover:bg-gold-50 group" title="Cart">
-                <ShoppingCart size={22} />
+              <Link href="/cart" className="relative text-pearl-700 hover:text-brand-600 p-3 transition-all duration-200 rounded-xl hover:bg-brand-50 group" title="Cart">
+                <ShoppingCart size={20} />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 premium-gradient text-white rounded-full text-xs min-w-[20px] h-5 px-1.5 flex items-center justify-center font-bold shadow-lg group-hover:scale-110 smooth-transition animate-pulse">
+                  <span className="absolute -top-1 -right-1 bg-gradient-to-r from-brand-500 to-brand-600 text-white rounded-full text-xs min-w-[20px] h-5 px-1.5 flex items-center justify-center font-bold shadow-lg group-hover:scale-110 transition-transform animate-pulse">
                     {itemCount > 99 ? '99+' : itemCount}
                   </span>
                 )}
+                <span className="absolute inset-0 rounded-xl bg-brand-100 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-20 transition-all duration-200 -z-10"></span>
               </Link>
 
               {/* Mobile menu button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden text-neutral-700 hover:text-gold-600 p-2.5 smooth-transition rounded-lg hover:bg-gold-50"
+                className="lg:hidden text-pearl-700 hover:text-brand-600 p-2.5 smooth-transition rounded-lg hover:bg-brand-50"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -231,24 +240,24 @@ const Header = () => {
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-4 pr-10 py-2 border border-neutral-300 rounded-lg focus:ring-gold-500 focus:border-gold-500"
+                  className="w-full pl-4 pr-10 py-2 border border-pearl-300 rounded-lg focus:ring-brand-500 focus:border-brand-500"
                   autoFocus
                 />
-                <button type="submit" className="absolute right-3 top-2.5 text-neutral-400 hover:text-gold-600">
+                <button type="submit" className="absolute right-3 top-2.5 text-pearl-400 hover:text-brand-600">
                   <Search size={16} />
                 </button>
               </form>
               
               {/* Search Results Dropdown */}
               {showResults && searchResults.length > 0 && (
-                <div className="absolute top-full left-0 right-0 bg-white border border-neutral-200 rounded-lg shadow-lg mt-1 z-50 max-h-96 overflow-y-auto">
+                <div className="absolute top-full left-0 right-0 bg-white border border-pearl-200 rounded-lg shadow-lg mt-1 z-50 max-h-96 overflow-y-auto">
                   {searchResults.map((product) => (
                     <button
                       key={product.id}
                       onClick={() => handleProductClick(product.id)}
-                      className="w-full flex items-center space-x-3 p-3 hover:bg-neutral-50 text-left"
+                      className="w-full flex items-center space-x-3 p-3 hover:bg-pearl-50 text-left"
                     >
-                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-neutral-100 flex-shrink-0">
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-pearl-100 flex-shrink-0">
                         <Image
                           src={product.images[0]}
                           alt={product.name}
@@ -257,8 +266,8 @@ const Header = () => {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-sm font-medium text-neutral-900 truncate">{product.name}</h3>
-                        <p className="text-sm text-neutral-600">${product.price.toFixed(2)}</p>
+                        <h3 className="text-sm font-medium text-pearl-900 truncate">{product.name}</h3>
+                        <p className="text-sm text-pearl-600">৳{product.price.toLocaleString()}</p>
                       </div>
                     </button>
                   ))}
@@ -270,7 +279,7 @@ const Header = () => {
                         setShowResults(false);
                         setSearchQuery('');
                       }}
-                      className="block w-full p-3 text-center text-gold-600 hover:bg-gold-50 border-t border-neutral-200 font-medium"
+                      className="block w-full p-3 text-center text-brand-600 hover:bg-brand-50 border-t border-pearl-200 font-medium"
                     >
                       View all results for "{searchQuery}"
                     </Link>
@@ -290,14 +299,14 @@ const Header = () => {
               <div key={item.name}>
                 {item.dropdown ? (
                   <div className="py-1">
-                    <div className="px-3 py-2 text-sm font-semibold text-neutral-900 uppercase tracking-wide">{item.name}</div>
+                    <div className="px-3 py-2 text-sm font-semibold text-pearl-900 uppercase tracking-wide">{item.name}</div>
                     {item.dropdown.map((subItem: any) => {
                       const IconComponent = subItem.icon;
                       return (
                         <Link
                           key={subItem.name}
                           href={subItem.href}
-                          className="flex items-center px-6 py-2 text-gray-700 hover:text-gold-600 hover:bg-gold-50"
+                          className="flex items-center px-6 py-2 text-pearl-700 hover:text-brand-600 hover:bg-brand-50"
                           onClick={() => setIsMenuOpen(false)}
                         >
                           {IconComponent && <IconComponent className="w-5 h-5 mr-2" />}
@@ -309,7 +318,7 @@ const Header = () => {
                 ) : (
                   <Link
                     href={item.href || '/'}
-                    className="block px-3 py-2 text-neutral-700 hover:text-gold-600 hover:bg-gold-50 font-semibold uppercase tracking-wide smooth-transition rounded-lg"
+                    className="block px-3 py-2 text-pearl-700 hover:text-brand-600 hover:bg-brand-50 font-semibold uppercase tracking-wide smooth-transition rounded-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
